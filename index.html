@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HFT Bulk Deal Tracker</title>
+<style>
+:root {
+  --bg:#0b0d14; --bg2:#111420; --bg3:#181c2e;
+  --border:#1e2440; --border2:#2a3060;
+  --green:#00e676; --blue:#2196f3; --orange:#ff9800; --red:#ef5350; --amber:#f59e0b;
+  --text:#e8eaf0; --text2:#8b90b0; --text3:#4a5070;
+  --mono:'JetBrains Mono','Fira Code','Consolas',monospace;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+
+nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:var(--bg)}
+.logo-text{font-size:15px;font-weight:700;color:var(--text)}
+.nav-links{display:flex;gap:28px}
+.nav-links a{font-size:13px;color:var(--text2)}
+.nav-links a:hover{color:var(--text);text-decoration:none}
+.nav-cta{background:var(--green);color:var(--bg)!important;padding:7px 16px;border-radius:6px;font-weight:700;font-size:13px}
+.nav-cta:hover{opacity:.88;text-decoration:none!important}
+
+.hero{padding:80px 40px 60px;text-align:center;max-width:720px;margin:0 auto}
+.hero-badge{display:inline-block;font-size:11px;padding:4px 12px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25);border-radius:20px;color:var(--green);margin-bottom:20px;font-family:var(--mono)}
+.hero h1{font-size:44px;font-weight:800;line-height:1.15;margin-bottom:18px;letter-spacing:-.02em}
+.hero h1 span{color:var(--green)}
+.hero p{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto}
+.hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--green);color:var(--bg);padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;transition:opacity .15s}
+.btn-primary:hover{opacity:.88;text-decoration:none}
+.btn-secondary{background:var(--bg2);color:var(--text);padding:12px 28px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid var(--border2);transition:all .15s}
+.btn-secondary:hover{border-color:var(--text2);text-decoration:none}
+
+.features{padding:60px 40px;max-width:1100px;margin:0 auto}
+.section-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);text-align:center;margin-bottom:12px}
+.section-heading{font-size:28px;font-weight:700;text-align:center;margin-bottom:48px}
+.features-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.feature-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px}
+.feature-icon{font-size:28px;margin-bottom:14px}
+.feature-card h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.feature-card p{font-size:13px;color:var(--text2);line-height:1.7}
+
+.hft-section{padding:60px 40px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.hft-inner{max-width:1100px;margin:0 auto}
+.hft-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:32px}
+.hft-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:10px}
+.hft-code{font-family:var(--mono);font-size:12px;font-weight:700;padding:3px 8px;border-radius:4px;background:rgba(0,230,118,.15);color:var(--green);flex-shrink:0}
+.hft-name{font-size:12px;color:var(--text2)}
+
+.how-section{padding:60px 40px;max-width:900px;margin:0 auto}
+.steps{display:flex;flex-direction:column;gap:0;margin-top:32px}
+.step{display:flex;gap:24px;padding:24px 0;border-bottom:1px solid var(--border)}
+.step:last-child{border-bottom:none}
+.step-num{width:40px;height:40px;border-radius:50%;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.3);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--green);font-size:16px;flex-shrink:0;margin-top:2px}
+.step-content h3{font-size:15px;font-weight:700;margin-bottom:6px}
+.step-content p{font-size:13px;color:var(--text2);line-height:1.7}
+.step-content code{font-family:var(--mono);font-size:11px;background:var(--bg3);padding:1px 6px;border-radius:3px;color:var(--green)}
+
+.cta-section{padding:80px 40px;text-align:center}
+.cta-section h2{font-size:32px;font-weight:700;margin-bottom:14px}
+.cta-section p{font-size:15px;color:var(--text2);margin-bottom:28px}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center}
+.footer-left{font-size:12px;color:var(--text3)}
+.footer-right{display:flex;gap:20px}
+.footer-right a{font-size:12px;color:var(--text3)}
+.footer-right a:hover{color:var(--text2)}
+
+@media(max-width:768px){
+  .features-grid{grid-template-columns:1fr}
+  .hft-grid{grid-template-columns:1fr 1fr}
+  .hero h1{font-size:28px}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="logo-icon">▲</div>
+    <span class="logo-text">HFT Bulk Deal Tracker</span>
+  </div>
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#hft-list">HFT Traders</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="generator.html" class="nav-cta">Open Generator →</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-badge">NSE · BSE Bulk Deal Intelligence</div>
+  <h1>Track <span>HFT Activity</span> on Every NSE Stock</h1>
+  <p>Upload your bulk deal CSV, instantly generate a Pine Script indicator that marks HFT trader activity on TradingView charts — automatically, for every stock.</p>
+  <div class="hero-btns">
+    <a href="generator.html" class="btn-primary">⚡ Open Generator</a>
+    <a href="#how-it-works" class="btn-secondary">How it works</a>
+  </div>
+</div>
+
+<div class="features" id="features">
+  <div class="section-title">Features</div>
+  <div class="section-heading">Everything you need</div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">📂</div>
+      <h3>Upload Any CSV</h3>
+      <p>Supports all NSE bulk deal CSV formats. Drop one file or multiple files — they merge automatically with no duplicates.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">💾</div>
+      <h3>Remembers Previous Data</h3>
+      <p>Your historical data is saved in the browser. Next update, just upload the new week's file — it merges with everything you've added before.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Instant Pine Script</h3>
+      <p>Generates a ready-to-paste Pine Script indicator in seconds. Arrows appear on every NSE chart where HFT traders were active.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📐</div>
+      <h3>Sized Arrows</h3>
+      <p>Arrow size scales with number of HFT traders — tiny for 1 trader, enormous for all 12. Hover to see exactly which traders were present.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎯</div>
+      <h3>Custom Indicators</h3>
+      <p>Generate combined indicator for all HFTs, or dedicated indicators for individual traders like NK Securities or Graviton.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>100% Private</h3>
+      <p>Everything runs in your browser. No data is uploaded to any server. Your trading data stays completely private.</p>
+    </div>
+  </div>
+</div>
+
+<div class="hft-section" id="hft-list">
+  <div class="hft-inner">
+    <div class="section-title">Watchlist</div>
+    <div class="section-heading">12 HFT Traders Tracked</div>
+    <div class="hft-grid">
+      <div class="hft-card"><span class="hft-code">J</span><span class="hft-name">Jump Trading Financial India</span></div>
+      <div class="hft-card"><span class="hft-code">Q</span><span class="hft-name">QE Securities LLP</span></div>
+      <div class="hft-card"><span class="hft-code">N</span><span class="hft-name">Junomoneta Finsol</span></div>
+      <div class="hft-card"><span class="hft-code">K</span><span class="hft-name">NK Securities Research</span></div>
+      <div class="hft-card"><span class="hft-code">H</span><span class="hft-name">HRTI Private Limited</span></div>
+      <div class="hft-card"><span class="hft-code">G</span><span class="hft-name">Graviton Research Capital</span></div>
+      <div class="hft-card"><span class="hft-code">S</span><span class="hft-name">Share India Securities</span></div>
+      <div class="hft-card"><span class="hft-code">E</span><span class="hft-name">Elixir Wealth Management</span></div>
+      <div class="hft-card"><span class="hft-code">D</span><span class="hft-name">D3 Stock Vision LLP</span></div>
+      <div class="hft-card"><span class="hft-code">M</span><span class="hft-name">Goldmine Stocks</span></div>
+      <div class="hft-card"><span class="hft-code">C</span><span class="hft-name">Microcurves Trading</span></div>
+      <div class="hft-card"><span class="hft-code">MS</span><span class="hft-name">Musigma Securities</span></div>
+    </div>
+  </div>
+</div>
+
+<div class="how-section" id="how-it-works">
+  <div class="section-title">Workflow</div>
+  <div class="section-heading">How it works</div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Download Bulk Deal CSV from NSE</h3>
+        <p>Go to NSE website → Market Data → Bulk Deals → select date range → Download CSV. Or use the filtered CSV you already prepare weekly.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Upload to the Generator</h3>
+        <p>Open the <a href="generator.html">Generator</a> and drop your CSV file. The tool reads it instantly in your browser — no upload to any server. Previous data is remembered automatically from last time.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Select traders and generate</h3>
+        <p>Choose which HFT traders to include — all 12, or individual ones. Click <code>Generate Pine Script</code>. Done in under a second.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Paste into TradingView</h3>
+        <p>Click <code>Copy to Clipboard</code>. Open TradingView Pine Editor → paste → Save. Green arrows appear on every stock where HFTs were active.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>Update weekly in 30 seconds</h3>
+        <p>Each week just upload the new CSV. The tool adds new data to your existing history automatically, regenerates the script, and you paste once more.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="cta-section">
+  <h2>Ready to track HFT activity?</h2>
+  <p>Free, private, and works entirely in your browser.</p>
+  <a href="generator.html" class="btn-primary" style="display:inline-block">⚡ Open Generator →</a>
+</div>
+
+<footer>
+  <div class="footer-left">HFT Bulk Deal Tracker · Built for NSE traders</div>
+  <div class="footer-right">
+    <a href="generator.html">Generator</a>
+    <a href="#how-it-works">How it works</a>
+    <a href="#hft-list">HFT List</a>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Generator · HFT Bulk Deal Tracker</title>
+<style>
+:root {
+  --bg:#0b0d14; --bg2:#111420; --bg3:#181c2e;
+  --border:#1e2440; --border2:#2a3060;
+  --green:#00e676; --green2:#00b85a;
+  --blue:#2196f3; --orange:#ff9800; --red:#ef5350; --amber:#f59e0b;
+  --text:#e8eaf0; --text2:#8b90b0; --text3:#4a5070;
+  --mono:'JetBrains Mono','Fira Code','Consolas',monospace;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+
+/* Nav */
+nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 20px;height:48px;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.nav-logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo-icon{width:28px;height:28px;background:var(--green);border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;color:var(--bg)}
+.logo-text{font-size:13px;font-weight:700;color:var(--text)}
+.nav-right{display:flex;align-items:center;gap:16px}
+.nav-right a{font-size:12px;color:var(--text2);text-decoration:none}
+.nav-right a:hover{color:var(--text)}
+.storage-badge{font-size:10px;padding:2px 8px;border-radius:10px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.2);color:var(--green);font-family:var(--mono)}
+
+/* Layout */
+.app{display:grid;grid-template-columns:300px 1fr 380px;flex:1;overflow:hidden}
+
+/* Panel shared */
+.panel{display:flex;flex-direction:column;overflow:hidden;border-right:1px solid var(--border)}
+.panel-header{padding:10px 14px;background:var(--bg3);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.panel-title{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3)}
+.panel-body{flex:1;overflow-y:auto;padding:12px 14px;display:flex;flex-direction:column;gap:12px}
+.panel-body::-webkit-scrollbar{width:3px}
+.panel-body::-webkit-scrollbar-thumb{background:var(--border2)}
+
+/* Section label */
+.sec-lbl{font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+
+/* Mode tabs */
+.mode-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:3px;background:var(--bg3);border-radius:6px;padding:3px}
+.mode-tab{padding:6px;border:none;background:none;color:var(--text2);font-size:11px;font-weight:600;cursor:pointer;border-radius:4px;transition:all .12s;text-align:center}
+.mode-tab.active{background:var(--green);color:var(--bg)}
+.mode-tab:hover:not(.active){background:var(--border2);color:var(--text)}
+
+/* HFT list */
+.hft-list{display:flex;flex-direction:column;gap:3px}
+.hft-item{display:flex;align-items:center;gap:7px;padding:5px 8px;border-radius:5px;background:var(--bg3);border:1px solid var(--border);cursor:pointer;transition:border-color .1s}
+.hft-item:hover{border-color:var(--border2)}
+.hft-item.on{border-color:rgba(0,230,118,.3)}
+.hft-item input{accent-color:var(--green);width:13px;height:13px;cursor:pointer;flex-shrink:0}
+.hft-item label{font-size:11px;color:var(--text2);cursor:pointer;flex:1;font-family:var(--mono)}
+.hft-item.on label{color:var(--text)}
+.hft-code{font-size:9px;padding:1px 5px;border-radius:3px;background:var(--border2);color:var(--text3);font-family:var(--mono);flex-shrink:0}
+.hft-item.on .hft-code{background:rgba(0,230,118,.15);color:var(--green)}
+.sel-all-row{display:flex;gap:6px}
+.tiny-btn{font-size:10px;padding:3px 8px;border:1px solid var(--border2);border-radius:4px;background:none;color:var(--text2);cursor:pointer;transition:all .12s}
+.tiny-btn:hover{background:var(--border2);color:var(--text)}
+
+/* Upload */
+.drop-zone{border:2px dashed var(--border2);border-radius:8px;padding:16px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg3);position:relative}
+.drop-zone:hover,.drop-zone.drag{border-color:var(--green);background:rgba(0,230,118,.04)}
+.drop-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+.drop-zone h3{font-size:12px;font-weight:600;margin-bottom:3px}
+.drop-zone p{font-size:10px;color:var(--text3)}
+.file-list{display:flex;flex-direction:column;gap:3px}
+.file-item{display:flex;align-items:center;gap:7px;padding:5px 8px;background:var(--bg3);border:1px solid var(--border);border-radius:5px}
+.file-dot{width:5px;height:5px;border-radius:50%;background:var(--green);flex-shrink:0}
+.file-nm{flex:1;font-size:10px;color:var(--text2);font-family:var(--mono);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.file-sz{font-size:9px;color:var(--text3);flex-shrink:0}
+.file-rm{background:none;border:none;color:var(--text3);cursor:pointer;font-size:13px;padding:0 2px;flex-shrink:0}
+.file-rm:hover{color:var(--red)}
+
+/* Manual */
+.manual-box{background:var(--bg3);border:1px solid var(--border);border-radius:6px;overflow:hidden}
+.manual-box textarea{width:100%;padding:8px 10px;background:transparent;border:none;color:var(--text);font-family:var(--mono);font-size:10px;resize:vertical;min-height:80px;outline:none;line-height:1.7}
+.manual-box textarea::placeholder{color:var(--text3)}
+
+/* Generate btn */
+.gen-btn{width:100%;padding:11px;background:var(--green);border:none;border-radius:7px;color:var(--bg);font-size:13px;font-weight:800;cursor:pointer;transition:opacity .15s,transform .1s;display:flex;align-items:center;justify-content:center;gap:7px}
+.gen-btn:hover:not(:disabled){opacity:.88}
+.gen-btn:active:not(:disabled){transform:scale(.98)}
+.gen-btn:disabled{opacity:.4;cursor:default}
+
+/* Middle panel - stats + log */
+.mid-panel{display:flex;flex-direction:column;overflow:hidden}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 14px;flex-shrink:0}
+.stat{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:10px 12px}
+.stat-v{font-size:22px;font-weight:800;color:var(--green);line-height:1;font-family:var(--mono)}
+.stat-l{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-top:3px}
+
+/* Token bar */
+.token-section{padding:0 14px 10px;flex-shrink:0}
+.tok-header{display:flex;justify-content:space-between;margin-bottom:5px;font-size:10px}
+.tok-bg{height:5px;background:var(--border);border-radius:3px;overflow:hidden}
+.tok-fill{height:100%;border-radius:3px;background:var(--green);transition:width .4s ease}
+.tok-fill.warn{background:var(--amber)}
+.tok-fill.danger{background:var(--red)}
+
+/* Stored data info */
+.stored-info{margin:0 14px 10px;background:var(--bg3);border:1px solid var(--border);border-radius:7px;padding:10px 12px;flex-shrink:0}
+.stored-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+.stored-row:last-child{margin-bottom:0}
+.stored-lbl{font-size:10px;color:var(--text3)}
+.stored-val{font-size:11px;font-weight:600;color:var(--text2);font-family:var(--mono)}
+.clear-btn{font-size:10px;padding:2px 8px;border:1px solid rgba(239,83,80,.3);border-radius:4px;background:none;color:var(--red);cursor:pointer;transition:all .12s}
+.clear-btn:hover{background:rgba(239,83,80,.1)}
+
+/* Log */
+.log-wrap{flex:1;overflow:hidden;display:flex;flex-direction:column;border-top:1px solid var(--border)}
+.log-head{padding:7px 14px;background:var(--bg3);border-bottom:1px solid var(--border);font-size:9px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);display:flex;align-items:center;gap:7px;flex-shrink:0}
+.log-dot{width:5px;height:5px;border-radius:50%;background:var(--text3)}
+.log-dot.on{background:var(--green);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+#log{flex:1;overflow-y:auto;padding:10px 14px;font-family:var(--mono);font-size:10px;line-height:1.8;color:var(--text2)}
+#log::-webkit-scrollbar{width:3px}
+#log::-webkit-scrollbar-thumb{background:var(--border2)}
+.lok{color:var(--green)} .linf{color:var(--blue)} .lwrn{color:var(--amber)} .lerr{color:var(--red)}
+
+/* Output panel */
+.out-panel{display:flex;flex-direction:column;overflow:hidden}
+.out-actions{display:flex;gap:7px;padding:8px 14px;background:var(--bg3);border-bottom:1px solid var(--border);flex-shrink:0}
+.out-btn{padding:5px 12px;border-radius:5px;font-size:11px;font-weight:600;cursor:pointer;border:none;transition:all .15s}
+.out-btn.copy{background:var(--green);color:var(--bg)}
+.out-btn.copy:hover{opacity:.85}
+.out-btn.copy.done{background:var(--green2)}
+.out-btn.copy:disabled{opacity:.4;cursor:default}
+.out-btn.dl{background:var(--bg);color:var(--text2);border:1px solid var(--border2)}
+.out-btn.dl:hover{background:var(--border);color:var(--text)}
+.out-btn.dl:disabled{opacity:.4;cursor:default}
+.fname-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:5px;color:var(--text2);font-size:11px;padding:4px 8px;outline:none;font-family:var(--mono)}
+.fname-input:focus{border-color:var(--green)}
+#output{flex:1;overflow-y:auto;padding:12px 14px;font-family:var(--mono);font-size:10px;line-height:1.7;color:var(--text2);white-space:pre;user-select:all}
+#output::-webkit-scrollbar{width:3px}
+#output::-webkit-scrollbar-thumb{background:var(--border2)}
+.empty-out{color:var(--text3);font-size:12px;text-align:center;padding:40px 20px;line-height:2;white-space:normal}
+
+/* Pine highlight */
+.kw{color:#bb86fc} .str{color:#a5d6a7} .cmt{color:var(--text3);font-style:italic} .num{color:#ffcc80}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">
+    <div class="logo-icon">▲</div>
+    <span class="logo-text">HFT Bulk Deal Tracker</span>
+  </a>
+  <div class="nav-right">
+    <span class="storage-badge" id="storageBadge">No saved data</span>
+    <a href="index.html">← Home</a>
+  </div>
+</nav>
+
+<div class="app">
+
+  <!-- LEFT: Controls -->
+  <div class="panel">
+    <div class="panel-header">
+      <span class="panel-title">Settings</span>
+    </div>
+    <div class="panel-body">
+
+      <div>
+        <div class="sec-lbl">Indicator Type</div>
+        <div class="mode-tabs">
+          <button class="mode-tab active" onclick="setMode('all')">All HFTs</button>
+          <button class="mode-tab" onclick="setMode('single')">Single</button>
+          <button class="mode-tab" onclick="setMode('custom')">Custom</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="sec-lbl">HFT Traders</div>
+        <div class="sel-all-row" style="margin-bottom:6px">
+          <button class="tiny-btn" onclick="checkAll(true)">Select all</button>
+          <button class="tiny-btn" onclick="checkAll(false)">None</button>
+        </div>
+        <div class="hft-list" id="hftList"></div>
+      </div>
+
+      <div>
+        <div class="sec-lbl">Upload New CSV</div>
+        <div class="drop-zone" id="dropZone">
+          <input type="file" id="fileInput" accept=".csv" multiple onchange="handleFiles(this.files)">
+          <h3>📂 Drop CSV files here</h3>
+          <p>or click to browse · multiple files ok</p>
+        </div>
+        <div class="file-list" id="fileList" style="margin-top:6px"></div>
+      </div>
+
+      <div>
+        <div class="sec-lbl">Manual Entries</div>
+        <div class="manual-box">
+          <textarea id="manualInput" placeholder="09-Jun-2026&#9;MASTERTR&#9;SHARE INDIA SECURITIES LIMITED&#10;29-Jun-2026&#9;BANG&#9;NK SECURITIES RESEARCH PRIVATE LIMITED"></textarea>
+        </div>
+      </div>
+
+      <button class="gen-btn" id="genBtn" onclick="generate()">⚡ Generate Pine Script</button>
+
+    </div>
+  </div>
+
+  <!-- MIDDLE: Stats + Log -->
+  <div class="mid-panel">
+    <div class="stats-grid">
+      <div class="stat"><div class="stat-v" id="sEntries">—</div><div class="stat-l">Total Entries</div></div>
+      <div class="stat"><div class="stat-v" id="sSymbols">—</div><div class="stat-l">Symbols</div></div>
+      <div class="stat"><div class="stat-v" id="sChunks">—</div><div class="stat-l">Chunks</div></div>
+      <div class="stat"><div class="stat-v" id="sRange" style="font-size:13px;padding-top:4px">—</div><div class="stat-l">Date Range</div></div>
+    </div>
+
+    <div class="token-section">
+      <div class="tok-header">
+        <span style="color:var(--text2);font-weight:600;font-size:11px">Token Usage</span>
+        <span id="tokLabel" style="color:var(--text3);font-family:var(--mono);font-size:10px">0 / 80,000</span>
+      </div>
+      <div class="tok-bg"><div class="tok-fill" id="tokBar" style="width:0%"></div></div>
+    </div>
+
+    <div class="stored-info" id="storedInfo" style="display:none">
+      <div class="stored-row">
+        <span class="stored-lbl">Saved entries in browser</span>
+        <span class="stored-val" id="savedCount">0</span>
+      </div>
+      <div class="stored-row">
+        <span class="stored-lbl">Last updated</span>
+        <span class="stored-val" id="savedDate">—</span>
+      </div>
+      <div class="stored-row" style="margin-top:6px">
+        <span class="stored-lbl">New files will merge with saved data</span>
+        <button class="clear-btn" onclick="clearStorage()">Clear saved</button>
+      </div>
+    </div>
+
+    <div class="log-wrap">
+      <div class="log-head">
+        <div class="log-dot" id="logDot"></div>
+        Processing Log
+      </div>
+      <div id="log"><span class="linf">Ready. Upload CSV and click Generate.</span></div>
+    </div>
+  </div>
+
+  <!-- RIGHT: Output -->
+  <div class="out-panel">
+    <div class="panel-header">
+      <span class="panel-title">Pine Script Output</span>
+    </div>
+    <div class="out-actions">
+      <input class="fname-input" id="fname" value="HFT_Bulk_Deal_Detector.pine" placeholder="filename.pine">
+      <button class="out-btn dl" id="dlBtn" onclick="dlFile()" disabled>⬇ Download</button>
+      <button class="out-btn copy" id="copyBtn" onclick="copyOut()" disabled>📋 Copy</button>
+    </div>
+    <div id="output"><div class="empty-out">Pine Script output will appear here.<br><span style="color:var(--text3)">Upload CSV → Click Generate</span></div></div>
+  </div>
+
+</div>
+
+<script>
+// ── HFT Definitions ──────────────────────────────────────────────────────────
+const TRADERS = [
+  {name:"Jump Trading Financial India Private Limited",  code:"J",  disp:"Jump Trading"},
+  {name:"QE Securities LLP",                            code:"Q",  disp:"QE Securities"},
+  {name:"Junomoneta Finsol Private Limited",            code:"N",  disp:"Junomoneta"},
+  {name:"NK Securities Research Private Limited",       code:"K",  disp:"NK Securities"},
+  {name:"HRTI Private Limited",                         code:"H",  disp:"HRTI"},
+  {name:"Graviton Research Capital LLP",                code:"G",  disp:"Graviton"},
+  {name:"Share India Securities Limited",               code:"S",  disp:"Share India"},
+  {name:"Elixir Wealth Management Private Limited",     code:"E",  disp:"Elixir Wealth"},
+  {name:"D3 Stock Vision LLP",                          code:"D",  disp:"D3 Stock Vision"},
+  {name:"Goldmine Stocks Private Limited",              code:"M",  disp:"Goldmine Stocks"},
+  {name:"Microcurves Trading Private Limited",          code:"C",  disp:"Microcurves"},
+  {name:"Musigma Securities",                           code:"MS", disp:"Musigma Securities"},
+];
+
+const MONTHS = {JAN:"01",FEB:"02",MAR:"03",APR:"04",MAY:"05",JUN:"06",
+                JUL:"07",AUG:"08",SEP:"09",OCT:"10",NOV:"11",DEC:"12"};
+
+const STORAGE_KEY = "hft_bulk_data_v2";
+let selected = new Set(TRADERS.map(t=>t.code));
+let newFiles = [];
+let generatedScript = '';
+let mode = 'all';
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+buildHFTList();
+loadStorageInfo();
+
+function buildHFTList() {
+  document.getElementById('hftList').innerHTML = TRADERS.map(t=>`
+    <div class="hft-item on" id="hi_${t.code}" onclick="toggleT('${t.code}',this)">
+      <input type="checkbox" checked onchange="toggleT('${t.code}',this.closest('.hft-item'))">
+      <label>${t.disp}</label>
+      <span class="hft-code">${t.code}</span>
+    </div>`).join('');
+}
+
+function toggleT(code, el) {
+  const cb = el.querySelector('input');
+  if (event.target !== cb) { cb.checked = !cb.checked; }
+  if (cb.checked) { selected.add(code); el.classList.add('on'); }
+  else { selected.delete(code); el.classList.remove('on'); }
+}
+
+function checkAll(v) {
+  TRADERS.forEach(t => {
+    const el = document.getElementById('hi_'+t.code);
+    el.querySelector('input').checked = v;
+    el.classList.toggle('on', v);
+    if (v) selected.add(t.code); else selected.delete(t.code);
+  });
+}
+
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll('.mode-tab').forEach((tab,i)=>
+    tab.classList.toggle('active', ['all','single','custom'][i]===m));
+  if (m==='all') checkAll(true);
+  if (m==='single') {
+    const first = [...selected][0] || TRADERS[0].code;
+    selected = new Set([first]);
+    TRADERS.forEach(t => {
+      const el = document.getElementById('hi_'+t.code);
+      el.querySelector('input').checked = t.code===first;
+      el.classList.toggle('on', t.code===first);
+    });
+  }
+}
+
+// ── File handling ─────────────────────────────────────────────────────────────
+function handleFiles(files) {
+  for (const f of files) if (!newFiles.find(x=>x.name===f.name)) newFiles.push(f);
+  renderFiles();
+}
+
+function removeFile(name) { newFiles = newFiles.filter(f=>f.name!==name); renderFiles(); }
+
+function renderFiles() {
+  document.getElementById('fileList').innerHTML = newFiles.map(f=>`
+    <div class="file-item">
+      <div class="file-dot"></div>
+      <span class="file-nm" title="${f.name}">${f.name}</span>
+      <span class="file-sz">${(f.size/1024).toFixed(0)}KB</span>
+      <button class="file-rm" onclick="removeFile('${f.name}')">×</button>
+    </div>`).join('');
+}
+
+const dz = document.getElementById('dropZone');
+dz.addEventListener('dragover', e=>{e.preventDefault();dz.classList.add('drag')});
+dz.addEventListener('dragleave', ()=>dz.classList.remove('drag'));
+dz.addEventListener('drop', e=>{e.preventDefault();dz.classList.remove('drag');handleFiles(e.dataTransfer.files)});
+
+// ── localStorage ─────────────────────────────────────────────────────────────
+function loadStorageInfo() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const saved = JSON.parse(raw);
+    const count = Object.keys(saved.data||{}).length;
+    const date  = saved.updatedAt ? new Date(saved.updatedAt).toLocaleDateString('en-IN') : '—';
+    document.getElementById('savedCount').textContent = count.toLocaleString();
+    document.getElementById('savedDate').textContent  = date;
+    document.getElementById('storedInfo').style.display = 'block';
+    document.getElementById('storageBadge').textContent = `${count.toLocaleString()} saved entries`;
+  } catch {}
+}
+
+function saveToStorage(data) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ data, updatedAt: Date.now() }));
+    loadStorageInfo();
+  } catch(e) {
+    log('lwrn', 'Storage full — data not saved to browser.');
+  }
+}
+
+function clearStorage() {
+  if (!confirm('Clear all saved data? This cannot be undone.')) return;
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById('storedInfo').style.display = 'none';
+  document.getElementById('storageBadge').textContent = 'No saved data';
+  log('lwrn', 'Saved data cleared.');
+}
+
+// ── Date parsing ──────────────────────────────────────────────────────────────
+function parseDate(raw) {
+  raw = (raw||'').trim().replace(/"/g,'');
+  let m;
+  m = raw.match(/^(\d{1,2})-([A-Za-z]{3})-(\d{4})$/);
+  if (m) return m[3]+(MONTHS[m[2].toUpperCase()]||'00')+m[1].padStart(2,'0');
+  m = raw.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+  if (m) return m[3]+m[2]+m[1];
+  m = raw.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (m) return m[1]+m[2]+m[3];
+  return null;
+}
+
+function parseCSV(text) {
+  const lines = text.split('\n');
+  let header = null;
+  const rows = [];
+  for (const line of lines) {
+    const raw = line.trim(); if (!raw) continue;
+    const cols = raw.includes('\t') ? raw.split('\t') : raw.split(',');
+    const clean = cols.map(c=>c.trim().replace(/^"|"$/g,''));
+    if (!header) { header = clean; continue; }
+    if (clean.length >= 2) rows.push(clean);
+  }
+  return rows;
+}
+
+// ── Main generate ─────────────────────────────────────────────────────────────
+async function generate() {
+  const btn = document.getElementById('genBtn');
+  btn.disabled = true; btn.textContent = '⏳ Processing…';
+  document.getElementById('logDot').classList.add('on');
+  clearLog();
+  generatedScript = '';
+  document.getElementById('copyBtn').disabled = true;
+  document.getElementById('dlBtn').disabled = true;
+  document.getElementById('output').innerHTML = '';
+
+  try {
+    // Build HFT map
+    const hftMap = {};
+    for (const t of TRADERS) {
+      if (selected.has(t.code)) hftMap[t.name.toUpperCase()] = t.code;
+    }
+
+    if (!Object.keys(hftMap).length) {
+      log('lerr','No traders selected.'); return;
+    }
+
+    log('linf', `Traders: ${[...selected].join(', ')}`);
+
+    // Load saved data
+    let hits = {}; // key: "SYM:DATE" -> Set of codes
+    try {
+      const raw = localStorage.getItem(STORAGE_KEY);
+      if (raw) {
+        const saved = JSON.parse(raw);
+        for (const [k,v] of Object.entries(saved.data||{})) {
+          hits[k] = new Set(v);
+        }
+        log('linf', `Loaded ${Object.keys(hits).length.toLocaleString()} saved entries`);
+      }
+    } catch {}
+
+    // Process new files
+    for (const file of newFiles) {
+      log('linf', `Reading: ${file.name}`);
+      const text = await file.text();
+      const rows = parseCSV(text);
+      let cnt = 0;
+      for (const row of rows) {
+        const dateRaw = row[0]||'';
+        const sym = (row[1]||'').trim().toUpperCase();
+        let client = (row[2]||'').trim().toUpperCase();
+        if (row[3] && !Object.keys(hftMap).some(k=>client.startsWith(k.slice(0,6)))) {
+          client = (row[3]||'').trim().toUpperCase();
+        }
+        const code = hftMap[client];
+        if (!code) continue;
+        const date = parseDate(dateRaw);
+        if (!date || date.length!==8) continue;
+        if (!['2023','2024','2025','2026','2027'].includes(date.slice(0,4))) continue;
+        const key = `${sym}:${date}`;
+        if (!hits[key]) hits[key] = new Set();
+        hits[key].add(code);
+        cnt++;
+      }
+      log('lok', `  → ${cnt} HFT matches`);
+    }
+
+    // Process manual entries
+    const manual = document.getElementById('manualInput').value.trim();
+    if (manual) {
+      let mcnt = 0;
+      for (const line of manual.split('\n')) {
+        const cols = line.trim().split(/\t|,\s*/);
+        if (cols.length < 3) continue;
+        const date = parseDate(cols[0]);
+        const sym  = (cols[1]||'').trim().toUpperCase();
+        const client = (cols[2]||'').trim().toUpperCase();
+        const code = hftMap[client];
+        if (!code||!date||!sym) continue;
+        const key = `${sym}:${date}`;
+        if (!hits[key]) hits[key] = new Set();
+        hits[key].add(code);
+        mcnt++;
+      }
+      if (mcnt) log('lok', `Manual entries added: ${mcnt}`);
+    }
+
+    if (!Object.keys(hits).length) {
+      log('lerr','No HFT matches found. Check CSV format.'); return;
+    }
+
+    // Save merged data to localStorage
+    const toSave = {};
+    for (const [k,v] of Object.entries(hits)) toSave[k] = [...v];
+    saveToStorage(toSave);
+
+    // Build lines
+    const lines = Object.entries(hits)
+      .map(([k,v]) => {
+        const activeCodes = [...v].filter(c=>selected.has(c)).sort();
+        return activeCodes.length ? `${k}:${activeCodes.join('|')}` : null;
+      })
+      .filter(Boolean)
+      .sort();
+
+    if (!lines.length) { log('lerr','No data for selected traders.'); return; }
+
+    // Chunk
+    const LIMIT = 3900;
+    const chunks = [];
+    let cur = [], curLen = 0;
+    for (const l of lines) {
+      const add = l.length+1;
+      if (curLen+add>LIMIT && cur.length) { chunks.push(cur); cur=[l]; curLen=l.length; }
+      else { cur.push(l); curLen+=add; }
+    }
+    if (cur.length) chunks.push(cur);
+
+    const N = chunks.length;
+    const chars = lines.reduce((s,l)=>s+l.length+1,0);
+    const allSyms = new Set(lines.map(l=>l.split(':')[0]));
+    const allDates = lines.map(l=>l.split(':')[1]);
+    const minD = allDates.reduce((a,b)=>a<b?a:b);
+    const maxD = allDates.reduce((a,b)=>a>b?a:b);
+    const fmtD = d=>`${d.slice(6,8)}-${d.slice(4,6)}-${d.slice(0,4)}`;
+    const isSingle = selected.size===1;
+    const singleT = isSingle ? TRADERS.find(t=>t.code===[...selected][0]) : null;
+    const totalT = selected.size;
+
+    // Update stats
+    document.getElementById('sEntries').textContent = lines.length.toLocaleString();
+    document.getElementById('sSymbols').textContent = allSyms.size.toLocaleString();
+    document.getElementById('sChunks').textContent  = N;
+    document.getElementById('sRange').textContent   = `${fmtD(minD)} → ${fmtD(maxD)}`;
+
+    const pct = (chars/80000*100).toFixed(1);
+    const tStatus = chars<65000?'':'chars<78000?'warn':'danger';
+    document.getElementById('tokBar').style.width = Math.min(100,pct)+'%';
+    document.getElementById('tokBar').className = `tok-fill ${tStatus}`;
+    document.getElementById('tokLabel').textContent = `${chars.toLocaleString()} / 80,000 (${pct}%)`;
+
+    if (chars >= 80000) {
+      log('lwrn','⚠ Over 80,000 limit! Split into two scripts by year.');
+      return;
+    }
+
+    // Build Pine Script
+    const arrowColor = isSingle
+      ? (singleT?.code==='K'?'#2196F3':singleT?.code==='G'?'#FF9800':'#00E676')
+      : '#00E676';
+    const title = isSingle ? `${singleT?.disp} Bulk Deal Detector` : 'HFT Bulk Deal Detector';
+
+    let p = `//@version=5\n`;
+    p += `indicator("${title}",overlay=true,max_labels_count=500)\n\n`;
+    p += `// ${fmtD(minD)} to ${fmtD(maxD)} | ${allSyms.size} symbols | ${lines.length} entries\n`;
+    const legend = TRADERS.filter(t=>selected.has(t.code)).map(t=>`${t.code}=${t.disp}`).join(', ');
+    p += `// ${legend}\n\n`;
+
+    for (let i=0;i<N;i++) p += `var string D${i+1}="${chunks[i].join(',')}"\n`;
+
+    p += `\ncol_arrow=input.color(${arrowColor},"Arrow color",group="Style")\n`;
+    p += `col_glow=input.color(color.new(${arrowColor},85),"Candle glow",group="Style")\n`;
+    p += `col_bg=input.color(color.new(#001a0a,15),"Label bg",group="Style")\n`;
+    p += `show_glow=input.bool(true,"Show candle glow",group="Style")\n`;
+    p += `show_tip=input.bool(true,"Show tooltip",group="Style")\n`;
+    p += `arr_off=input.float(0.4,"Arrow gap (%)",minval=0.05,maxval=5.0,step=0.05,group="Style")\n\n`;
+
+    if (isSingle) {
+      p += `var map<string,bool> _m=map.new<string,bool>()\n\n`;
+      p += `f_parse(raw)=>\n    string[] rws=str.split(raw,",")\n    for i=0 to array.size(rws)-1\n        string r=array.get(rws,i)\n        int a=str.pos(r,":")\n        if not na(a)\n            string sym=str.substring(r,0,a)\n            string rest=str.substring(r,a+1)\n            int b=str.pos(rest,":")\n            if not na(b)\n                string dt=str.substring(rest,0,b)\n                map.put(_m,sym+":"+dt,true)\n    true\n\n`;
+    } else {
+      p += `var map<string,string> _m=map.new<string,string>()\n\n`;
+      p += `f_parse(raw)=>\n    string[] rws=str.split(raw,",")\n    for i=0 to array.size(rws)-1\n        string r=array.get(rws,i)\n        int a=str.pos(r,":")\n        if not na(a)\n            string sym=str.substring(r,0,a)\n            string rest=str.substring(r,a+1)\n            int b=str.pos(rest,":")\n            if not na(b)\n                string dt=str.substring(rest,0,b)\n                string cd=str.substring(rest,b+1)\n                map.put(_m,sym+":"+dt,cd)\n    true\n\n`;
+    }
+
+    const groups = [];
+    for (let i=0;i<N;i+=8) groups.push([...Array(Math.min(8,N-i))].map((_,j)=>i+j));
+    for (let gi=0;gi<groups.length;gi++) {
+      const lbl = String.fromCharCode(97+gi);
+      p += `load_${lbl}()=>\n`;
+      for (const ci of groups[gi]) p += `    f_parse(D${ci+1})\n`;
+      p += `    true\n\n`;
+    }
+    for (let gi=0;gi<groups.length;gi++) p += `var _l${String.fromCharCode(97+gi)}=load_${String.fromCharCode(97+gi)}()\n`;
+
+    p += `\nsym=str.upper(syminfo.ticker)\nbdt=str.format_time(time,"yyyyMMdd","Asia/Kolkata")\n`;
+
+    if (isSingle) {
+      p += `found=map.contains(_m,sym+":"+bdt)\n\nif found\n    y=low*(1.0-arr_off/100.0)\n    tip=show_tip?"${singleT?.disp}\\nStock: "+sym+"\\nDate: "+str.format_time(time,"yyyy-MM-dd","Asia/Kolkata"):"${singleT?.disp}"\n    label.new(x=bar_index,y=y,text="▲${singleT?.code}",style=label.style_label_up,color=col_bg,textcolor=col_arrow,size=size.normal,tooltip=tip,xloc=xloc.bar_index,yloc=yloc.price)\n\nbgcolor(show_glow and found?col_glow:na,title="${singleT?.disp} candle glow")\nalertcondition(found,title="${singleT?.disp} Bulk Deal",message="${singleT?.disp} bulk deal on {{ticker}}")\n`;
+    } else {
+      p += `v=map.get(_m,sym+":"+bdt)\nbc=na(v)?0:array.size(str.split(v,"|"))\nbn=na(v)?"":v\n\n`;
+      const nameMap = TRADERS.filter(t=>selected.has(t.code)).map(t=>`c=="${t.code}"?"${t.disp}"`).join(':');
+      p += `code_to_name(c)=>\n    ${nameMap}:c\n\nxp(s)=>\n    string[] parts=str.split(s,"|")\n    string result=""\n    for i=0 to array.size(parts)-1\n        result:=result+code_to_name(array.get(parts,i))+"\\n"\n    result\n\n`;
+      p += `sz=bc<=2?"tiny":bc<=4?"small":bc<=6?"normal":bc<=8?"large":bc<=10?"huge":"enormous"\n\nif bc>0\n    y=low*(1.0-arr_off/100.0)\n    tip=show_tip?"HFT BULK DEAL\\nStock: "+sym+"\\nDate: "+str.format_time(time,"yyyy-MM-dd","Asia/Kolkata")+"\\nTraders: "+str.tostring(bc)+" of ${totalT}\\n"+xp(bn):"HFT: "+str.tostring(bc)+" traders"\n    label.new(x=bar_index,y=y,text="▲"+str.tostring(bc),style=label.style_label_up,color=col_bg,textcolor=col_arrow,size=sz,tooltip=tip,xloc=xloc.bar_index,yloc=yloc.price)\n\nbgcolor(show_glow and bc>0?col_glow:na,title="HFT candle glow")\nalertcondition(bc>0,title="HFT Bulk Deal",message="HFT activity on {{ticker}}")\n`;
+    }
+
+    generatedScript = p;
+
+    // Auto filename with date range
+    const autoName = isSingle
+      ? `${singleT?.disp.replace(/\s+/g,'_')}_${fmtD(minD).replace(/-/g,'')}_to_${fmtD(maxD).replace(/-/g,'')}.pine`
+      : `HFT_Bulk_Deal_${fmtD(minD).replace(/-/g,'')}_to_${fmtD(maxD).replace(/-/g,'')}.pine`;
+    document.getElementById('fname').value = autoName;
+
+    // Highlight output
+    const hl = p.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+      .replace(/(\/\/.+)/g,'<span class="cmt">$1</span>')
+      .replace(/\b(var|string|int|float|bool|if|for|to|true|false|and|not|na)\b/g,'<span class="kw">$1</span>')
+      .replace(/"([^"]*)"/g,'<span class="str">"$1"</span>');
+    document.getElementById('output').innerHTML = `<code>${hl}</code>`;
+    document.getElementById('copyBtn').disabled = false;
+    document.getElementById('dlBtn').disabled = false;
+
+    log('lok', `✅ Done! ${lines.length} entries · ${N} chunks · ${allSyms.size} symbols · ${pct}% tokens`);
+
+  } catch(e) {
+    log('lerr','Error: '+e.message); console.error(e);
+  } finally {
+    btn.disabled=false; btn.innerHTML='⚡ Generate Pine Script';
+    document.getElementById('logDot').classList.remove('on');
+  }
+}
+
+// ── Copy / Download ───────────────────────────────────────────────────────────
+async function copyOut() {
+  if (!generatedScript) return;
+  try { await navigator.clipboard.writeText(generatedScript); }
+  catch { const t=document.createElement('textarea');t.value=generatedScript;document.body.appendChild(t);t.select();document.execCommand('copy');t.remove(); }
+  const btn=document.getElementById('copyBtn');
+  btn.classList.add('done'); btn.textContent='✓ Copied!';
+  setTimeout(()=>{btn.classList.remove('done');btn.textContent='📋 Copy';},2500);
+}
+
+function dlFile() {
+  if (!generatedScript) return;
+  const name = document.getElementById('fname').value || 'HFT_Bulk_Deal.pine';
+  const blob = new Blob([generatedScript],{type:'text/plain'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = name; a.click();
+}
+
+// ── Log ───────────────────────────────────────────────────────────────────────
+function log(cls, msg) {
+  const el = document.getElementById('log');
+  const d = document.createElement('div');
+  d.className = cls; d.textContent = msg;
+  if (el.children.length===1 && el.firstChild.classList?.contains('linf')) el.innerHTML='';
+  el.appendChild(d); el.scrollTop=el.scrollHeight;
+}
+function clearLog() { document.getElementById('log').innerHTML=''; }
+</script>
+</body>
+</html>
