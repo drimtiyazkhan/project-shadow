@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HFT Bulk Deal Tracker</title>
+<title>Project Shadow — Operator Activity Tracker</title>
 <style>
 :root {
   --bg:#0b0d14; --bg2:#111420; --bg3:#181c2e;
@@ -28,16 +28,26 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .nav-cta{background:var(--green);color:var(--bg)!important;padding:7px 16px;border-radius:6px;font-weight:700;font-size:13px}
 .nav-cta:hover{opacity:.88;text-decoration:none!important}
 
-.hero{padding:80px 40px 60px;text-align:center;max-width:720px;margin:0 auto}
+.hero{padding:80px 40px 60px;text-align:center;max-width:760px;margin:0 auto}
 .hero-badge{display:inline-block;font-size:11px;padding:4px 12px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25);border-radius:20px;color:var(--green);margin-bottom:20px;font-family:var(--mono)}
 .hero h1{font-size:44px;font-weight:800;line-height:1.15;margin-bottom:18px;letter-spacing:-.02em}
 .hero h1 span{color:var(--green)}
-.hero p{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:32px;max-width:560px;margin-left:auto;margin-right:auto}
+.hero p{font-size:16px;color:var(--text2);line-height:1.7;margin-bottom:32px;max-width:600px;margin-left:auto;margin-right:auto}
 .hero-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 .btn-primary{background:var(--green);color:var(--bg);padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;transition:opacity .15s}
 .btn-primary:hover{opacity:.88;text-decoration:none}
 .btn-secondary{background:var(--bg2);color:var(--text);padding:12px 28px;border-radius:8px;font-weight:600;font-size:14px;border:1px solid var(--border2);transition:all .15s}
 .btn-secondary:hover{border-color:var(--text2);text-decoration:none}
+
+/* Thesis / narrative section */
+.thesis{padding:60px 40px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.thesis-inner{max-width:880px;margin:0 auto}
+.thesis-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:20px;margin-top:32px}
+.thesis-card{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:22px}
+.thesis-card .num{font-family:var(--mono);font-size:11px;color:var(--green);margin-bottom:10px}
+.thesis-card h3{font-size:15px;font-weight:700;margin-bottom:8px}
+.thesis-card p{font-size:13px;color:var(--text2);line-height:1.7}
+.thesis-note{margin-top:28px;font-size:12px;color:var(--text3);line-height:1.7;border-left:2px solid var(--border2);padding-left:14px}
 
 .features{padding:60px 40px;max-width:1100px;margin:0 auto}
 .section-title{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);text-align:center;margin-bottom:12px}
@@ -54,6 +64,32 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .hft-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:12px 14px;display:flex;align-items:center;gap:10px}
 .hft-code{font-family:var(--mono);font-size:12px;font-weight:700;padding:3px 8px;border-radius:4px;background:rgba(0,230,118,.15);color:var(--green);flex-shrink:0}
 .hft-name{font-size:12px;color:var(--text2)}
+
+/* Downloads section */
+.downloads{padding:60px 40px;max-width:1000px;margin:0 auto}
+.dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
+.dl-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:14px}
+.dl-card.locked{opacity:.96}
+.dl-year{font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:.08em}
+.dl-title{font-size:20px;font-weight:800}
+.dl-tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.05em;width:fit-content}
+.dl-tag.free{background:rgba(0,230,118,.12);color:var(--green);border:1px solid rgba(0,230,118,.3)}
+.dl-tag.paid{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
+.dl-card p{font-size:12px;color:var(--text2);line-height:1.7;flex:1}
+.dl-btn{padding:10px 16px;border-radius:7px;font-size:13px;font-weight:700;text-align:center;border:none;cursor:pointer;transition:opacity .15s}
+.dl-btn.free{background:var(--green);color:var(--bg)}
+.dl-btn.free:hover{opacity:.88;text-decoration:none}
+.dl-btn.locked{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
+
+/* Payment panel */
+.pay-panel{margin-top:40px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:32px;display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:center}
+.pay-qr{width:180px;height:180px;border-radius:10px;overflow:hidden;border:1px solid var(--border2);background:#fff}
+.pay-qr img{width:100%;height:100%;object-fit:contain;display:block}
+.pay-steps{display:flex;flex-direction:column;gap:10px}
+.pay-steps h3{font-size:16px;font-weight:700;margin-bottom:4px}
+.pay-step{display:flex;gap:10px;font-size:13px;color:var(--text2);line-height:1.6}
+.pay-step b{color:var(--text);font-weight:700}
+.pay-email{font-family:var(--mono);color:var(--green);font-weight:600}
 
 .how-section{padding:60px 40px;max-width:900px;margin:0 auto}
 .steps{display:flex;flex-direction:column;gap:0;margin-top:32px}
@@ -77,6 +113,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
 @media(max-width:768px){
   .features-grid{grid-template-columns:1fr}
   .hft-grid{grid-template-columns:1fr 1fr}
+  .thesis-grid{grid-template-columns:1fr}
+  .dl-grid{grid-template-columns:1fr}
+  .pay-panel{grid-template-columns:1fr;text-align:center}
+  .pay-qr{margin:0 auto}
   .hero h1{font-size:28px}
   nav{padding:0 20px}
   .nav-links{display:none}
@@ -88,29 +128,60 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
 <nav>
   <div class="nav-logo">
     <div class="logo-icon">▲</div>
-    <span class="logo-text">HFT Bulk Deal Tracker</span>
+    <span class="logo-text">Project Shadow</span>
   </div>
   <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#hft-list">HFT Traders</a>
+    <a href="#thesis">Our Thesis</a>
+    <a href="#downloads">Downloads</a>
+    <a href="#hft-list">Tracked Accounts</a>
     <a href="#how-it-works">How it works</a>
     <a href="generator.html" class="nav-cta">Open Generator →</a>
   </div>
 </nav>
 
 <div class="hero">
-  <div class="hero-badge">NSE · BSE Bulk Deal Intelligence</div>
-  <h1>Track <span>HFT Activity</span> on Every NSE Stock</h1>
-  <p>Upload your bulk deal CSV, instantly generate a Pine Script indicator that marks HFT trader activity on TradingView charts — automatically, for every stock.</p>
+  <div class="hero-badge">NSE · BSE Operator Activity Tracking</div>
+  <h1>Stop Trading Against the <span>Operator</span>. Start Trading With Them.</h1>
+  <p>Project Shadow tracks bulk deal activity from a specific set of HFT-linked accounts we believe are frequently used to execute operator moves. We follow the footprints — not the noise — so you can position in line with the operator instead of getting trapped on the wrong side of their move.</p>
   <div class="hero-btns">
-    <a href="generator.html" class="btn-primary">⚡ Open Generator</a>
-    <a href="#how-it-works" class="btn-secondary">How it works</a>
+    <a href="#downloads" class="btn-primary">📥 Get the 2024 Indicator — Free</a>
+    <a href="#thesis" class="btn-secondary">Read our thesis</a>
+  </div>
+</div>
+
+<div class="thesis" id="thesis">
+  <div class="thesis-inner">
+    <div class="section-title">Our Thesis</div>
+    <div class="section-heading">Why we track these accounts</div>
+    <p style="font-size:14px;color:var(--text2);line-height:1.8;text-align:center;max-width:680px;margin:0 auto">
+      Every stock that moves sharply has someone behind the move. In the Indian markets, we've observed a recurring pattern: a specific group of HFT trading accounts shows up, again and again, in the bulk deal data of stocks right before or during major price action. We call the entity coordinating this activity <b style="color:var(--text)">the operator</b>.
+    </p>
+    <div class="thesis-grid">
+      <div class="thesis-card">
+        <div class="num">01</div>
+        <h3>Frequent, Repeated Footprints</h3>
+        <p>We didn't pick these 12 accounts at random. They were shortlisted because of how often — and how consistently — they appear in bulk deals right around periods of sharp, manipulative-looking price action.</p>
+      </div>
+      <div class="thesis-card">
+        <div class="num">02</div>
+        <h3>Signal, Not Noise</h3>
+        <p>Our belief is that this activity is not incidental — it's a signal that operator interest is present in a stock. When several of these accounts show up on the same stock and date, that's when the signal gets strongest.</p>
+      </div>
+      <div class="thesis-card">
+        <div class="num">03</div>
+        <h3>Trade With the Operator</h3>
+        <p>The goal isn't to predict the operator's next move blindly — it's to avoid being trapped in a retail-facing plot, and instead position alongside where the real activity is concentrated.</p>
+      </div>
+    </div>
+    <div class="thesis-note">
+      This is our trading methodology and interpretation of publicly available NSE/BSE bulk deal data — not a factual claim about any individual entity's intent. Bulk deal disclosures are public record; our indicator simply visualizes patterns in that data on your TradingView chart. Always do your own research before acting on any signal.
+    </div>
   </div>
 </div>
 
 <div class="features" id="features">
   <div class="section-title">Features</div>
-  <div class="section-heading">Everything you need</div>
+  <div class="section-heading">Everything you need to track the operator</div>
   <div class="features-grid">
     <div class="feature-card">
       <div class="feature-icon">📂</div>
@@ -125,22 +196,64 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
     <div class="feature-card">
       <div class="feature-icon">⚡</div>
       <h3>Instant Pine Script</h3>
-      <p>Generates a ready-to-paste Pine Script indicator in seconds. Arrows appear on every NSE chart where HFT traders were active.</p>
+      <p>Generates a ready-to-paste Pine Script indicator in seconds. Arrows appear on every NSE chart where operator-linked accounts were active.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">📐</div>
       <h3>Sized Arrows</h3>
-      <p>Arrow size scales with number of HFT traders — tiny for 1 trader, enormous for all 12. Hover to see exactly which traders were present.</p>
+      <p>Arrow size scales with how many tracked accounts were active — tiny for 1, enormous for many. Hover to see exactly which accounts were present.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">🎯</div>
-      <h3>Custom Indicators</h3>
-      <p>Generate combined indicator for all HFTs, or dedicated indicators for individual traders like NK Securities or Graviton.</p>
+      <div class="feature-icon">📅</div>
+      <h3>Year-wise Indicators</h3>
+      <p>A fresh Pine Script is built every year (2024, 2025, 2026...) so the indicator stays fast and accurate as more bulk deal history accumulates.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">🔒</div>
       <h3>100% Private</h3>
-      <p>Everything runs in your browser. No data is uploaded to any server. Your trading data stays completely private.</p>
+      <p>The generator runs entirely in your browser. No data is uploaded to any server. Your trading data stays completely private.</p>
+    </div>
+  </div>
+</div>
+
+<div class="downloads" id="downloads">
+  <div class="section-title">Pine Script Downloads</div>
+  <div class="section-heading">Get the Operator Activity Indicator</div>
+
+  <div class="dl-grid">
+    <div class="dl-card">
+      <div class="dl-year">YEAR 2024</div>
+      <div class="dl-title">Operator Activity 2024</div>
+      <span class="dl-tag free">FREE</span>
+      <p>Full-year Pine Script covering all tracked accounts across 2024 bulk deal data. Paste directly into TradingView.</p>
+      <a class="dl-btn free" href="downloads/OPERATOR_Activity_2024.pine" download>⬇ Download Free</a>
+    </div>
+    <div class="dl-card locked">
+      <div class="dl-year">YEAR 2025</div>
+      <div class="dl-title">Operator Activity 2025</div>
+      <span class="dl-tag paid">PAID</span>
+      <p>Full-year Pine Script covering 2025 bulk deal data. Pay via QR below and email your transaction ID to receive it.</p>
+      <a class="dl-btn locked" href="#pay">🔒 Unlock — See Payment Info</a>
+    </div>
+    <div class="dl-card locked">
+      <div class="dl-year">YEAR 2026</div>
+      <div class="dl-title">Operator Activity 2026</div>
+      <span class="dl-tag paid">PAID</span>
+      <p>Full-year Pine Script covering 2026 bulk deal data, updated periodically as the year progresses.</p>
+      <a class="dl-btn locked" href="#pay">🔒 Unlock — See Payment Info</a>
+    </div>
+  </div>
+
+  <div class="pay-panel" id="pay">
+    <div class="pay-qr">
+      <img src="assets/qr-code.png" alt="Payment QR code">
+    </div>
+    <div class="pay-steps">
+      <h3>How to get the 2025 / 2026 script</h3>
+      <div class="pay-step"><b>1.</b> Scan the QR code and complete the payment.</div>
+      <div class="pay-step"><b>2.</b> Note down your payment transaction / reference ID.</div>
+      <div class="pay-step"><b>3.</b> Email the transaction ID, the year you paid for, and your name to <span class="pay-email">imtiyazfaith@gmail.com</span>.</div>
+      <div class="pay-step"><b>4.</b> The Pine Script (.pine file) will be emailed to you directly after the payment is verified.</div>
     </div>
   </div>
 </div>
@@ -148,7 +261,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
 <div class="hft-section" id="hft-list">
   <div class="hft-inner">
     <div class="section-title">Watchlist</div>
-    <div class="section-heading">12 HFT Traders Tracked</div>
+    <div class="section-heading">12 Accounts We Track</div>
     <div class="hft-grid">
       <div class="hft-card"><span class="hft-code">J</span><span class="hft-name">Jump Trading Financial India</span></div>
       <div class="hft-card"><span class="hft-code">Q</span><span class="hft-name">QE Securities LLP</span></div>
@@ -187,39 +300,40 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
     <div class="step">
       <div class="step-num">3</div>
       <div class="step-content">
-        <h3>Select traders and generate</h3>
-        <p>Choose which HFT traders to include — all 12, or individual ones. Click <code>Generate Pine Script</code>. Done in under a second.</p>
+        <h3>Select accounts and generate</h3>
+        <p>Choose which tracked accounts to include — all 12, or individual ones. Click <code>Generate Pine Script</code>. Done in under a second.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">4</div>
       <div class="step-content">
         <h3>Paste into TradingView</h3>
-        <p>Click <code>Copy to Clipboard</code>. Open TradingView Pine Editor → paste → Save. Green arrows appear on every stock where HFTs were active.</p>
+        <p>Click <code>Copy to Clipboard</code>. Open TradingView Pine Editor → paste → Save. Arrows appear on every stock where operator-linked activity was detected.</p>
       </div>
     </div>
     <div class="step">
       <div class="step-num">5</div>
       <div class="step-content">
-        <h3>Update weekly in 30 seconds</h3>
-        <p>Each week just upload the new CSV. The tool adds new data to your existing history automatically, regenerates the script, and you paste once more.</p>
+        <h3>Or just grab the ready-made yearly script</h3>
+        <p>Don't want to build your own? Download the pre-built <a href="#downloads">2024 script for free</a>, or get the 2025/2026 versions from us directly.</p>
       </div>
     </div>
   </div>
 </div>
 
 <div class="cta-section">
-  <h2>Ready to track HFT activity?</h2>
-  <p>Free, private, and works entirely in your browser.</p>
-  <a href="generator.html" class="btn-primary" style="display:inline-block">⚡ Open Generator →</a>
+  <h2>Ready to trade with the operator, not against them?</h2>
+  <p>Start with the free 2024 indicator — no signup, no cost.</p>
+  <a href="#downloads" class="btn-primary" style="display:inline-block">📥 Get the Free 2024 Indicator →</a>
 </div>
 
 <footer>
-  <div class="footer-left">HFT Bulk Deal Tracker · Built for NSE traders</div>
+  <div class="footer-left">Project Shadow · Operator Activity Tracking for NSE Traders</div>
   <div class="footer-right">
     <a href="generator.html">Generator</a>
+    <a href="#downloads">Downloads</a>
     <a href="#how-it-works">How it works</a>
-    <a href="#hft-list">HFT List</a>
+    <a href="#hft-list">Tracked Accounts</a>
   </div>
 </footer>
 
