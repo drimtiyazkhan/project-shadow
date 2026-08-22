@@ -15,7 +15,7 @@
   --sans:'Inter',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px}
 a{color:var(--green);text-decoration:none}
 a:hover{text-decoration:underline}
 
@@ -28,53 +28,53 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .nav-links a:hover{color:var(--text);text-decoration:none}
 
 .wrap{max-width:1100px;margin:0 auto;padding:40px}
-.page-title{font-size:28px;font-weight:800;margin-bottom:6px}
-.page-sub{font-size:13px;color:var(--text2);margin-bottom:32px}
+.page-title{font-size:32px;font-weight:800;margin-bottom:6px}
+.page-sub{font-size:15px;color:var(--text2);margin-bottom:32px}
 
-.status-bar{display:flex;gap:10px;align-items:center;margin-bottom:20px;font-size:12px;color:var(--text3);font-family:var(--mono)}
+.status-bar{display:flex;gap:10px;align-items:center;margin-bottom:20px;font-size:13px;color:var(--text3);font-family:var(--mono)}
 .status-dot{width:8px;height:8px;border-radius:50%;background:var(--text3)}
 .status-dot.ok{background:var(--green)}
 .status-dot.err{background:var(--red)}
 
 .panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px}
-.panel h2{font-size:16px;font-weight:700;margin-bottom:4px}
-.panel .panel-sub{font-size:12px;color:var(--text3);margin-bottom:18px}
+.panel h2{font-size:19px;font-weight:700;margin-bottom:4px}
+.panel .panel-sub{font-size:14px;color:var(--text3);margin-bottom:18px}
 
-table{width:100%;border-collapse:collapse;font-size:12.5px}
-th{text-align:left;color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;border-bottom:1px solid var(--border2)}
-td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text2)}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{text-align:left;color:var(--text3);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;padding:10px 12px;border-bottom:1px solid var(--border2)}
+td{padding:10px 12px;border-bottom:1px solid var(--border);color:var(--text2)}
 td.sym{color:var(--text);font-weight:700;font-family:var(--mono)}
 td.buy{color:var(--green);font-weight:700}
 td.sell{color:var(--red);font-weight:700}
 .empty-row td{text-align:center;color:var(--text3);padding:24px}
 
 .lookup-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
-.lookup-row input[type=text]{flex:1;min-width:160px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:7px;font-size:13px;font-family:var(--mono);text-transform:uppercase}
-.range-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:9px 14px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer}
+.lookup-row input[type=text]{flex:1;min-width:160px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:10px 12px;border-radius:7px;font-size:15px;font-family:var(--mono);text-transform:uppercase}
+.range-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:10px 16px;border-radius:7px;font-size:14px;font-weight:700;cursor:pointer}
 .range-btn.active{background:var(--green);color:var(--bg);border-color:var(--green)}
 .custom-range{display:flex;gap:8px;align-items:center}
 .custom-range input[type=date]{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 10px;border-radius:7px;font-size:12px}
-.go-btn{background:var(--green);color:var(--bg);border:none;padding:9px 18px;border-radius:7px;font-weight:700;font-size:12px;cursor:pointer}
-.dl-btn{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);padding:8px 14px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;margin-top:14px}
+.go-btn{background:var(--green);color:var(--bg);border:none;padding:10px 20px;border-radius:7px;font-weight:700;font-size:14px;cursor:pointer}
+.dl-btn{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);padding:9px 16px;border-radius:7px;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px}
 .dl-btn:hover{color:var(--text);border-color:var(--text2)}
 
 .summary-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
 .summary-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px}
-.summary-card .val{font-size:22px;font-weight:800;color:var(--green)}
-.summary-card .lbl{font-size:11px;color:var(--text3);margin-top:2px}
+.summary-card .val{font-size:25px;font-weight:800;color:var(--green)}
+.summary-card .lbl{font-size:12.5px;color:var(--text3);margin-top:2px}
 
 .filter-panel{padding:16px 24px}
 .filter-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
-.filter-label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;font-weight:700}
-.filter-count{font-size:11px;color:var(--text3);margin-left:auto}
+.filter-label{font-size:13.5px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+.filter-count{font-size:12.5px;color:var(--text3);margin-left:auto}
 .custom-picker{display:none;margin-top:16px;border-top:1px solid var(--border);padding-top:16px}
 .custom-picker.open{display:block}
-.custom-picker input[type=text]{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:7px;font-size:12px;margin-bottom:12px}
+.custom-picker input[type=text]{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:7px;font-size:14px;margin-bottom:12px}
 .client-list{max-height:220px;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-bottom:12px}
-.client-list label{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);cursor:pointer;padding:3px 0}
+.client-list label{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--text2);cursor:pointer;padding:3px 0}
 .client-list input{accent-color:var(--green)}
 .custom-actions{display:flex;gap:10px}
-.custom-actions button{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:7px 14px;border-radius:6px;font-size:11px;cursor:pointer}
+.custom-actions button{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:8px 16px;border-radius:6px;font-size:12.5px;cursor:pointer}
 .custom-actions button:hover{color:var(--text)}
 
 @media(max-width:768px){
@@ -103,7 +103,7 @@ td.sell{color:var(--red);font-weight:700}
 
 <div class="wrap">
   <div class="page-title">Bulk Deal Activity Tracker</div>
-  <div class="page-sub">Daily-updated activity from NSE bulk deals. Data refreshes automatically every trading day after 7:00 PM.</div>
+  <div class="page-sub">Data refreshes automatically every trading day after 7:00 PM.</div>
 
   <div class="status-bar" id="statusBar">
     <div class="status-dot" id="statusDot"></div>
@@ -140,8 +140,13 @@ td.sell{color:var(--red);font-weight:700}
   </div>
 
   <div class="panel">
-    <h2>Highest Activity — Trailing 7 Days</h2>
-    <div class="panel-sub">Symbols ranked by number of deals in the last week, within the current filter</div>
+    <h2>Highest Activity</h2>
+    <div class="panel-sub" id="weekPanelSub">Symbols ranked by number of deals, within the current filter</div>
+    <div class="lookup-row" style="margin-bottom:16px">
+      <button class="range-btn active" data-period="7">Weekly</button>
+      <button class="range-btn" data-period="30">Monthly</button>
+      <button class="range-btn" data-period="365">Yearly</button>
+    </div>
     <table>
       <thead><tr><th>Rank</th><th>Symbol</th><th>Deal Count</th><th>Distinct Accounts</th><th>Total Quantity</th></tr></thead>
       <tbody id="weekTable"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
@@ -173,8 +178,8 @@ td.sell{color:var(--red);font-weight:700}
     </div>
 
     <table>
-      <thead><tr><th>Date</th><th>Client</th><th>Type</th><th>Quantity</th><th>Price</th></tr></thead>
-      <tbody id="lookupTable"><tr class="empty-row"><td colspan="5">Enter a symbol and search</td></tr></tbody>
+      <thead><tr><th>Date</th><th>Symbol</th><th>Client</th><th>Type</th><th>Quantity</th><th>Price</th></tr></thead>
+      <tbody id="lookupTable"><tr class="empty-row"><td colspan="6">Pick a range and search — leave the symbol box empty to see all activity in that range</td></tr></tbody>
     </table>
     <button class="dl-btn" id="dlLookup">⬇ Download Symbols (.txt)</button>
   </div>
@@ -394,22 +399,39 @@ function daysAgoStr(n) {
 }
 
 /* =====================================================================
-   RENDER: TODAY
+   RENDER: TODAY (falls back to the most recent trading day with data,
+   e.g. shows Friday's activity on a Saturday/Sunday/holiday)
 ===================================================================== */
 
 let currentTodaySymbols = [];
+
+function latestAvailableDate() {
+  if (allRows.length === 0) return null;
+  return allRows.reduce((max, r) => (r.Date > max ? r.Date : max), allRows[0].Date);
+}
 
 function renderToday() {
   const label = document.getElementById('todayDateLabel');
   const body = document.getElementById('todayTable');
   const today = todayStr();
-  label.textContent = today;
+  const effectiveDate = latestAvailableDate();
 
-  const rows = visibleRows.filter(r => r.Date === today);
+  if (!effectiveDate) {
+    label.textContent = '—';
+    body.innerHTML = `<tr class="empty-row"><td colspan="5">No data loaded yet.</td></tr>`;
+    currentTodaySymbols = [];
+    return;
+  }
+
+  label.textContent = effectiveDate === today
+    ? effectiveDate
+    : `${effectiveDate} (most recent trading day — ${today} has no data, likely a weekend/holiday)`;
+
+  const rows = visibleRows.filter(r => r.Date === effectiveDate);
   currentTodaySymbols = [...new Set(rows.map(r => r.Symbol))];
 
   if (rows.length === 0) {
-    body.innerHTML = `<tr class="empty-row"><td colspan="5">No activity recorded for today yet (within current filter).</td></tr>`;
+    body.innerHTML = `<tr class="empty-row"><td colspan="5">No activity on ${effectiveDate} within the current filter.</td></tr>`;
     return;
   }
   body.innerHTML = rows.map(r => `<tr>
@@ -421,14 +443,29 @@ function renderToday() {
 }
 
 /* =====================================================================
-   RENDER: WEEK
+   RENDER: HIGHEST ACTIVITY (Weekly / Monthly / Yearly)
 ===================================================================== */
 
 let currentWeekSymbols = [];
+let activePeriodDays = 7;
+
+const PERIOD_LABELS = { 7: 'the last week', 30: 'the last month', 365: 'the last year' };
+
+document.querySelectorAll('.range-btn[data-period]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.range-btn[data-period]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activePeriodDays = parseInt(btn.dataset.period, 10);
+    renderWeek();
+  });
+});
 
 function renderWeek() {
   const body = document.getElementById('weekTable');
-  const from = daysAgoStr(7);
+  const sub = document.getElementById('weekPanelSub');
+  sub.textContent = `Symbols ranked by number of deals in ${PERIOD_LABELS[activePeriodDays]}, within the current filter`;
+
+  const from = daysAgoStr(activePeriodDays);
   const rows = visibleRows.filter(r => r.Date >= from);
 
   const bySymbol = {};
@@ -443,7 +480,7 @@ function renderWeek() {
   currentWeekSymbols = ranked.map(([sym]) => sym);
 
   if (ranked.length === 0) {
-    body.innerHTML = `<tr class="empty-row"><td colspan="5">No activity in the trailing 7 days yet (within current filter).</td></tr>`;
+    body.innerHTML = `<tr class="empty-row"><td colspan="5">No activity in ${PERIOD_LABELS[activePeriodDays]} yet (within current filter).</td></tr>`;
     return;
   }
   body.innerHTML = ranked.map(([sym, d], i) => `<tr>
@@ -485,28 +522,22 @@ document.getElementById('lookupBtn').addEventListener('click', () => {
   const body = document.getElementById('lookupTable');
   const cards = document.getElementById('summaryCards');
 
-  if (!symbol) {
-    body.innerHTML = `<tr class="empty-row"><td colspan="5">Enter a symbol and search</td></tr>`;
-    cards.style.display = 'none';
-    currentLookupSymbols = [];
-    return;
-  }
-
   const [from, to] = rangeToDates(activeRange);
   if (!from || !to) {
-    body.innerHTML = `<tr class="empty-row"><td colspan="5">Pick both a from and to date for custom range</td></tr>`;
+    body.innerHTML = `<tr class="empty-row"><td colspan="6">Pick both a from and to date for custom range</td></tr>`;
     cards.style.display = 'none';
     currentLookupSymbols = [];
     return;
   }
 
-  const rows = visibleRows.filter(r => r.Symbol === symbol && r.Date >= from && r.Date <= to)
+  const rows = visibleRows.filter(r => (!symbol || r.Symbol === symbol) && r.Date >= from && r.Date <= to)
                            .sort((a, b) => b.Date.localeCompare(a.Date));
 
-  currentLookupSymbols = rows.length ? [symbol] : [];
+  currentLookupSymbols = [...new Set(rows.map(r => r.Symbol))];
 
   if (rows.length === 0) {
-    body.innerHTML = `<tr class="empty-row"><td colspan="5">No activity for ${symbol} in this range (within current filter).</td></tr>`;
+    const what = symbol ? `for ${symbol}` : 'for any symbol';
+    body.innerHTML = `<tr class="empty-row"><td colspan="6">No activity ${what} in this range (within current filter).</td></tr>`;
     cards.style.display = 'none';
     return;
   }
@@ -522,7 +553,7 @@ document.getElementById('lookupBtn').addEventListener('click', () => {
   cards.style.display = 'grid';
 
   body.innerHTML = rows.map(r => `<tr>
-    <td>${r.Date}</td><td>${r.Client}</td>
+    <td>${r.Date}</td><td class="sym">${r.Symbol}</td><td>${r.Client}</td>
     <td class="${/buy/i.test(r.ActivityType)?'buy':/sell/i.test(r.ActivityType)?'sell':''}">${r.ActivityType || '—'}</td>
     <td>${r.Quantity ? r.Quantity.toLocaleString('en-IN') : '—'}</td>
     <td>${r.Price ? r.Price.toLocaleString('en-IN') : '—'}</td>
@@ -534,7 +565,10 @@ document.getElementById('lookupBtn').addEventListener('click', () => {
 ===================================================================== */
 
 function downloadSymbolsTxt(symbols, filename) {
-  const unique = [...new Set(symbols)].sort();
+  // Order is preserved from the table (symbols arrays are already built
+  // top-to-bottom as rows render) — deduped here as a safety net only,
+  // NOT re-sorted alphabetically.
+  const unique = [...new Set(symbols)];
   if (unique.length === 0) {
     alert('No symbols to download for this table yet.');
     return;
