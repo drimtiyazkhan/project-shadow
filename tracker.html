@@ -53,7 +53,8 @@ td.sell{color:var(--red);font-weight:700}
 .range-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:10px 16px;border-radius:7px;font-size:14px;font-weight:700;cursor:pointer}
 .range-btn.active{background:var(--green);color:var(--bg);border-color:var(--green)}
 .custom-range{display:flex;gap:8px;align-items:center}
-.custom-range input[type=date]{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 10px;border-radius:7px;font-size:12px}
+.custom-range input[type=date]{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:7px;font-size:15px;color-scheme:dark}
+.custom-range input[type=date]::-webkit-calendar-picker-indicator{filter:invert(1) brightness(1.6);cursor:pointer}
 .go-btn{background:var(--green);color:var(--bg);border:none;padding:10px 20px;border-radius:7px;font-weight:700;font-size:14px;cursor:pointer}
 .dl-btn{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);padding:9px 16px;border-radius:7px;font-size:14px;font-weight:700;cursor:pointer;margin-top:14px}
 .dl-btn:hover{color:var(--text);border-color:var(--text2)}
@@ -159,8 +160,8 @@ td.sell{color:var(--red);font-weight:700}
     <div class="panel-sub">Enter a symbol and pick a range to see its activity summary (within the current filter)</div>
     <div class="lookup-row">
       <input type="text" id="symbolInput" placeholder="e.g. RELIANCE">
-      <button class="range-btn active" data-range="1D">1D</button>
-      <button class="range-btn" data-range="1W">1W</button>
+      <button class="range-btn" data-range="1D">1D</button>
+      <button class="range-btn active" data-range="1W">1W</button>
       <button class="range-btn" data-range="1M">1M</button>
       <button class="range-btn" data-range="1Y">1Y</button>
       <button class="range-btn" data-range="CUSTOM">Custom</button>
@@ -168,7 +169,7 @@ td.sell{color:var(--red);font-weight:700}
     <div class="lookup-row custom-range" id="customRangeRow" style="display:none">
       <input type="date" id="customFrom"> <span style="color:var(--text3)">to</span> <input type="date" id="customTo">
     </div>
-    <button class="go-btn" id="lookupBtn" style="margin-bottom:18px">Search</button>
+    <button class="go-btn" id="lookupBtn" style="margin-bottom:18px;display:none">Search</button>
 
     <div class="summary-cards" id="summaryCards" style="display:none">
       <div class="summary-card"><div class="val" id="sumDeals">0</div><div class="lbl">Total Deals</div></div>
@@ -179,7 +180,7 @@ td.sell{color:var(--red);font-weight:700}
 
     <table>
       <thead><tr><th>Date</th><th>Symbol</th><th>Client</th><th>Type</th><th>Quantity</th><th>Price</th></tr></thead>
-      <tbody id="lookupTable"><tr class="empty-row"><td colspan="6">Pick a range and search — leave the symbol box empty to see all activity in that range</td></tr></tbody>
+      <tbody id="lookupTable"><tr class="empty-row"><td colspan="6">Loading…</td></tr></tbody>
     </table>
     <button class="dl-btn" id="dlLookup">⬇ Download Symbols (.txt)</button>
   </div>
@@ -387,6 +388,7 @@ async function loadAllData() {
   }
   buildClientCheckboxList();
   applyFilter();
+  performLookup(); // populate Symbol Lookup with the default 1W view immediately
 }
 
 function todayStr() {
@@ -493,7 +495,7 @@ function renderWeek() {
    SYMBOL LOOKUP
 ===================================================================== */
 
-let activeRange = '1D';
+let activeRange = '1W';
 let currentLookupSymbols = [];
 
 document.querySelectorAll('.range-btn[data-range]').forEach(btn => {
@@ -501,8 +503,17 @@ document.querySelectorAll('.range-btn[data-range]').forEach(btn => {
     document.querySelectorAll('.range-btn[data-range]').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     activeRange = btn.dataset.range;
-    document.getElementById('customRangeRow').style.display = activeRange === 'CUSTOM' ? 'flex' : 'none';
+    const isCustom = activeRange === 'CUSTOM';
+    document.getElementById('customRangeRow').style.display = isCustom ? 'flex' : 'none';
+    document.getElementById('lookupBtn').style.display = isCustom ? 'inline-block' : 'none';
+    if (!isCustom) performLookup(); // 1D/1W/1M/1Y run instantly, no Search click needed
   });
+});
+
+// Typing a symbol re-runs the current range instantly too (except while
+// on Custom, where both dates must be picked and Search clicked instead).
+document.getElementById('symbolInput').addEventListener('input', () => {
+  if (activeRange !== 'CUSTOM') performLookup();
 });
 
 function rangeToDates(range) {
@@ -514,10 +525,10 @@ function rangeToDates(range) {
   if (range === 'CUSTOM') {
     return [document.getElementById('customFrom').value, document.getElementById('customTo').value];
   }
-  return [daysAgoStr(1), to];
+  return [daysAgoStr(7), to];
 }
 
-document.getElementById('lookupBtn').addEventListener('click', () => {
+function performLookup() {
   const symbol = document.getElementById('symbolInput').value.trim().toUpperCase();
   const body = document.getElementById('lookupTable');
   const cards = document.getElementById('summaryCards');
@@ -558,7 +569,9 @@ document.getElementById('lookupBtn').addEventListener('click', () => {
     <td>${r.Quantity ? r.Quantity.toLocaleString('en-IN') : '—'}</td>
     <td>${r.Price ? r.Price.toLocaleString('en-IN') : '—'}</td>
   </tr>`).join('');
-});
+}
+
+document.getElementById('lookupBtn').addEventListener('click', performLookup);
 
 /* =====================================================================
    DOWNLOAD SYMBOLS AS .TXT   (format: NSE:SYMBOL, one per line, deduped)
