@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity Tracker · Project Shadow</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<style>
+:root {
+  --bg:#0b0d14; --bg2:#111420; --bg3:#181c2e;
+  --border:#1e2440; --border2:#2a3060;
+  --green:#00e676; --blue:#2196f3; --orange:#ff9800; --red:#ef5350; --amber:#f59e0b;
+  --text:#e8eaf0; --text2:#8b90b0; --text3:#4a5070;
+  --mono:'JetBrains Mono','Fira Code','Consolas',monospace;
+  --sans:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:14px}
+a{color:var(--green);text-decoration:none}
+a:hover{text-decoration:underline}
+
+nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;height:56px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:100}
+.nav-logo{display:flex;align-items:center;gap:10px}
+.logo-icon{width:32px;height:32px;background:var(--green);border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:16px;color:var(--bg)}
+.logo-text{font-size:15px;font-weight:700;color:var(--text)}
+.nav-links{display:flex;gap:28px;align-items:center}
+.nav-links a{font-size:13px;color:var(--text2)}
+.nav-links a:hover{color:var(--text);text-decoration:none}
+
+.wrap{max-width:1100px;margin:0 auto;padding:40px}
+.page-title{font-size:28px;font-weight:800;margin-bottom:6px}
+.page-sub{font-size:13px;color:var(--text2);margin-bottom:32px}
+
+.status-bar{display:flex;gap:10px;align-items:center;margin-bottom:20px;font-size:12px;color:var(--text3);font-family:var(--mono)}
+.status-dot{width:8px;height:8px;border-radius:50%;background:var(--text3)}
+.status-dot.ok{background:var(--green)}
+.status-dot.err{background:var(--red)}
+
+.panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px}
+.panel h2{font-size:16px;font-weight:700;margin-bottom:4px}
+.panel .panel-sub{font-size:12px;color:var(--text3);margin-bottom:18px}
+
+table{width:100%;border-collapse:collapse;font-size:12.5px}
+th{text-align:left;color:var(--text3);font-weight:600;font-size:11px;text-transform:uppercase;letter-spacing:.04em;padding:8px 10px;border-bottom:1px solid var(--border2)}
+td{padding:8px 10px;border-bottom:1px solid var(--border);color:var(--text2)}
+td.sym{color:var(--text);font-weight:700;font-family:var(--mono)}
+td.buy{color:var(--green);font-weight:700}
+td.sell{color:var(--red);font-weight:700}
+.empty-row td{text-align:center;color:var(--text3);padding:24px}
+
+.lookup-row{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:18px}
+.lookup-row input[type=text]{flex:1;min-width:160px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:7px;font-size:13px;font-family:var(--mono);text-transform:uppercase}
+.range-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:9px 14px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer}
+.range-btn.active{background:var(--green);color:var(--bg);border-color:var(--green)}
+.custom-range{display:flex;gap:8px;align-items:center}
+.custom-range input[type=date]{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 10px;border-radius:7px;font-size:12px}
+.go-btn{background:var(--green);color:var(--bg);border:none;padding:9px 18px;border-radius:7px;font-weight:700;font-size:12px;cursor:pointer}
+.dl-btn{background:var(--bg3);color:var(--text2);border:1px solid var(--border2);padding:8px 14px;border-radius:7px;font-size:12px;font-weight:700;cursor:pointer;margin-top:14px}
+.dl-btn:hover{color:var(--text);border-color:var(--text2)}
+
+.summary-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.summary-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px}
+.summary-card .val{font-size:22px;font-weight:800;color:var(--green)}
+.summary-card .lbl{font-size:11px;color:var(--text3);margin-top:2px}
+
+.filter-panel{padding:16px 24px}
+.filter-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.filter-label{font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+.filter-count{font-size:11px;color:var(--text3);margin-left:auto}
+.custom-picker{display:none;margin-top:16px;border-top:1px solid var(--border);padding-top:16px}
+.custom-picker.open{display:block}
+.custom-picker input[type=text]{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:9px 12px;border-radius:7px;font-size:12px;margin-bottom:12px}
+.client-list{max-height:220px;overflow-y:auto;display:grid;grid-template-columns:1fr 1fr;gap:4px 16px;margin-bottom:12px}
+.client-list label{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);cursor:pointer;padding:3px 0}
+.client-list input{accent-color:var(--green)}
+.custom-actions{display:flex;gap:10px}
+.custom-actions button{background:var(--bg3);border:1px solid var(--border2);color:var(--text2);padding:7px 14px;border-radius:6px;font-size:11px;cursor:pointer}
+.custom-actions button:hover{color:var(--text)}
+
+@media(max-width:768px){
+  .wrap{padding:20px}
+  nav{padding:0 20px}
+  .nav-links{display:none}
+  .summary-cards{grid-template-columns:1fr 1fr}
+  .client-list{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <div class="logo-icon">▲</div>
+    <span class="logo-text">Project Shadow</span>
+  </div>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="generator.html">Generator</a>
+    <a href="tracker.html" style="color:var(--text)">Tracker</a>
+    <a href="index.html#downloads">Downloads</a>
+  </div>
+</nav>
+
+<div class="wrap">
+  <div class="page-title">Bulk Deal Activity Tracker</div>
+  <div class="page-sub">Daily-updated activity from NSE bulk deals. Data refreshes automatically every trading day after 7:00 PM.</div>
+
+  <div class="status-bar" id="statusBar">
+    <div class="status-dot" id="statusDot"></div>
+    <span id="statusText">Loading data…</span>
+  </div>
+
+  <div class="panel filter-panel">
+    <div class="filter-top">
+      <span class="filter-label">Showing:</span>
+      <button class="range-btn active" id="filterTracked">Tracked Accounts (12)</button>
+      <button class="range-btn" id="filterAll">All Accounts</button>
+      <button class="range-btn" id="filterCustom">Custom Selection</button>
+      <span class="filter-count" id="filterCount"></span>
+    </div>
+    <div class="custom-picker" id="customPicker">
+      <input type="text" id="clientSearch" placeholder="Search accounts…">
+      <div class="client-list" id="clientList"></div>
+      <div class="custom-actions">
+        <button id="customSelectAll">Select All</button>
+        <button id="customSelectNone">Clear</button>
+        <button id="customApply" style="background:var(--green);color:var(--bg);border-color:var(--green)">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h2>Today's Activity</h2>
+    <div class="panel-sub" id="todayDateLabel">—</div>
+    <table>
+      <thead><tr><th>Symbol</th><th>Client</th><th>Type</th><th>Quantity</th><th>Price</th></tr></thead>
+      <tbody id="todayTable"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
+    </table>
+    <button class="dl-btn" id="dlToday">⬇ Download Symbols (.txt)</button>
+  </div>
+
+  <div class="panel">
+    <h2>Highest Activity — Trailing 7 Days</h2>
+    <div class="panel-sub">Symbols ranked by number of deals in the last week, within the current filter</div>
+    <table>
+      <thead><tr><th>Rank</th><th>Symbol</th><th>Deal Count</th><th>Distinct Accounts</th><th>Total Quantity</th></tr></thead>
+      <tbody id="weekTable"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
+    </table>
+    <button class="dl-btn" id="dlWeek">⬇ Download Symbols (.txt)</button>
+  </div>
+
+  <div class="panel">
+    <h2>Symbol Lookup</h2>
+    <div class="panel-sub">Enter a symbol and pick a range to see its activity summary (within the current filter)</div>
+    <div class="lookup-row">
+      <input type="text" id="symbolInput" placeholder="e.g. RELIANCE">
+      <button class="range-btn active" data-range="1D">1D</button>
+      <button class="range-btn" data-range="1W">1W</button>
+      <button class="range-btn" data-range="1M">1M</button>
+      <button class="range-btn" data-range="1Y">1Y</button>
+      <button class="range-btn" data-range="CUSTOM">Custom</button>
+    </div>
+    <div class="lookup-row custom-range" id="customRangeRow" style="display:none">
+      <input type="date" id="customFrom"> <span style="color:var(--text3)">to</span> <input type="date" id="customTo">
+    </div>
+    <button class="go-btn" id="lookupBtn" style="margin-bottom:18px">Search</button>
+
+    <div class="summary-cards" id="summaryCards" style="display:none">
+      <div class="summary-card"><div class="val" id="sumDeals">0</div><div class="lbl">Total Deals</div></div>
+      <div class="summary-card"><div class="val" id="sumAccounts">0</div><div class="lbl">Distinct Accounts</div></div>
+      <div class="summary-card"><div class="val" id="sumQty">0</div><div class="lbl">Total Quantity</div></div>
+      <div class="summary-card"><div class="val" id="sumDays">0</div><div class="lbl">Active Days</div></div>
+    </div>
+
+    <table>
+      <thead><tr><th>Date</th><th>Client</th><th>Type</th><th>Quantity</th><th>Price</th></tr></thead>
+      <tbody id="lookupTable"><tr class="empty-row"><td colspan="5">Enter a symbol and search</td></tr></tbody>
+    </table>
+    <button class="dl-btn" id="dlLookup">⬇ Download Symbols (.txt)</button>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   DATA LOADING
+   Accepts BOTH formats:
+   1. Raw NSE export saved as .xlsx (headers like "Client Name ", "Buy /
+      Sell ", "Quantity Traded ", "Trade Price / Wght. Avg. Price ", with
+      comma-formatted numbers and DD-MON-YYYY dates)
+   2. The standard schema (Date, Symbol, Client, ActivityType, Quantity,
+      Price) produced by scripts/convert_historical_csv.py or the daily
+      fetch script
+   No manual conversion required either way.
+===================================================================== */
+
+const YEARS_TO_TRY = [2024, 2025, 2026, 2027];
+let allRows = [];
+let visibleRows = [];
+
+const HEADER_CANDIDATES = {
+  Date: ["date"],
+  Symbol: ["symbol"],
+  SecurityName: ["security name", "securityname"],
+  Client: ["client name", "client"],
+  ActivityType: ["buy / sell", "buy/sell", "activitytype", "type"],
+  Quantity: ["quantity traded", "quantity"],
+  Price: ["trade price / wght. avg. price", "price"],
+};
+
+const MONTHS = {jan:1,feb:2,mar:3,apr:4,may:5,jun:6,jul:7,aug:8,sep:9,oct:10,nov:11,dec:12};
+
+function parseDateAny(val) {
+  if (val instanceof Date && !isNaN(val)) {
+    return val.toISOString().slice(0, 10);
+  }
+  if (typeof val === 'number') {
+    const d = new Date(Math.round((val - 25569) * 86400 * 1000));
+    if (!isNaN(d)) return d.toISOString().slice(0, 10);
+  }
+  const s = String(val || '').trim();
+  if (/^\d{4}-\d{2}-\d{2}$/.test(s)) return s;
+  const m = s.match(/^(\d{1,2})-([A-Za-z]{3})-(\d{4})$/);
+  if (m) {
+    const mon = MONTHS[m[2].toLowerCase()];
+    if (mon) return `${m[3]}-${String(mon).padStart(2, '0')}-${m[1].padStart(2, '0')}`;
+  }
+  const d2 = new Date(s);
+  if (!isNaN(d2)) return d2.toISOString().slice(0, 10);
+  return null;
+}
+
+function cleanNumber(val) {
+  if (val === null || val === undefined || val === '') return 0;
+  if (typeof val === 'number') return val;
+  const s = String(val).trim().replace(/,/g, '');
+  if (s === '' || s === '-') return 0;
+  const n = parseFloat(s);
+  return isNaN(n) ? 0 : n;
+}
+
+function normalizeRow(raw) {
+  const lower = {};
+  Object.keys(raw).forEach(k => { lower[k.trim().toLowerCase()] = raw[k]; });
+
+  function pick(field) {
+    for (const cand of HEADER_CANDIDATES[field]) {
+      if (cand in lower) return lower[cand];
+    }
+    return null;
+  }
+
+  const dateVal = parseDateAny(pick('Date'));
+  const symbol = String(pick('Symbol') || '').trim().toUpperCase();
+  const client = String(pick('Client') || '').trim();
+  if (!dateVal || !symbol || !client) return null;
+
+  return {
+    Date: dateVal,
+    Symbol: symbol,
+    Client: client,
+    ActivityType: String(pick('ActivityType') || '').trim().toUpperCase(),
+    Quantity: cleanNumber(pick('Quantity')),
+    Price: cleanNumber(pick('Price')),
+  };
+}
+
+async function loadYear(year) {
+  const url = `data/activity_${year}.xlsx`;
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) return [];
+    const buf = await resp.arrayBuffer();
+    const wb = XLSX.read(buf, { type: 'array', cellDates: true });
+    const sheet = wb.Sheets[wb.SheetNames[0]];
+    const json = XLSX.utils.sheet_to_json(sheet, { defval: '' });
+    return json.map(normalizeRow).filter(r => r !== null);
+  } catch (e) {
+    console.warn('Could not load', url, e);
+    return [];
+  }
+}
+
+/* =====================================================================
+   TRACKED-ACCOUNTS WATCHLIST + FILTER MODES
+===================================================================== */
+
+const TRACKED_ACCOUNTS = [
+  "JUMP TRADING",
+  "QE SECURITIES",
+  "JUNOMONETA",
+  "NK SECURITIES",
+  "HRTI",
+  "GRAVITON",
+  "SHARE INDIA",
+  "ELIXIR WEALTH",
+  "D3 STOCK VISION",
+  "GOLDMINE STOCKS",
+  "MICROCURVES",
+  "MUSIGMA",
+];
+
+function isTracked(client) {
+  const name = (client || '').toUpperCase();
+  return TRACKED_ACCOUNTS.some(acc => name.includes(acc));
+}
+
+let filterMode = 'tracked'; // 'tracked' | 'all' | 'custom'
+let customSelected = new Set();
+
+function applyFilter() {
+  if (filterMode === 'all') {
+    visibleRows = allRows;
+  } else if (filterMode === 'custom') {
+    visibleRows = allRows.filter(r => customSelected.has(r.Client));
+  } else {
+    visibleRows = allRows.filter(r => isTracked(r.Client));
+  }
+  const countEl = document.getElementById('filterCount');
+  if (countEl) countEl.textContent = `${visibleRows.length.toLocaleString('en-IN')} of ${allRows.length.toLocaleString('en-IN')} rows shown`;
+  renderToday();
+  renderWeek();
+}
+
+function setFilterMode(mode) {
+  filterMode = mode;
+  document.getElementById('filterTracked').classList.toggle('active', mode === 'tracked');
+  document.getElementById('filterAll').classList.toggle('active', mode === 'all');
+  document.getElementById('filterCustom').classList.toggle('active', mode === 'custom');
+  document.getElementById('customPicker').classList.toggle('open', mode === 'custom');
+  applyFilter();
+}
+
+document.getElementById('filterTracked').addEventListener('click', () => setFilterMode('tracked'));
+document.getElementById('filterAll').addEventListener('click', () => setFilterMode('all'));
+document.getElementById('filterCustom').addEventListener('click', () => setFilterMode('custom'));
+
+function buildClientCheckboxList() {
+  const clients = [...new Set(allRows.map(r => r.Client))].sort();
+  const container = document.getElementById('clientList');
+  container.innerHTML = clients.map(c => `
+    <label><input type="checkbox" value="${c.replace(/"/g, '&quot;')}"> ${c}</label>
+  `).join('');
+}
+
+document.getElementById('clientSearch').addEventListener('input', (e) => {
+  const q = e.target.value.trim().toLowerCase();
+  document.querySelectorAll('#clientList label').forEach(lbl => {
+    lbl.style.display = lbl.textContent.toLowerCase().includes(q) ? 'flex' : 'none';
+  });
+});
+
+document.getElementById('customSelectAll').addEventListener('click', () => {
+  document.querySelectorAll('#clientList input').forEach(cb => { if (cb.closest('label').style.display !== 'none') cb.checked = true; });
+});
+document.getElementById('customSelectNone').addEventListener('click', () => {
+  document.querySelectorAll('#clientList input').forEach(cb => cb.checked = false);
+});
+document.getElementById('customApply').addEventListener('click', () => {
+  customSelected = new Set(
+    [...document.querySelectorAll('#clientList input:checked')].map(cb => cb.value)
+  );
+  setFilterMode('custom');
+});
+
+/* =====================================================================
+   LOAD
+===================================================================== */
+
+async function loadAllData() {
+  const statusDot = document.getElementById('statusDot');
+  const statusText = document.getElementById('statusText');
+  const results = await Promise.all(YEARS_TO_TRY.map(loadYear));
+  allRows = results.flat();
+
+  if (allRows.length === 0) {
+    statusDot.className = 'status-dot err';
+    statusText.textContent = 'No data files found yet in /data/ — upload activity_2024.xlsx / activity_2025.xlsx / activity_2026.xlsx, or wait for the daily fetch job to run.';
+  } else {
+    statusDot.className = 'status-dot ok';
+    const dates = allRows.map(r => r.Date).sort();
+    statusText.textContent = `Loaded ${allRows.length.toLocaleString('en-IN')} total records · ${dates[0]} → ${dates[dates.length - 1]}`;
+  }
+  buildClientCheckboxList();
+  applyFilter();
+}
+
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+function daysAgoStr(n) {
+  const d = new Date();
+  d.setDate(d.getDate() - n);
+  return d.toISOString().slice(0, 10);
+}
+
+/* =====================================================================
+   RENDER: TODAY
+===================================================================== */
+
+let currentTodaySymbols = [];
+
+function renderToday() {
+  const label = document.getElementById('todayDateLabel');
+  const body = document.getElementById('todayTable');
+  const today = todayStr();
+  label.textContent = today;
+
+  const rows = visibleRows.filter(r => r.Date === today);
+  currentTodaySymbols = [...new Set(rows.map(r => r.Symbol))];
+
+  if (rows.length === 0) {
+    body.innerHTML = `<tr class="empty-row"><td colspan="5">No activity recorded for today yet (within current filter).</td></tr>`;
+    return;
+  }
+  body.innerHTML = rows.map(r => `<tr>
+    <td class="sym">${r.Symbol}</td><td>${r.Client}</td>
+    <td class="${/buy/i.test(r.ActivityType)?'buy':/sell/i.test(r.ActivityType)?'sell':''}">${r.ActivityType || '—'}</td>
+    <td>${r.Quantity ? r.Quantity.toLocaleString('en-IN') : '—'}</td>
+    <td>${r.Price ? r.Price.toLocaleString('en-IN') : '—'}</td>
+  </tr>`).join('');
+}
+
+/* =====================================================================
+   RENDER: WEEK
+===================================================================== */
+
+let currentWeekSymbols = [];
+
+function renderWeek() {
+  const body = document.getElementById('weekTable');
+  const from = daysAgoStr(7);
+  const rows = visibleRows.filter(r => r.Date >= from);
+
+  const bySymbol = {};
+  rows.forEach(r => {
+    if (!bySymbol[r.Symbol]) bySymbol[r.Symbol] = { count: 0, accounts: new Set(), qty: 0 };
+    bySymbol[r.Symbol].count++;
+    bySymbol[r.Symbol].accounts.add(r.Client);
+    bySymbol[r.Symbol].qty += r.Quantity;
+  });
+
+  const ranked = Object.entries(bySymbol).sort((a, b) => b[1].count - a[1].count).slice(0, 15);
+  currentWeekSymbols = ranked.map(([sym]) => sym);
+
+  if (ranked.length === 0) {
+    body.innerHTML = `<tr class="empty-row"><td colspan="5">No activity in the trailing 7 days yet (within current filter).</td></tr>`;
+    return;
+  }
+  body.innerHTML = ranked.map(([sym, d], i) => `<tr>
+    <td>${i + 1}</td><td class="sym">${sym}</td><td>${d.count}</td>
+    <td>${d.accounts.size}</td><td>${d.qty.toLocaleString('en-IN')}</td>
+  </tr>`).join('');
+}
+
+/* =====================================================================
+   SYMBOL LOOKUP
+===================================================================== */
+
+let activeRange = '1D';
+let currentLookupSymbols = [];
+
+document.querySelectorAll('.range-btn[data-range]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.range-btn[data-range]').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeRange = btn.dataset.range;
+    document.getElementById('customRangeRow').style.display = activeRange === 'CUSTOM' ? 'flex' : 'none';
+  });
+});
+
+function rangeToDates(range) {
+  const to = todayStr();
+  if (range === '1D') return [daysAgoStr(1), to];
+  if (range === '1W') return [daysAgoStr(7), to];
+  if (range === '1M') return [daysAgoStr(30), to];
+  if (range === '1Y') return [daysAgoStr(365), to];
+  if (range === 'CUSTOM') {
+    return [document.getElementById('customFrom').value, document.getElementById('customTo').value];
+  }
+  return [daysAgoStr(1), to];
+}
+
+document.getElementById('lookupBtn').addEventListener('click', () => {
+  const symbol = document.getElementById('symbolInput').value.trim().toUpperCase();
+  const body = document.getElementById('lookupTable');
+  const cards = document.getElementById('summaryCards');
+
+  if (!symbol) {
+    body.innerHTML = `<tr class="empty-row"><td colspan="5">Enter a symbol and search</td></tr>`;
+    cards.style.display = 'none';
+    currentLookupSymbols = [];
+    return;
+  }
+
+  const [from, to] = rangeToDates(activeRange);
+  if (!from || !to) {
+    body.innerHTML = `<tr class="empty-row"><td colspan="5">Pick both a from and to date for custom range</td></tr>`;
+    cards.style.display = 'none';
+    currentLookupSymbols = [];
+    return;
+  }
+
+  const rows = visibleRows.filter(r => r.Symbol === symbol && r.Date >= from && r.Date <= to)
+                           .sort((a, b) => b.Date.localeCompare(a.Date));
+
+  currentLookupSymbols = rows.length ? [symbol] : [];
+
+  if (rows.length === 0) {
+    body.innerHTML = `<tr class="empty-row"><td colspan="5">No activity for ${symbol} in this range (within current filter).</td></tr>`;
+    cards.style.display = 'none';
+    return;
+  }
+
+  const accounts = new Set(rows.map(r => r.Client));
+  const qty = rows.reduce((s, r) => s + r.Quantity, 0);
+  const days = new Set(rows.map(r => r.Date));
+
+  document.getElementById('sumDeals').textContent = rows.length;
+  document.getElementById('sumAccounts').textContent = accounts.size;
+  document.getElementById('sumQty').textContent = qty.toLocaleString('en-IN');
+  document.getElementById('sumDays').textContent = days.size;
+  cards.style.display = 'grid';
+
+  body.innerHTML = rows.map(r => `<tr>
+    <td>${r.Date}</td><td>${r.Client}</td>
+    <td class="${/buy/i.test(r.ActivityType)?'buy':/sell/i.test(r.ActivityType)?'sell':''}">${r.ActivityType || '—'}</td>
+    <td>${r.Quantity ? r.Quantity.toLocaleString('en-IN') : '—'}</td>
+    <td>${r.Price ? r.Price.toLocaleString('en-IN') : '—'}</td>
+  </tr>`).join('');
+});
+
+/* =====================================================================
+   DOWNLOAD SYMBOLS AS .TXT   (format: NSE:SYMBOL, one per line, deduped)
+===================================================================== */
+
+function downloadSymbolsTxt(symbols, filename) {
+  const unique = [...new Set(symbols)].sort();
+  if (unique.length === 0) {
+    alert('No symbols to download for this table yet.');
+    return;
+  }
+  const content = unique.map(s => `NSE:${s}`).join('\n');
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+document.getElementById('dlToday').addEventListener('click', () => {
+  downloadSymbolsTxt(currentTodaySymbols, `today-symbols-${todayStr()}.txt`);
+});
+document.getElementById('dlWeek').addEventListener('click', () => {
+  downloadSymbolsTxt(currentWeekSymbols, `week-symbols-${todayStr()}.txt`);
+});
+document.getElementById('dlLookup').addEventListener('click', () => {
+  downloadSymbolsTxt(currentLookupSymbols, `lookup-symbols-${todayStr()}.txt`);
+});
+
+loadAllData();
+</script>
+
+</body>
+</html>
