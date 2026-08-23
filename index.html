@@ -27,6 +27,7 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .nav-links a:hover{color:var(--text);text-decoration:none}
 .nav-cta{background:var(--green);color:var(--bg)!important;padding:7px 16px;border-radius:6px;font-weight:700;font-size:13px}
 .nav-cta:hover{opacity:.88;text-decoration:none!important}
+.nav-hamburger{display:none;background:none;border:none;color:var(--text);font-size:26px;cursor:pointer;line-height:1;padding:4px 6px}
 
 .hero{padding:80px 40px 60px;text-align:center;max-width:760px;margin:0 auto}
 .hero-badge{display:inline-block;font-size:11px;padding:4px 12px;background:rgba(0,230,118,.1);border:1px solid rgba(0,230,118,.25);border-radius:20px;color:var(--green);margin-bottom:20px;font-family:var(--mono)}
@@ -104,6 +105,19 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .cta-section h2{font-size:32px;font-weight:700;margin-bottom:14px}
 .cta-section p{font-size:15px;color:var(--text2);margin-bottom:28px}
 
+.feedback-section{padding:60px 40px;max-width:640px;margin:0 auto}
+.feedback-form{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:32px;margin-top:32px}
+.feedback-field{margin-bottom:16px}
+.feedback-field label{display:block;font-size:12px;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;font-weight:700;margin-bottom:6px}
+.feedback-field input,.feedback-field textarea{width:100%;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:11px 14px;border-radius:7px;font-size:14px;font-family:var(--sans)}
+.feedback-field textarea{min-height:120px;resize:vertical}
+.feedback-submit{background:var(--green);color:var(--bg);border:none;padding:12px 28px;border-radius:8px;font-weight:700;font-size:14px;cursor:pointer;width:100%}
+.feedback-submit:hover{opacity:.88}
+.feedback-submit:disabled{opacity:.5;cursor:not-allowed}
+.feedback-status{margin-top:14px;font-size:13px;text-align:center}
+.feedback-status.success{color:var(--green)}
+.feedback-status.error{color:var(--red)}
+
 footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center}
 .footer-left{font-size:12px;color:var(--text3)}
 .footer-right{display:flex;gap:20px}
@@ -118,8 +132,13 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
   .pay-panel{grid-template-columns:1fr;text-align:center}
   .pay-qr{margin:0 auto}
   .hero h1{font-size:28px}
-  nav{padding:0 20px}
-  .nav-links{display:none}
+  nav{padding:0 20px;position:relative}
+  .nav-hamburger{display:block}
+  .nav-links{display:none;position:absolute;top:56px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);flex-direction:column;gap:0;padding:8px 20px 16px;box-shadow:0 12px 24px rgba(0,0,0,.4)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 4px;border-bottom:1px solid var(--border)}
+  .nav-links a:last-child{border-bottom:none}
+  .nav-links a.nav-cta{margin-top:10px;text-align:center;border-bottom:none}
 }
 </style>
 </head>
@@ -130,22 +149,29 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
     <div class="logo-icon">▲</div>
     <span class="logo-text">Project Shadow</span>
   </div>
-  <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <a href="#thesis">Our Thesis</a>
     <a href="#downloads">Downloads</a>
     <a href="#hft-list">Tracked Accounts</a>
     <a href="#how-it-works">How it works</a>
     <a href="tracker.html">Tracker</a>
+    <a href="#feedback">Feedback</a>
     <a href="generator.html" class="nav-cta">Open Generator →</a>
   </div>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menu">☰</button>
 </nav>
+<script>
+document.getElementById('navHamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+</script>
 
 <div class="hero">
-  <div class="hero-badge">NSE · BSE Operator Activity Tracking</div>
+  <div class="hero-badge">NSE Operator Activity Tracking</div>
   <h1>Stop Trading Against the <span>Operator</span>. Start Trading With Them.</h1>
   <p>Project Shadow tracks bulk deal activity from a specific set of HFT-linked accounts we believe are frequently used to execute operator moves. We follow the footprints — not the noise — so you can position in line with the operator instead of getting trapped on the wrong side of their move.</p>
   <div class="hero-btns">
-    <a href="#downloads" class="btn-primary">📥 Get the 2024 Indicator — Free</a>
+    <a href="#downloads" class="btn-primary">📥 Get the Indicator</a>
     <a href="#thesis" class="btn-secondary">Read our thesis</a>
   </div>
 </div>
@@ -175,7 +201,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
       </div>
     </div>
     <div class="thesis-note">
-      This is our trading methodology and interpretation of publicly available NSE/BSE bulk deal data — not a factual claim about any individual entity's intent. Bulk deal disclosures are public record; our indicator simply visualizes patterns in that data on your TradingView chart. Always do your own research before acting on any signal.
+      This is our trading methodology and interpretation of publicly available NSE bulk deal data — not a factual claim about any individual entity's intent. Bulk deal disclosures are public record; our indicator simply visualizes patterns in that data on your TradingView chart. Always do your own research before acting on any signal.
     </div>
   </div>
 </div>
@@ -185,34 +211,34 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
   <div class="section-heading">Everything you need to track the operator</div>
   <div class="features-grid">
     <div class="feature-card">
-      <div class="feature-icon">📂</div>
-      <h3>Upload Any CSV</h3>
-      <p>Supports all NSE bulk deal CSV formats. Drop one file or multiple files — they merge automatically with no duplicates.</p>
+      <div class="feature-icon">🔄</div>
+      <h3>Automated Daily Tracking</h3>
+      <p>Bulk deal data is fetched automatically every trading day after 7:00 PM — no manual downloads, no CSVs to chase.</p>
     </div>
     <div class="feature-card">
-      <div class="feature-icon">💾</div>
-      <h3>Remembers Previous Data</h3>
-      <p>Your historical data is saved in the browser. Next update, just upload the new week's file — it merges with everything you've added before.</p>
+      <div class="feature-icon">🗂️</div>
+      <h3>Full Historical Archive</h3>
+      <p>Activity is recorded permanently, year by year, going back to 2024 — nothing is ever overwritten or lost.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔍</div>
+      <h3>Symbol Lookup, Any Range</h3>
+      <p>Look up any symbol's activity over 1D, 1W, 1M, 1Y, or a custom date range — and export the result as a ready-to-use TradingView watchlist.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🎚️</div>
+      <h3>Tracked, All, or Custom Accounts</h3>
+      <p>View just our 12 tracked accounts, every account in the data, or build your own custom watchlist — switch any time.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">⚡</div>
-      <h3>Instant Pine Script</h3>
-      <p>Generates a ready-to-paste Pine Script indicator in seconds. Arrows appear on every NSE chart where operator-linked accounts were active.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📐</div>
-      <h3>Sized Arrows</h3>
-      <p>Arrow size scales with how many tracked accounts were active — tiny for 1, enormous for many. Hover to see exactly which accounts were present.</p>
-    </div>
-    <div class="feature-card">
-      <div class="feature-icon">📅</div>
-      <h3>Year-wise Indicators</h3>
-      <p>A fresh Pine Script is built every year (2024, 2025, 2026...) so the indicator stays fast and accurate as more bulk deal history accumulates.</p>
+      <h3>Pine Script Generator</h3>
+      <p>Turn any set of tracked activity into a ready-to-paste Pine Script indicator, with arrows sized by how many accounts were active.</p>
     </div>
     <div class="feature-card">
       <div class="feature-icon">🔒</div>
       <h3>100% Private</h3>
-      <p>The generator runs entirely in your browser. No data is uploaded to any server. Your trading data stays completely private.</p>
+      <p>The generator runs entirely in your browser — no data you upload is ever sent to a server.</p>
     </div>
   </div>
 </div>
@@ -222,12 +248,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
   <div class="section-heading">Get the Operator Activity Indicator</div>
 
   <div class="dl-grid">
-    <div class="dl-card">
+    <div class="dl-card locked">
       <div class="dl-year">YEAR 2024</div>
       <div class="dl-title">Operator Activity 2024</div>
-      <span class="dl-tag free">FREE</span>
-      <p>Full-year Pine Script covering all tracked accounts across 2024 bulk deal data. Paste directly into TradingView.</p>
-      <a class="dl-btn free" href="downloads/OPERATOR_Activity_2024.pine" download>⬇ Download Free</a>
+      <span class="dl-tag paid">PAID</span>
+      <p>Full-year Pine Script covering 2024 bulk deal data. Pay via QR below and email your transaction ID to receive it.</p>
+      <a class="dl-btn locked" href="#pay">🔒 Unlock — See Payment Info</a>
     </div>
     <div class="dl-card locked">
       <div class="dl-year">YEAR 2025</div>
@@ -250,7 +276,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
       <img src="assets/qr-code.png" alt="Payment QR code">
     </div>
     <div class="pay-steps">
-      <h3>How to get the 2025 / 2026 script</h3>
+      <h3>How to get any year's script</h3>
       <div class="pay-step"><b>1.</b> Scan the QR code and complete the payment.</div>
       <div class="pay-step"><b>2.</b> Note down your payment transaction / reference ID.</div>
       <div class="pay-step"><b>3.</b> Email the transaction ID, the year you paid for, and your name to <span class="pay-email">imtiyazfaith@gmail.com</span>.</div>
@@ -316,7 +342,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
       <div class="step-num">5</div>
       <div class="step-content">
         <h3>Or just grab the ready-made yearly script</h3>
-        <p>Don't want to build your own? Download the pre-built <a href="#downloads">2024 script for free</a>, or get the 2025/2026 versions from us directly.</p>
+        <p>Don't want to build your own? Get the ready-made <a href="#downloads">yearly Pine Script</a> for 2024, 2025, or 2026 directly from us.</p>
       </div>
     </div>
   </div>
@@ -324,9 +350,77 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
 
 <div class="cta-section">
   <h2>Ready to trade with the operator, not against them?</h2>
-  <p>Start with the free 2024 indicator — no signup, no cost.</p>
-  <a href="#downloads" class="btn-primary" style="display:inline-block">📥 Get the Free 2024 Indicator →</a>
+  <p>Get the yearly indicator and start trading with the operator.</p>
+  <a href="#downloads" class="btn-primary" style="display:inline-block">📥 Get the Indicator →</a>
 </div>
+
+<div class="feedback-section" id="feedback">
+  <div class="section-title">Feedback</div>
+  <div class="section-heading">Tell us what you think</div>
+  <p style="text-align:center;color:var(--text2);font-size:14px">Found a bug, have a feature request, or just want to share your thoughts? It goes straight to our inbox.</p>
+
+  <form class="feedback-form" id="feedbackForm">
+    <div class="feedback-field">
+      <label for="fbName">Name (optional)</label>
+      <input type="text" id="fbName" name="name" placeholder="Your name">
+    </div>
+    <div class="feedback-field">
+      <label for="fbEmail">Email (optional, if you want a reply)</label>
+      <input type="email" id="fbEmail" name="email" placeholder="you@example.com">
+    </div>
+    <div class="feedback-field">
+      <label for="fbMessage">Message *</label>
+      <textarea id="fbMessage" name="message" required placeholder="Your feedback, bug report, or suggestion..."></textarea>
+    </div>
+    <button type="submit" class="feedback-submit" id="fbSubmit">Send Feedback</button>
+    <div class="feedback-status" id="fbStatus"></div>
+  </form>
+</div>
+
+<script>
+document.getElementById('feedbackForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const btn = document.getElementById('fbSubmit');
+  const status = document.getElementById('fbStatus');
+  const name = document.getElementById('fbName').value.trim();
+  const email = document.getElementById('fbEmail').value.trim();
+  const message = document.getElementById('fbMessage').value.trim();
+
+  if (!message) return;
+
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+  status.textContent = '';
+  status.className = 'feedback-status';
+
+  try {
+    const resp = await fetch('https://formsubmit.co/ajax/imtiyazfaith@gmail.com', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        name: name || '(not provided)',
+        email: email || '(not provided)',
+        message: message,
+        _subject: 'New feedback — Project Shadow',
+      }),
+    });
+
+    if (resp.ok) {
+      status.textContent = "Thanks — your feedback has been sent!";
+      status.className = 'feedback-status success';
+      document.getElementById('feedbackForm').reset();
+    } else {
+      throw new Error('Non-OK response');
+    }
+  } catch (err) {
+    status.textContent = "Something went wrong sending that. Please try again in a moment.";
+    status.className = 'feedback-status error';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = 'Send Feedback';
+  }
+});
+</script>
 
 <footer>
   <div class="footer-left">Project Shadow · Operator Activity Tracking for NSE Traders</div>
@@ -335,6 +429,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
     <a href="#downloads">Downloads</a>
     <a href="#how-it-works">How it works</a>
     <a href="#hft-list">Tracked Accounts</a>
+    <a href="#feedback">Feedback</a>
   </div>
 </footer>
 

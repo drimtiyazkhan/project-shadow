@@ -27,6 +27,7 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .nav-links{display:flex;gap:28px;align-items:center}
 .nav-links a{font-size:13px;color:var(--text2)}
 .nav-links a:hover{color:var(--text);text-decoration:none}
+.nav-hamburger{display:none;background:none;border:none;color:var(--text);font-size:26px;cursor:pointer;line-height:1;padding:4px 6px}
 
 .wrap{max-width:1100px;margin:0 auto;padding:40px}
 .page-title{font-size:32px;font-weight:800;margin-bottom:6px}
@@ -101,8 +102,12 @@ td.sell{color:var(--red);font-weight:700}
 
 @media(max-width:768px){
   .wrap{padding:20px}
-  nav{padding:0 20px}
-  .nav-links{display:none}
+  nav{padding:0 20px;position:relative}
+  .nav-hamburger{display:block}
+  .nav-links{display:none;position:absolute;top:56px;left:0;right:0;background:var(--bg2);border-bottom:1px solid var(--border);flex-direction:column;align-items:stretch;gap:0;padding:8px 20px 16px;box-shadow:0 12px 24px rgba(0,0,0,.4)}
+  .nav-links.open{display:flex}
+  .nav-links a{padding:12px 4px;border-bottom:1px solid var(--border)}
+  .nav-links a:last-child{border-bottom:none}
   .summary-cards{grid-template-columns:1fr 1fr}
   .client-list{grid-template-columns:1fr}
 }
@@ -115,13 +120,19 @@ td.sell{color:var(--red);font-weight:700}
     <div class="logo-icon">▲</div>
     <span class="logo-text">Project Shadow</span>
   </div>
-  <div class="nav-links">
+  <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
     <a href="generator.html">Generator</a>
     <a href="tracker.html" style="color:var(--text)">Tracker</a>
     <a href="index.html#downloads">Downloads</a>
   </div>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Menu">☰</button>
 </nav>
+<script>
+document.getElementById('navHamburger').addEventListener('click', () => {
+  document.getElementById('navLinks').classList.toggle('open');
+});
+</script>
 
 <div class="wrap">
   <div class="page-title">Bulk Deal Activity Tracker</div>
@@ -385,7 +396,7 @@ function updateSummaryStrip() {
 
   document.getElementById('statTodaySymbols').textContent = currentTodaySymbols.length;
 
-  const weekFrom = daysAgoStr(7);
+  const weekFrom = daysAgoFromLatest(7);
   const weekRows = visibleRows.filter(r => r.Date >= weekFrom);
   const weekSymbolCount = new Set(weekRows.map(r => r.Symbol)).size;
   document.getElementById('statWeekSymbols').textContent = weekSymbolCount;
@@ -468,6 +479,18 @@ function daysAgoStr(n) {
   d.setDate(d.getDate() - n);
   return d.toISOString().slice(0, 10);
 }
+function addDaysToDateStr(dateStr, deltaDays) {
+  const d = new Date(dateStr + 'T00:00:00Z');
+  d.setUTCDate(d.getUTCDate() + deltaDays);
+  return d.toISOString().slice(0, 10);
+}
+// Anchors all range math to the most recent date actually present in the
+// data (e.g. last Friday), instead of the real calendar date — otherwise
+// "1D"/"1W"/etc. compute against a weekend/holiday with zero data.
+function daysAgoFromLatest(n) {
+  const anchor = latestAvailableDate() || todayStr();
+  return addDaysToDateStr(anchor, -n);
+}
 
 /* =====================================================================
    RENDER: TODAY (falls back to the most recent trading day with data,
@@ -536,7 +559,7 @@ function renderWeek() {
   const sub = document.getElementById('weekPanelSub');
   sub.textContent = `Symbols ranked by number of deals in ${PERIOD_LABELS[activePeriodDays]}, within the current filter`;
 
-  const from = daysAgoStr(activePeriodDays);
+  const from = daysAgoFromLatest(activePeriodDays);
   const rows = visibleRows.filter(r => r.Date >= from);
 
   const bySymbol = {};
@@ -586,15 +609,15 @@ document.getElementById('symbolInput').addEventListener('input', () => {
 });
 
 function rangeToDates(range) {
-  const to = todayStr();
-  if (range === '1D') return [daysAgoStr(1), to];
-  if (range === '1W') return [daysAgoStr(7), to];
-  if (range === '1M') return [daysAgoStr(30), to];
-  if (range === '1Y') return [daysAgoStr(365), to];
+  const anchor = latestAvailableDate() || todayStr();
+  if (range === '1D') return [anchor, anchor]; // the latest available trading day only
+  if (range === '1W') return [daysAgoFromLatest(7), anchor];
+  if (range === '1M') return [daysAgoFromLatest(30), anchor];
+  if (range === '1Y') return [daysAgoFromLatest(365), anchor];
   if (range === 'CUSTOM') {
     return [document.getElementById('customFrom').value, document.getElementById('customTo').value];
   }
-  return [daysAgoStr(7), to];
+  return [daysAgoFromLatest(7), anchor];
 }
 
 function performLookup() {
