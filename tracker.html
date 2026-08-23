@@ -15,6 +15,7 @@
   --sans:'Inter',system-ui,sans-serif;
 }
 *{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px}
 a{color:var(--green);text-decoration:none}
 a:hover{text-decoration:underline}
@@ -31,6 +32,18 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .page-title{font-size:32px;font-weight:800;margin-bottom:6px}
 .page-sub{font-size:15px;color:var(--text2);margin-bottom:32px}
 
+.top-stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:28px}
+
+.section-nav{position:sticky;top:56px;z-index:90;background:var(--bg2);border:1px solid var(--border);border-radius:10px;display:flex;gap:4px;padding:6px;margin-bottom:24px}
+.section-nav a{flex:1;text-align:center;font-size:13.5px;font-weight:700;color:var(--text2);padding:10px 14px;border-radius:7px;transition:all .15s}
+.section-nav a:hover{color:var(--text);text-decoration:none;background:var(--bg3)}
+.section-nav a.active{color:var(--bg);background:var(--green)}
+.panel{scroll-margin-top:112px}
+.top-stat-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px}
+.top-stat-card .val{font-size:30px;font-weight:800;color:var(--green);line-height:1.1}
+.top-stat-card .val.small{font-size:20px}
+.top-stat-card .lbl{font-size:12.5px;color:var(--text3);margin-top:6px;text-transform:uppercase;letter-spacing:.04em;font-weight:700}
+
 .status-bar{display:flex;gap:10px;align-items:center;margin-bottom:20px;font-size:13px;color:var(--text3);font-family:var(--mono)}
 .status-dot{width:8px;height:8px;border-radius:50%;background:var(--text3)}
 .status-dot.ok{background:var(--green)}
@@ -39,6 +52,14 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .panel{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:24px;margin-bottom:24px}
 .panel h2{font-size:19px;font-weight:700;margin-bottom:4px}
 .panel .panel-sub{font-size:14px;color:var(--text3);margin-bottom:18px}
+
+.panel-header-row{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin-bottom:4px}
+.panel-header-row h2{margin-bottom:0}
+.panel-header-row .dl-btn{margin-top:0;flex-shrink:0}
+
+.table-scroll{max-height:380px;overflow-y:auto;border:1px solid var(--border);border-radius:8px}
+.table-scroll table{margin:0}
+.table-scroll thead th{position:sticky;top:0;background:var(--bg2);z-index:1}
 
 table{width:100%;border-collapse:collapse;font-size:14.5px}
 th{text-align:left;color:var(--text3);font-weight:600;font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;padding:10px 12px;border-bottom:1px solid var(--border2)}
@@ -106,6 +127,19 @@ td.sell{color:var(--red);font-weight:700}
   <div class="page-title">Bulk Deal Activity Tracker</div>
   <div class="page-sub">Data refreshes automatically every trading day after 7:00 PM.</div>
 
+  <div class="top-stats-grid">
+    <div class="top-stat-card"><div class="val" id="statTodaySymbols">—</div><div class="lbl">Symbols Active Today</div></div>
+    <div class="top-stat-card"><div class="val" id="statWeekSymbols">—</div><div class="lbl">Symbols Active This Week</div></div>
+    <div class="top-stat-card"><div class="val" id="statAccountsInView">—</div><div class="lbl">Accounts In View</div></div>
+    <div class="top-stat-card"><div class="val small" id="statDataAsOf">—</div><div class="lbl">Data As Of</div></div>
+  </div>
+
+  <div class="section-nav" id="sectionNav">
+    <a href="#panel-today" class="active">Today's Activity</a>
+    <a href="#panel-week">Highest Activity</a>
+    <a href="#panel-lookup">Symbol Lookup</a>
+  </div>
+
   <div class="status-bar" id="statusBar">
     <div class="status-dot" id="statusDot"></div>
     <span id="statusText">Loading data…</span>
@@ -130,33 +164,44 @@ td.sell{color:var(--red);font-weight:700}
     </div>
   </div>
 
-  <div class="panel">
-    <h2>Today's Activity</h2>
+  <div class="panel" id="panel-today">
+    <div class="panel-header-row">
+      <h2>Today's Activity</h2>
+      <button class="dl-btn" id="dlToday">⬇ Download Symbols (.txt)</button>
+    </div>
     <div class="panel-sub" id="todayDateLabel">—</div>
-    <table>
-      <thead><tr><th>Symbol</th><th>Client</th><th>Type</th><th>Quantity</th><th>Price</th></tr></thead>
-      <tbody id="todayTable"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
-    </table>
-    <button class="dl-btn" id="dlToday">⬇ Download Symbols (.txt)</button>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Symbol</th><th>Client</th><th>Type</th><th>Quantity</th><th>Price</th></tr></thead>
+        <tbody id="todayTable"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="panel">
-    <h2>Highest Activity</h2>
+  <div class="panel" id="panel-week">
+    <div class="panel-header-row">
+      <h2>Highest Activity</h2>
+      <button class="dl-btn" id="dlWeek">⬇ Download Symbols (.txt)</button>
+    </div>
     <div class="panel-sub" id="weekPanelSub">Symbols ranked by number of deals, within the current filter</div>
     <div class="lookup-row" style="margin-bottom:16px">
       <button class="range-btn active" data-period="7">Weekly</button>
       <button class="range-btn" data-period="30">Monthly</button>
       <button class="range-btn" data-period="365">Yearly</button>
     </div>
-    <table>
-      <thead><tr><th>Rank</th><th>Symbol</th><th>Deal Count</th><th>Distinct Accounts</th><th>Total Quantity</th></tr></thead>
-      <tbody id="weekTable"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
-    </table>
-    <button class="dl-btn" id="dlWeek">⬇ Download Symbols (.txt)</button>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Rank</th><th>Symbol</th><th>Deal Count</th><th>Distinct Accounts</th><th>Total Quantity</th></tr></thead>
+        <tbody id="weekTable"><tr class="empty-row"><td colspan="5">Loading…</td></tr></tbody>
+      </table>
+    </div>
   </div>
 
-  <div class="panel">
-    <h2>Symbol Lookup</h2>
+  <div class="panel" id="panel-lookup">
+    <div class="panel-header-row">
+      <h2>Symbol Lookup</h2>
+      <button class="dl-btn" id="dlLookup">⬇ Download Symbols (.txt)</button>
+    </div>
     <div class="panel-sub">Enter a symbol and pick a range to see its activity summary (within the current filter)</div>
     <div class="lookup-row">
       <input type="text" id="symbolInput" placeholder="e.g. RELIANCE">
@@ -178,11 +223,12 @@ td.sell{color:var(--red);font-weight:700}
       <div class="summary-card"><div class="val" id="sumDays">0</div><div class="lbl">Active Days</div></div>
     </div>
 
-    <table>
-      <thead><tr><th>Date</th><th>Symbol</th><th>Client</th><th>Type</th><th>Quantity</th><th>Price</th></tr></thead>
-      <tbody id="lookupTable"><tr class="empty-row"><td colspan="6">Loading…</td></tr></tbody>
-    </table>
-    <button class="dl-btn" id="dlLookup">⬇ Download Symbols (.txt)</button>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Date</th><th>Symbol</th><th>Client</th><th>Type</th><th>Quantity</th><th>Price</th></tr></thead>
+        <tbody id="lookupTable"><tr class="empty-row"><td colspan="6">Loading…</td></tr></tbody>
+      </table>
+    </div>
   </div>
 </div>
 
@@ -325,6 +371,29 @@ function applyFilter() {
   if (countEl) countEl.textContent = `${visibleRows.length.toLocaleString('en-IN')} of ${allRows.length.toLocaleString('en-IN')} rows shown`;
   renderToday();
   renderWeek();
+  updateSummaryStrip();
+}
+
+/* =====================================================================
+   TOP SUMMARY STRIP
+   Recomputed every time the filter changes or data (re)loads, so the
+   4 numbers always reflect whatever view (Tracked/All/Custom) is active.
+===================================================================== */
+
+function updateSummaryStrip() {
+  const effectiveDate = latestAvailableDate();
+
+  document.getElementById('statTodaySymbols').textContent = currentTodaySymbols.length;
+
+  const weekFrom = daysAgoStr(7);
+  const weekRows = visibleRows.filter(r => r.Date >= weekFrom);
+  const weekSymbolCount = new Set(weekRows.map(r => r.Symbol)).size;
+  document.getElementById('statWeekSymbols').textContent = weekSymbolCount;
+
+  const accountsInView = new Set(visibleRows.map(r => r.Client)).size;
+  document.getElementById('statAccountsInView').textContent = accountsInView;
+
+  document.getElementById('statDataAsOf').textContent = effectiveDate || '—';
 }
 
 function setFilterMode(mode) {
@@ -607,6 +676,26 @@ document.getElementById('dlWeek').addEventListener('click', () => {
 document.getElementById('dlLookup').addEventListener('click', () => {
   downloadSymbolsTxt(currentLookupSymbols, `lookup-symbols-${todayStr()}.txt`);
 });
+
+/* =====================================================================
+   SECTION NAV — highlights the current panel's link while scrolling
+===================================================================== */
+
+const sectionNavLinks = document.querySelectorAll('#sectionNav a');
+const sectionPanels = ['panel-today', 'panel-week', 'panel-lookup'].map(id => document.getElementById(id));
+
+const sectionObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      const id = entry.target.id;
+      sectionNavLinks.forEach(link => {
+        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+      });
+    }
+  });
+}, { rootMargin: '-120px 0px -60% 0px', threshold: 0 });
+
+sectionPanels.forEach(panel => { if (panel) sectionObserver.observe(panel); });
 
 loadAllData();
 </script>
