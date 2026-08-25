@@ -160,3 +160,102 @@ requests.exceptions.JSONDecodeError: Expecting value: line 2 column 1 (char 1)
 2026-08-25 06:30:56,256 [WARNING] Gave up after 4 attempts — NSE's file still doesn't show today's date. This is expected on weekends/holidays. If it's a trading day, check https://nsearchives.nseindia.com/content/equities/bulk.csv manually.
 2026-08-25 06:30:56,256 [INFO] === Bulk deal fetch run finished ===
 
+2026-08-25 14:11:36,278 [INFO] === Bulk deal fetch run started (2026-08-25T19:41:36.278479+05:30 IST) ===
+2026-08-25 14:11:37,045 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (15029 bytes)
+2026-08-25 14:11:37,068 [INFO] Parsed 156 rows from NSE's archive file
+2026-08-25 14:11:37,068 [INFO] Most recent date present in the fetched file: 2026-08-25 (today is 2026-08-25)
+2026-08-25 14:11:38,320 [ERROR] [existing activity_2026.xlsx] Could not find a matching column for: ['ActivityType']
+2026-08-25 14:11:38,320 [ERROR] [existing activity_2026.xlsx] Columns actually present: ['Date', 'Symbol', 'SecurityName', 'Client', 'ActivityType', 'Quantity', 'Price', 'Remarks', '_hash']
+2026-08-25 14:11:38,320 [ERROR] activity_2026.xlsx has an unrecognized column format and could not be auto-repaired. Stopping here rather than risk corrupting it further — please check this file manually.
+2026-08-25 14:11:38,320 [ERROR] Fetch attempt 1/4 raised an error
+Traceback (most recent call last):
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 309, in main
+    added, got_today = run_once()
+                       ^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 299, in run_once
+    added = append_rows(df)
+            ^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 267, in append_rows
+    existing = load_existing(int(year))
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 233, in load_existing
+    df = normalize_dataframe(raw, f"existing activity_{year}.xlsx")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 199, in normalize_dataframe
+    raise ValueError(f"[{source_label}] Unexpected format — missing fields: {missing}")
+ValueError: [existing activity_2026.xlsx] Unexpected format — missing fields: ['ActivityType']
+2026-08-25 14:11:38,323 [WARNING] Today's data not yet reflected in NSE's file (attempt 1/4). Retrying in 20 minutes...
+2026-08-25 14:31:39,179 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (15029 bytes)
+2026-08-25 14:31:39,200 [INFO] Parsed 156 rows from NSE's archive file
+2026-08-25 14:31:39,200 [INFO] Most recent date present in the fetched file: 2026-08-25 (today is 2026-08-25)
+2026-08-25 14:31:40,193 [ERROR] [existing activity_2026.xlsx] Could not find a matching column for: ['ActivityType']
+2026-08-25 14:31:40,193 [ERROR] [existing activity_2026.xlsx] Columns actually present: ['Date', 'Symbol', 'SecurityName', 'Client', 'ActivityType', 'Quantity', 'Price', 'Remarks', '_hash']
+2026-08-25 14:31:40,194 [ERROR] activity_2026.xlsx has an unrecognized column format and could not be auto-repaired. Stopping here rather than risk corrupting it further — please check this file manually.
+2026-08-25 14:31:40,194 [ERROR] Fetch attempt 2/4 raised an error
+Traceback (most recent call last):
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 309, in main
+    added, got_today = run_once()
+                       ^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 299, in run_once
+    added = append_rows(df)
+            ^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 267, in append_rows
+    existing = load_existing(int(year))
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 233, in load_existing
+    df = normalize_dataframe(raw, f"existing activity_{year}.xlsx")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 199, in normalize_dataframe
+    raise ValueError(f"[{source_label}] Unexpected format — missing fields: {missing}")
+ValueError: [existing activity_2026.xlsx] Unexpected format — missing fields: ['ActivityType']
+2026-08-25 14:31:40,197 [WARNING] Today's data not yet reflected in NSE's file (attempt 2/4). Retrying in 20 minutes...
+2026-08-25 14:51:41,117 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (15029 bytes)
+2026-08-25 14:51:41,138 [INFO] Parsed 156 rows from NSE's archive file
+2026-08-25 14:51:41,139 [INFO] Most recent date present in the fetched file: 2026-08-25 (today is 2026-08-25)
+2026-08-25 14:51:42,132 [ERROR] [existing activity_2026.xlsx] Could not find a matching column for: ['ActivityType']
+2026-08-25 14:51:42,132 [ERROR] [existing activity_2026.xlsx] Columns actually present: ['Date', 'Symbol', 'SecurityName', 'Client', 'ActivityType', 'Quantity', 'Price', 'Remarks', '_hash']
+2026-08-25 14:51:42,132 [ERROR] activity_2026.xlsx has an unrecognized column format and could not be auto-repaired. Stopping here rather than risk corrupting it further — please check this file manually.
+2026-08-25 14:51:42,132 [ERROR] Fetch attempt 3/4 raised an error
+Traceback (most recent call last):
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 309, in main
+    added, got_today = run_once()
+                       ^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 299, in run_once
+    added = append_rows(df)
+            ^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 267, in append_rows
+    existing = load_existing(int(year))
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 233, in load_existing
+    df = normalize_dataframe(raw, f"existing activity_{year}.xlsx")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 199, in normalize_dataframe
+    raise ValueError(f"[{source_label}] Unexpected format — missing fields: {missing}")
+ValueError: [existing activity_2026.xlsx] Unexpected format — missing fields: ['ActivityType']
+2026-08-25 14:51:42,135 [WARNING] Today's data not yet reflected in NSE's file (attempt 3/4). Retrying in 20 minutes...
+2026-08-25 15:11:43,192 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (15029 bytes)
+2026-08-25 15:11:43,213 [INFO] Parsed 156 rows from NSE's archive file
+2026-08-25 15:11:43,213 [INFO] Most recent date present in the fetched file: 2026-08-25 (today is 2026-08-25)
+2026-08-25 15:11:44,227 [ERROR] [existing activity_2026.xlsx] Could not find a matching column for: ['ActivityType']
+2026-08-25 15:11:44,227 [ERROR] [existing activity_2026.xlsx] Columns actually present: ['Date', 'Symbol', 'SecurityName', 'Client', 'ActivityType', 'Quantity', 'Price', 'Remarks', '_hash']
+2026-08-25 15:11:44,227 [ERROR] activity_2026.xlsx has an unrecognized column format and could not be auto-repaired. Stopping here rather than risk corrupting it further — please check this file manually.
+2026-08-25 15:11:44,227 [ERROR] Fetch attempt 4/4 raised an error
+Traceback (most recent call last):
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 309, in main
+    added, got_today = run_once()
+                       ^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 299, in run_once
+    added = append_rows(df)
+            ^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 267, in append_rows
+    existing = load_existing(int(year))
+               ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 233, in load_existing
+    df = normalize_dataframe(raw, f"existing activity_{year}.xlsx")
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/project-shadow/project-shadow/scripts/fetch_bulk_deals.py", line 199, in normalize_dataframe
+    raise ValueError(f"[{source_label}] Unexpected format — missing fields: {missing}")
+ValueError: [existing activity_2026.xlsx] Unexpected format — missing fields: ['ActivityType']
+2026-08-25 15:11:44,231 [WARNING] Gave up after 4 attempts — NSE's file still doesn't show today's date. This is expected on weekends/holidays. If it's a trading day, check https://nsearchives.nseindia.com/content/equities/bulk.csv manually.
+2026-08-25 15:11:44,231 [INFO] === Bulk deal fetch run finished ===
+
