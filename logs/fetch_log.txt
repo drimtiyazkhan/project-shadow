@@ -259,3 +259,27 @@ ValueError: [existing activity_2026.xlsx] Unexpected format — missing fields: 
 2026-08-25 15:11:44,231 [WARNING] Gave up after 4 attempts — NSE's file still doesn't show today's date. This is expected on weekends/holidays. If it's a trading day, check https://nsearchives.nseindia.com/content/equities/bulk.csv manually.
 2026-08-25 15:11:44,231 [INFO] === Bulk deal fetch run finished ===
 
+2026-08-26 09:13:52,231 [INFO] === Bulk deal fetch run started (2026-08-26T14:43:52.231275+05:30 IST) ===
+2026-08-26 09:13:53,161 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (15029 bytes)
+2026-08-26 09:13:53,185 [INFO] Parsed 156 rows from NSE's archive file
+2026-08-26 09:13:53,185 [INFO] Most recent date present in the fetched file: 2026-08-25 (today is 2026-08-26)
+2026-08-26 09:14:02,192 [INFO] Saved 17091 total rows to /home/runner/work/project-shadow/project-shadow/data/activity_2026.xlsx
+2026-08-26 09:14:02,192 [INFO] Year 2026: added 156 new rows
+2026-08-26 09:14:02,195 [WARNING] Today's data not yet reflected in NSE's file (attempt 1/4). Retrying in 20 minutes...
+2026-08-26 09:34:03,144 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (15029 bytes)
+2026-08-26 09:34:03,165 [INFO] Parsed 156 rows from NSE's archive file
+2026-08-26 09:34:03,165 [INFO] Most recent date present in the fetched file: 2026-08-25 (today is 2026-08-26)
+2026-08-26 09:34:10,360 [INFO] Year 2026: no new rows (all 156 already recorded)
+2026-08-26 09:34:10,363 [WARNING] Today's data not yet reflected in NSE's file (attempt 2/4). Retrying in 20 minutes...
+2026-08-26 09:54:11,577 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (15029 bytes)
+2026-08-26 09:54:11,598 [INFO] Parsed 156 rows from NSE's archive file
+2026-08-26 09:54:11,598 [INFO] Most recent date present in the fetched file: 2026-08-25 (today is 2026-08-26)
+2026-08-26 09:54:18,822 [INFO] Year 2026: no new rows (all 156 already recorded)
+2026-08-26 09:54:18,825 [WARNING] Today's data not yet reflected in NSE's file (attempt 3/4). Retrying in 20 minutes...
+2026-08-26 10:14:19,905 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (15029 bytes)
+2026-08-26 10:14:19,926 [INFO] Parsed 156 rows from NSE's archive file
+2026-08-26 10:14:19,926 [INFO] Most recent date present in the fetched file: 2026-08-25 (today is 2026-08-26)
+2026-08-26 10:14:27,254 [INFO] Year 2026: no new rows (all 156 already recorded)
+2026-08-26 10:14:27,257 [WARNING] Gave up after 4 attempts — NSE's file still doesn't show today's date. This is expected on weekends/holidays. If it's a trading day, check https://nsearchives.nseindia.com/content/equities/bulk.csv manually.
+2026-08-26 10:14:27,258 [INFO] === Bulk deal fetch run finished ===
+
