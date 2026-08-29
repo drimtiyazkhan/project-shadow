@@ -1,0 +1,67 @@
+name: Generate Sample Indicator
+
+on:
+  # Fires automatically right after "Daily Bulk Deal Fetch" finishes —
+  # never runs on its own separate schedule, so it's always working from
+  # that day's just-updated data.
+  workflow_run:
+    workflows: ["Daily Bulk Deal Fetch"]
+    types: [completed]
+  workflow_dispatch: {}   # lets you trigger it manually to test
+
+permissions:
+  contents: write
+
+concurrency:
+  group: generate-sample-indicator
+  cancel-in-progress: false
+
+jobs:
+  generate:
+    # Only run if the triggering fetch actually succeeded (or if this was
+    # triggered manually via workflow_dispatch, which has no workflow_run
+    # context at all).
+    if: >
+      github.event_name == 'workflow_dispatch' ||
+      github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install pandas openpyxl
+
+      - name: Generate sample indicator
+        run: python scripts/generate_sample_indicator.py
+
+      - name: Commit and push generated sample
+        run: |
+          git config user.name "project-shadow-bot"
+          git config user.email "actions@github.com"
+          git add downloads/OPERATOR_Sample_Trailing1Month.pine
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git commit -m "Regenerate trailing 1-month sample indicator ($(date -u +'%Y-%m-%d'))"
+
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Push succeeded on attempt $attempt."
+              exit 0
+            fi
+            echo "Push failed (attempt $attempt/5) — pulling latest and retrying..."
+            git pull --rebase origin main
+            sleep 5
+          done
+          echo "Push still failing after 5 attempts."
+          exit 1
