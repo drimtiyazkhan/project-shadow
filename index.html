@@ -80,6 +80,17 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .showcase-point p{font-size:12.5px;color:var(--text2);line-height:1.7}
 
 .downloads{padding:60px 40px;max-width:1000px;margin:0 auto}
+.bundle-banner{background:linear-gradient(135deg,rgba(0,230,118,.14),rgba(245,158,11,.10));border:1px solid rgba(0,230,118,.35);border-radius:14px;padding:26px 30px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.bundle-banner-left{display:flex;align-items:center;gap:16px}
+.bundle-badge{background:var(--green);color:var(--bg);font-weight:800;font-size:11px;padding:5px 12px;border-radius:20px;letter-spacing:.04em;white-space:nowrap;animation:pulse-badge 1.8s ease-in-out infinite}
+@keyframes pulse-badge{0%,100%{opacity:1}50%{opacity:.6}}
+.bundle-text h3{font-size:18px;font-weight:800;margin-bottom:4px}
+.bundle-text p{font-size:13px;color:var(--text2)}
+.bundle-text .old-price{text-decoration:line-through;color:var(--text3);font-weight:600}
+.bundle-text .new-price{color:var(--green);font-weight:800;font-size:16px}
+.bundle-cta{background:var(--green);color:var(--bg);padding:12px 26px;border-radius:8px;font-weight:800;font-size:14px;white-space:nowrap}
+.bundle-cta:hover{opacity:.88;text-decoration:none}
+
 .dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
 .dl-grid-4{grid-template-columns:repeat(4,1fr)}
 .dl-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:14px}
@@ -90,6 +101,8 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .dl-tag.free{background:rgba(0,230,118,.12);color:var(--green);border:1px solid rgba(0,230,118,.3)}
 .dl-tag.paid{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
 .dl-card p{font-size:12px;color:var(--text2);line-height:1.7;flex:1}
+.dl-price{font-size:24px;font-weight:800;color:var(--text)}
+.dl-price .per{font-size:12px;font-weight:600;color:var(--text3)}
 .dl-btn{padding:10px 16px;border-radius:7px;font-size:13px;font-weight:700;text-align:center;border:none;cursor:pointer;transition:opacity .15s}
 .dl-btn.free{background:var(--green);color:var(--bg)}
 .dl-btn.free:hover{opacity:.88;text-decoration:none}
@@ -139,6 +152,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
 
 @media(max-width:920px){
   .dl-grid-4{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+  .bundle-banner{flex-direction:column;text-align:center}
+  .bundle-banner-left{flex-direction:column}
 }
 @media(max-width:768px){
   .showcase-shots{grid-template-columns:1fr}
@@ -326,6 +343,17 @@ document.getElementById('navHamburger').addEventListener('click', () => {
   <div class="section-title">Pine Script Downloads</div>
   <div class="section-heading">Get the Operator Activity Indicator</div>
 
+  <div class="bundle-banner">
+    <div class="bundle-banner-left">
+      <span class="bundle-badge">🔥 INAUGURATION OFFER</span>
+      <div class="bundle-text">
+        <h3>All 3 Years Bundle — Hurry, Limited Period!</h3>
+        <p>2024 + 2025 + 2026 together, normally <span class="old-price">₹1,997</span> → now just <span class="new-price">₹999</span></p>
+      </div>
+    </div>
+    <a href="#pay" class="bundle-cta">Grab The Bundle →</a>
+  </div>
+
   <div class="dl-grid dl-grid-4">
     <div class="dl-card">
       <div class="dl-year">TRAILING 30 DAYS</div>
@@ -338,6 +366,7 @@ document.getElementById('navHamburger').addEventListener('click', () => {
       <div class="dl-year">YEAR 2024</div>
       <div class="dl-title">Operator Activity 2024</div>
       <span class="dl-tag paid">PAID</span>
+      <div class="dl-price">₹399</div>
       <p>Full-year Pine Script covering 2024 bulk deal data. Pay via QR below and email your transaction ID to receive it.</p>
       <a class="dl-btn locked" href="#pay">🔒 Unlock — See Payment Info</a>
     </div>
@@ -345,6 +374,7 @@ document.getElementById('navHamburger').addEventListener('click', () => {
       <div class="dl-year">YEAR 2025</div>
       <div class="dl-title">Operator Activity 2025</div>
       <span class="dl-tag paid">PAID</span>
+      <div class="dl-price">₹599</div>
       <p>Full-year Pine Script covering 2025 bulk deal data. Pay via QR below and email your transaction ID to receive it.</p>
       <a class="dl-btn locked" href="#pay">🔒 Unlock — See Payment Info</a>
     </div>
@@ -352,6 +382,7 @@ document.getElementById('navHamburger').addEventListener('click', () => {
       <div class="dl-year">YEAR 2026</div>
       <div class="dl-title">Operator Activity 2026</div>
       <span class="dl-tag paid">PAID</span>
+      <div class="dl-price">₹999</div>
       <p>Full-year Pine Script covering 2026 bulk deal data, updated periodically as the year progresses.</p>
       <a class="dl-btn locked" href="#pay">🔒 Unlock — See Payment Info</a>
     </div>
@@ -362,11 +393,11 @@ document.getElementById('navHamburger').addEventListener('click', () => {
       <img src="assets/qr-code.png" alt="Payment QR code">
     </div>
     <div class="pay-steps">
-      <h3>How to get any year's script</h3>
-      <div class="pay-step"><b>1.</b> Scan the QR code and complete the payment.</div>
+      <h3>How to get any year's script (or the bundle)</h3>
+      <div class="pay-step"><b>1.</b> Scan the QR code and pay the amount for the year(s) you want — or ₹999 for all 3 years during the inauguration offer.</div>
       <div class="pay-step"><b>2.</b> Note down your payment transaction / reference ID.</div>
-      <div class="pay-step"><b>3.</b> Email the transaction ID, the year you paid for, and your name to <span class="pay-email">imtiyazfaith@gmail.com</span>.</div>
-      <div class="pay-step"><b>4.</b> The Pine Script (.pine file) will be emailed to you directly after the payment is verified.</div>
+      <div class="pay-step"><b>3.</b> Email the transaction ID, which year(s) or bundle you paid for, and your name to <span class="pay-email">imtiyazfaith@gmail.com</span>.</div>
+      <div class="pay-step"><b>4.</b> The Pine Script (.pine file/s) will be emailed to you directly after the payment is verified.</div>
     </div>
   </div>
 </div>
