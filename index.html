@@ -67,8 +67,21 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .hft-name{font-size:12px;color:var(--text2)}
 
 /* Downloads section */
+.showcase{padding:60px 40px;max-width:1100px;margin:0 auto}
+.showcase-shots{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin:32px 0 48px}
+.showcase-shot{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.showcase-shot img{width:100%;height:auto;display:block}
+.showcase-shot-caption{padding:14px 18px;font-size:12.5px;color:var(--text2);line-height:1.6;border-top:1px solid var(--border)}
+.showcase-shot-caption b{color:var(--text)}
+.showcase-points{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.showcase-point{display:flex;gap:14px;background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:20px}
+.showcase-point-num{width:32px;height:32px;flex-shrink:0;border-radius:8px;background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.3);color:var(--green);font-weight:800;font-size:14px;display:flex;align-items:center;justify-content:center}
+.showcase-point h4{font-size:14px;font-weight:700;margin-bottom:6px}
+.showcase-point p{font-size:12.5px;color:var(--text2);line-height:1.7}
+
 .downloads{padding:60px 40px;max-width:1000px;margin:0 auto}
 .dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
+.dl-grid-4{grid-template-columns:repeat(4,1fr)}
 .dl-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:14px}
 .dl-card.locked{opacity:.96}
 .dl-year{font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:.08em}
@@ -124,7 +137,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
 .footer-right a{font-size:12px;color:var(--text3)}
 .footer-right a:hover{color:var(--text2)}
 
+@media(max-width:920px){
+  .dl-grid-4{grid-template-columns:repeat(2,1fr)}
+}
 @media(max-width:768px){
+  .showcase-shots{grid-template-columns:1fr}
+  .showcase-points{grid-template-columns:1fr}
   .features-grid{grid-template-columns:1fr}
   .hft-grid{grid-template-columns:1fr 1fr}
   .thesis-grid{grid-template-columns:1fr}
@@ -151,6 +169,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
   </div>
   <div class="nav-links" id="navLinks">
     <a href="#thesis">Our Thesis</a>
+    <a href="#indicator-features">See It In Action</a>
     <a href="#downloads">Downloads</a>
     <a href="#hft-list">Tracked Accounts</a>
     <a href="#how-it-works">How it works</a>
@@ -242,11 +261,79 @@ document.getElementById('navHamburger').addEventListener('click', () => {
   </div>
 </div>
 
+<div class="showcase" id="indicator-features">
+  <div class="section-title">On The Chart</div>
+  <div class="section-heading">What the indicator actually looks like</div>
+
+  <div class="showcase-shots">
+    <div class="showcase-shot">
+      <img src="assets/screenshot-tooltip.png" alt="Pine Script indicator tooltip showing date and tracked trader names on a bulk deal day">
+      <div class="showcase-shot-caption"><b>Hover any marker</b> to see the exact date, how many of the 12 tracked accounts were active, and every account name present that day.</div>
+    </div>
+    <div class="showcase-shot">
+      <img src="assets/screenshot-markers.png" alt="Pine Script indicator showing markers of varying size and vertical highlighting across a candlestick chart">
+      <div class="showcase-shot-caption"><b>Marker size and highlighting</b> scale automatically with how many tracked accounts were active on a given day.</div>
+    </div>
+  </div>
+
+  <div class="showcase-points">
+    <div class="showcase-point">
+      <div class="showcase-point-num">1</div>
+      <div>
+        <h4>Marks every candle with activity</h4>
+        <p>Any day one of the 12 tracked accounts appears in the bulk deal data, the indicator drops a marker directly on that candle — no digging through spreadsheets.</p>
+      </div>
+    </div>
+    <div class="showcase-point">
+      <div class="showcase-point-num">2</div>
+      <div>
+        <h4>Hover for full detail</h4>
+        <p>Move your cursor over any marker and a tooltip pops up with the date, stock, and the full list of tracked account names active that day.</p>
+      </div>
+    </div>
+    <div class="showcase-point">
+      <div class="showcase-point-num">3</div>
+      <div>
+        <h4>Marker size shows conviction</h4>
+        <p>A single account shows a small marker; several tracked accounts on the same day show a visibly larger one — the size itself tells you how significant the day was, at a glance.</p>
+      </div>
+    </div>
+    <div class="showcase-point">
+      <div class="showcase-point-num">4</div>
+      <div>
+        <h4>Vertical highlighting</h4>
+        <p>Candles with tracked activity get a soft vertical highlight down the chart, so clusters of activity are visible even when zoomed out.</p>
+      </div>
+    </div>
+    <div class="showcase-point">
+      <div class="showcase-point-num">5</div>
+      <div>
+        <h4>Saves hours of manual work</h4>
+        <p>No more manually cross-referencing bulk deal CSVs against a chart, day by day, stock by stock — the indicator does it for every symbol automatically.</p>
+      </div>
+    </div>
+    <div class="showcase-point">
+      <div class="showcase-point-num">6</div>
+      <div>
+        <h4>Surfaces historical operator levels</h4>
+        <p>Scroll back through months or years of chart history and instantly see exactly where tracked accounts were active before — a fast way to find historically significant price levels.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="downloads" id="downloads">
   <div class="section-title">Pine Script Downloads</div>
   <div class="section-heading">Get the Operator Activity Indicator</div>
 
-  <div class="dl-grid">
+  <div class="dl-grid dl-grid-4">
+    <div class="dl-card">
+      <div class="dl-year">TRAILING 30 DAYS</div>
+      <div class="dl-title">1-Month Sample</div>
+      <span class="dl-tag free">FREE</span>
+      <p>A live sample covering the trailing 30 days, regenerated automatically every day from real data. Try it before you buy a full year.</p>
+      <a class="dl-btn free" href="downloads/OPERATOR_Sample_Trailing1Month.pine" download>⬇ Download Free Sample</a>
+    </div>
     <div class="dl-card locked">
       <div class="dl-year">YEAR 2024</div>
       <div class="dl-title">Operator Activity 2024</div>
