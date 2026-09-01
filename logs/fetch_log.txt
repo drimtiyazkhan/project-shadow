@@ -364,3 +364,12 @@ ValueError: [existing activity_2026.xlsx] Unexpected format — missing fields: 
 2026-08-31 20:03:44,214 [WARNING] Gave up after 4 attempts — NSE's file still doesn't show today's date. This is expected on weekends/holidays. If it's a trading day, check https://nsearchives.nseindia.com/content/equities/bulk.csv manually.
 2026-08-31 20:03:44,215 [INFO] === Bulk deal fetch run finished ===
 
+2026-09-01 17:22:45,599 [INFO] === Bulk deal fetch run started (2026-09-01T22:52:45.599273+05:30 IST) ===
+2026-09-01 17:22:48,119 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (22722 bytes)
+2026-09-01 17:22:48,156 [INFO] Parsed 248 rows from NSE's archive file
+2026-09-01 17:22:48,156 [INFO] Most recent date present in the fetched file: 2026-09-01 (today is 2026-09-01)
+2026-09-01 17:22:58,860 [INFO] Saved 18160 total rows to /home/runner/work/project-shadow-automation/project-shadow-automation/site/data/activity_2026.xlsx
+2026-09-01 17:22:58,860 [INFO] Year 2026: added 248 new rows
+2026-09-01 17:22:58,863 [INFO] Success: today's data was found and processed (248 new rows).
+2026-09-01 17:22:58,864 [INFO] === Bulk deal fetch run finished ===
+
