@@ -59,6 +59,22 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .feature-card h3{font-size:15px;font-weight:700;margin-bottom:8px}
 .feature-card p{font-size:13px;color:var(--text2);line-height:1.7}
 
+.install-guide{padding:60px 40px;max-width:1100px;margin:0 auto}
+.install-steps{display:flex;flex-direction:column;gap:0;margin-top:32px}
+.install-step{display:grid;grid-template-columns:280px 1fr;gap:32px;align-items:center;padding:32px 0;border-bottom:1px solid var(--border)}
+.install-step:last-child{border-bottom:none}
+.install-step:nth-child(even){grid-template-columns:280px 1fr}
+.install-step-img{width:100%;border-radius:10px;border:1px solid var(--border);overflow:hidden;background:var(--bg2)}
+.install-step-img img{width:100%;height:auto;display:block}
+.install-step-num{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(0,230,118,.12);border:1px solid rgba(0,230,118,.3);color:var(--green);font-weight:800;font-size:13px;margin-bottom:10px}
+.install-step-content h3{font-size:17px;font-weight:700;margin-bottom:8px}
+.install-step-content p{font-size:13.5px;color:var(--text2);line-height:1.7}
+.install-step-compact{display:flex;gap:16px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--border)}
+.install-step-compact:last-child{border-bottom:none}
+.install-step-compact .install-step-num{margin-bottom:0;flex-shrink:0}
+.install-step-compact-text{font-size:13.5px;color:var(--text2);line-height:1.7;padding-top:3px}
+.install-step-compact-text b{color:var(--text)}
+
 .hft-section{padding:60px 40px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
 .hft-inner{max-width:1100px;margin:0 auto}
 .hft-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:32px}
@@ -158,6 +174,8 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
   .bundle-banner-left{flex-direction:column}
 }
 @media(max-width:768px){
+  .install-step{grid-template-columns:1fr}
+  .install-step:nth-child(even){grid-template-columns:1fr}
   .showcase-shots{grid-template-columns:1fr}
   .showcase-points{grid-template-columns:1fr}
   .features-grid{grid-template-columns:1fr}
@@ -190,6 +208,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
     <a href="#thesis">Our Thesis</a>
     <a href="#indicator-features">See It In Action</a>
     <a href="#downloads">Downloads</a>
+    <a href="#install-guide">Setup Guide</a>
     <a href="#hft-list">Tracked Accounts</a>
     <a href="#how-it-works">How it works</a>
     <a href="#feedback">Feedback</a>
@@ -400,6 +419,81 @@ document.getElementById('navHamburger').addEventListener('click', () => {
       <div class="pay-step"><b>2.</b> Note down your payment transaction / reference ID.</div>
       <div class="pay-step"><b>3.</b> Email the transaction ID, which year(s) or bundle you paid for, and your name to <span class="pay-email">imtiyazfaith@gmail.com</span>.</div>
       <div class="pay-step"><b>4.</b> The Pine Script (.pine file/s) will be emailed to you directly after the payment is verified.</div>
+    </div>
+  </div>
+</div>
+
+<div class="install-guide" id="install-guide">
+  <div class="section-title">Setup Guide</div>
+  <div class="section-heading">How to load it into TradingView</div>
+
+  <div class="install-steps">
+    <div class="install-step">
+      <div class="install-step-img"><img src="assets/tv-real-step1-pine-editor.png" alt="Clicking the Pine Editor icon in the TradingView chart sidebar"></div>
+      <div class="install-step-content">
+        <div class="install-step-num">1</div>
+        <h3>Click on Pine Editor</h3>
+        <p>On your TradingView chart, find the <b style="color:var(--text)">Pine Editor</b> icon in the right-hand toolbar (the small triangle icon) and click it.</p>
+      </div>
+    </div>
+    <div class="install-step">
+      <div class="install-step-img"><img src="assets/tv-real-step2-curve-icon.png" alt="Clicking the script dropdown icon next to Untitled script"></div>
+      <div class="install-step-content">
+        <div class="install-step-num">2</div>
+        <h3>Click the script dropdown</h3>
+        <p>Click the small curve (<code>~</code>) icon next to "Untitled script" to open the script menu.</p>
+      </div>
+    </div>
+    <div class="install-step">
+      <div class="install-step-img"><img src="assets/tv-real-step3-create-indicator.png" alt="Selecting Create new, then Indicator from the menu"></div>
+      <div class="install-step-content">
+        <div class="install-step-num">3</div>
+        <h3>Create a new indicator</h3>
+        <p>Hover over <b style="color:var(--text)">Create new</b>, then click <b style="color:var(--text)">Indicator</b> from the menu that appears.</p>
+      </div>
+    </div>
+    <div class="install-step">
+      <div class="install-step-img"><img src="assets/tv-real-step4-delete-all.png" alt="Selecting all default code and deleting it"></div>
+      <div class="install-step-content">
+        <div class="install-step-num">4</div>
+        <h3>Select all, delete everything</h3>
+        <p>Click into the editor, select everything (<code>Ctrl+A</code>), and delete it — you should be left with a completely empty editor.</p>
+      </div>
+    </div>
+
+    <div class="install-step-compact">
+      <div class="install-step-num">5</div>
+      <div class="install-step-compact-text">Open your downloaded <b>.pine</b> file in any plain text editor (Notepad, TextEdit, VS Code, etc.).</div>
+    </div>
+    <div class="install-step-compact">
+      <div class="install-step-num">6</div>
+      <div class="install-step-compact-text">Select everything in that file (<b>Ctrl+A</b>) and copy it (<b>Ctrl+C</b>).</div>
+    </div>
+
+    <div class="install-step">
+      <div class="install-step-img"><img src="assets/tv-real-step7-paste-all.png" alt="Pasting the copied script into the empty Pine Editor panel"></div>
+      <div class="install-step-content">
+        <div class="install-step-num">7</div>
+        <h3>Paste it into the editor</h3>
+        <p>Click back into the now-empty Pine Editor panel on TradingView and paste (<code>Ctrl+V</code>) everything you just copied.</p>
+      </div>
+    </div>
+    <div class="install-step">
+      <div class="install-step-img"><img src="assets/tv-real-step8-save-add-chart.png" alt="Clicking Save, then Add to chart"></div>
+      <div class="install-step-content">
+        <div class="install-step-num">8</div>
+        <h3>Click Save, then Add to chart</h3>
+        <p>Click <b style="color:var(--text)">Save</b> first (name it anything), then click <b style="color:var(--text)">Add to chart</b> to apply it.</p>
+      </div>
+    </div>
+
+    <div class="install-step-compact">
+      <div class="install-step-num">9</div>
+      <div class="install-step-compact-text">Exit the Pine Editor — you're done with it.</div>
+    </div>
+    <div class="install-step-compact">
+      <div class="install-step-num">10</div>
+      <div class="install-step-compact-text">Your indicator is ready to use. Open the chart of any stock where tracked activity happened, and the markers will appear automatically.</div>
     </div>
   </div>
 </div>
