@@ -96,36 +96,21 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .showcase-point p{font-size:12.5px;color:var(--text2);line-height:1.7}
 
 .downloads{padding:60px 40px;max-width:1000px;margin:0 auto}
-.bundle-banner{background:linear-gradient(135deg,rgba(0,230,118,.14),rgba(245,158,11,.10));border:1px solid rgba(0,230,118,.35);border-radius:14px;padding:26px 30px;margin-bottom:28px;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-.bundle-banner-left{display:flex;align-items:center;gap:16px}
-.bundle-badge{background:var(--green);color:var(--bg);font-weight:800;font-size:11px;padding:5px 12px;border-radius:20px;letter-spacing:.04em;white-space:nowrap;animation:pulse-badge 1.8s ease-in-out infinite}
-@keyframes pulse-badge{0%,100%{opacity:1}50%{opacity:.6}}
-.bundle-text h3{font-size:18px;font-weight:800;margin-bottom:4px}
-.bundle-text p{font-size:13px;color:var(--text2)}
-.bundle-text .old-price{text-decoration:line-through;color:var(--text3);font-weight:600}
-.bundle-text .new-price{color:var(--green);font-weight:800;font-size:16px}
-.bundle-cta{background:var(--green);color:var(--bg);padding:12px 26px;border-radius:8px;font-weight:800;font-size:14px;white-space:nowrap}
-.bundle-cta:hover{opacity:.88;text-decoration:none}
-
+.donate-section{padding:60px 40px;background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.donate-inner{max-width:640px;margin:0 auto;text-align:center}
 .dl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px}
-.dl-grid-4{grid-template-columns:repeat(4,1fr)}
 .dl-card{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:26px;display:flex;flex-direction:column;gap:14px}
-.dl-card.locked{opacity:.96}
 .dl-year{font-family:var(--mono);font-size:12px;color:var(--text3);letter-spacing:.08em}
 .dl-title{font-size:20px;font-weight:800}
 .dl-tag{display:inline-block;font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;letter-spacing:.05em;width:fit-content}
 .dl-tag.free{background:rgba(0,230,118,.12);color:var(--green);border:1px solid rgba(0,230,118,.3)}
-.dl-tag.paid{background:rgba(245,158,11,.12);color:var(--amber);border:1px solid rgba(245,158,11,.3)}
 .dl-card p{font-size:12px;color:var(--text2);line-height:1.7;flex:1}
-.dl-price{font-size:24px;font-weight:800;color:var(--text)}
-.dl-price .per{font-size:12px;font-weight:600;color:var(--text3)}
 .dl-btn{padding:10px 16px;border-radius:7px;font-size:13px;font-weight:700;text-align:center;border:none;cursor:pointer;transition:opacity .15s}
 .dl-btn.free{background:var(--green);color:var(--bg)}
 .dl-btn.free:hover{opacity:.88;text-decoration:none}
-.dl-btn.locked{background:var(--bg3);color:var(--text2);border:1px solid var(--border2)}
 
-/* Payment panel */
-.pay-panel{margin-top:40px;background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:32px;display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:center}
+/* Payment / donate panel */
+.pay-panel{margin-top:40px;background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:32px;display:grid;grid-template-columns:180px 1fr;gap:28px;align-items:center}
 .pay-qr{width:180px;height:180px;border-radius:10px;overflow:hidden;border:1px solid var(--border2);background:#fff}
 .pay-qr img{width:100%;height:100%;object-fit:contain;display:block}
 .pay-steps{display:flex;flex-direction:column;gap:10px}
@@ -160,19 +145,22 @@ nav{background:var(--bg2);border-bottom:1px solid var(--border);padding:0 40px;h
 .feedback-status.success{color:var(--green)}
 .feedback-status.error{color:var(--red)}
 
+.dl-modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:1000;align-items:center;justify-content:center;padding:20px}
+.dl-modal-overlay.open{display:flex}
+.dl-modal{background:var(--bg2);border:1px solid var(--border2);border-radius:16px;padding:36px;max-width:420px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.5)}
+.dl-modal-countdown{font-size:52px;font-weight:800;color:var(--green);font-family:var(--mono);line-height:1;margin-bottom:6px}
+.dl-modal h3{font-size:17px;font-weight:700;margin-bottom:14px}
+.dl-modal p{font-size:13.5px;color:var(--text2);line-height:1.7;margin-bottom:20px}
+.dl-modal-qr{width:110px;height:110px;margin:0 auto 16px;border-radius:8px;overflow:hidden;border:1px solid var(--border2);background:#fff}
+.dl-modal-qr img{width:100%;height:100%;object-fit:contain;display:block}
+.dl-modal-note{font-size:12px;color:var(--text3);margin-bottom:0}
+
 footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40px;display:flex;justify-content:space-between;align-items:center}
 .footer-left{font-size:12px;color:var(--text3)}
 .footer-right{display:flex;gap:20px}
 .footer-right a{font-size:12px;color:var(--text3)}
 .footer-right a:hover{color:var(--text2)}
 
-@media(max-width:920px){
-  .dl-grid-4{grid-template-columns:repeat(2,1fr)}
-}
-@media(max-width:600px){
-  .bundle-banner{flex-direction:column;text-align:center}
-  .bundle-banner-left{flex-direction:column}
-}
 @media(max-width:768px){
   .install-step{grid-template-columns:1fr}
   .install-step:nth-child(even){grid-template-columns:1fr}
@@ -208,6 +196,7 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
     <a href="#thesis">Our Thesis</a>
     <a href="#indicator-features">See It In Action</a>
     <a href="#downloads">Downloads</a>
+    <a href="#donate">Donate</a>
     <a href="#install-guide">Setup Guide</a>
     <a href="#hft-list">Tracked Accounts</a>
     <a href="#how-it-works">How it works</a>
@@ -362,63 +351,47 @@ document.getElementById('navHamburger').addEventListener('click', () => {
 
 <div class="downloads" id="downloads">
   <div class="section-title">Pine Script Downloads</div>
-  <div class="section-heading">Get the Operator Activity Indicator</div>
+  <div class="section-heading">Get the Operator Activity Indicator — 100% Free</div>
+  <p style="text-align:center;color:var(--text2);font-size:14px;max-width:560px;margin:-16px auto 0">Every year is free to download, updates automatically, and always will be. If it's useful to you, consider supporting the project below.</p>
 
-  <div class="bundle-banner">
-    <div class="bundle-banner-left">
-      <span class="bundle-badge">🔥 INAUGURATION OFFER</span>
-      <div class="bundle-text">
-        <h3>All 3 Years Bundle — Hurry, Limited Period!</h3>
-        <p>2024 + 2025 + 2026 together, normally <span class="old-price">₹1,997</span> → now just <span class="new-price">₹999</span></p>
-      </div>
-    </div>
-    <a href="#pay" class="bundle-cta">Grab The Bundle →</a>
-  </div>
-
-  <div class="dl-grid dl-grid-4">
+  <div class="dl-grid">
     <div class="dl-card">
-      <div class="dl-year">TRAILING 30 DAYS</div>
-      <div class="dl-title">1-Month Sample</div>
-      <span class="dl-tag free">FREE</span>
-      <p>A live sample covering the trailing 30 days, regenerated automatically every day from real data. Try it before you buy a full year.</p>
-      <a class="dl-btn free" href="downloads/OPERATOR_Sample_Trailing1Month.pine" download data-goatcounter-click="sample-indicator-download" data-goatcounter-title="Free Sample Indicator Download">⬇ Download Free Sample</a>
-    </div>
-    <div class="dl-card locked">
       <div class="dl-year">YEAR 2024</div>
       <div class="dl-title">Operator Activity 2024</div>
-      <span class="dl-tag paid">PAID</span>
-      <div class="dl-price">₹399</div>
-      <p>Full-year Pine Script covering 2024 bulk deal data. Pay via QR below and email your transaction ID to receive it.</p>
-      <a class="dl-btn locked" href="#pay">🔒 Unlock — See Payment Info</a>
+      <span class="dl-tag free">FREE</span>
+      <p>Full-year Pine Script covering 2024 bulk deal data — the complete historical record for the year.</p>
+      <a class="dl-btn free" href="downloads/OPERATOR_Activity_2024.pine" download data-goatcounter-click="download-2024" data-goatcounter-title="2024 Indicator Download">⬇ Download Free</a>
     </div>
-    <div class="dl-card locked">
+    <div class="dl-card">
       <div class="dl-year">YEAR 2025</div>
       <div class="dl-title">Operator Activity 2025</div>
-      <span class="dl-tag paid">PAID</span>
-      <div class="dl-price">₹599</div>
-      <p>Full-year Pine Script covering 2025 bulk deal data. Pay via QR below and email your transaction ID to receive it.</p>
-      <a class="dl-btn locked" href="#pay">🔒 Unlock — See Payment Info</a>
+      <span class="dl-tag free">FREE</span>
+      <p>Full-year Pine Script covering 2025 bulk deal data — the complete historical record for the year.</p>
+      <a class="dl-btn free" href="downloads/OPERATOR_Activity_2025.pine" download data-goatcounter-click="download-2025" data-goatcounter-title="2025 Indicator Download">⬇ Download Free</a>
     </div>
-    <div class="dl-card locked">
+    <div class="dl-card">
       <div class="dl-year">YEAR 2026</div>
       <div class="dl-title">Operator Activity 2026</div>
-      <span class="dl-tag paid">PAID</span>
-      <div class="dl-price">₹999</div>
-      <p>Full-year Pine Script covering 2026 bulk deal data, updated periodically as the year progresses.</p>
-      <a class="dl-btn locked" href="#pay">🔒 Unlock — See Payment Info</a>
+      <span class="dl-tag free">FREE</span>
+      <p>Full-year Pine Script covering 2026 to date. Regenerated automatically every day as new bulk deal data comes in.</p>
+      <a class="dl-btn free" href="downloads/OPERATOR_Activity_2026.pine" download data-goatcounter-click="download-2026" data-goatcounter-title="2026 Indicator Download">⬇ Download Free</a>
     </div>
   </div>
+</div>
 
-  <div class="pay-panel" id="pay">
-    <div class="pay-qr">
-      <img src="assets/qr-code.png" alt="Payment QR code">
-    </div>
-    <div class="pay-steps">
-      <h3>How to get any year's script (or the bundle)</h3>
-      <div class="pay-step"><b>1.</b> Scan the QR code and pay the amount for the year(s) you want — or ₹999 for all 3 years during the inauguration offer.</div>
-      <div class="pay-step"><b>2.</b> Note down your payment transaction / reference ID.</div>
-      <div class="pay-step"><b>3.</b> Email the transaction ID, which year(s) or bundle you paid for, and your name to <span class="pay-email">imtiyazfaith@gmail.com</span>.</div>
-      <div class="pay-step"><b>4.</b> The Pine Script (.pine file/s) will be emailed to you directly after the payment is verified.</div>
+<div class="donate-section" id="donate">
+  <div class="donate-inner">
+    <div class="section-title">Support The Project</div>
+    <div class="section-heading">Keep it free for everyone</div>
+    <p style="text-align:center;color:var(--text2);font-size:14px;max-width:560px;margin:0 auto 32px">Project Shadow costs real time and money to run every day — data fetching, daily indicator generation, and hosting. It's free for everyone and always will be. If it's saved you time or money, a small donation helps keep it going.</p>
+    <div class="pay-panel">
+      <div class="pay-qr">
+        <img src="assets/qr-code.png" alt="Donation QR code">
+      </div>
+      <div class="pay-steps">
+        <h3>Scan to donate any amount</h3>
+        <p style="font-size:13.5px;color:var(--text2);line-height:1.7;margin-top:8px">Every bit helps keep the daily data pipeline running and the indicators free for everyone. Thank you for considering it — no pressure, no obligation.</p>
+      </div>
     </div>
   </div>
 </div>
@@ -640,11 +613,66 @@ document.getElementById('feedbackForm').addEventListener('submit', async (e) => 
   <div class="footer-right">
     <a href="tracker.html">Tracker</a>
     <a href="#downloads">Downloads</a>
+    <a href="#donate">Donate</a>
     <a href="#how-it-works">How it works</a>
     <a href="#hft-list">Tracked Accounts</a>
     <a href="#feedback">Feedback</a>
   </div>
 </footer>
+
+<div class="dl-modal-overlay" id="dlModalOverlay">
+  <div class="dl-modal">
+    <div class="dl-modal-countdown" id="dlModalCountdown">10</div>
+    <h3>Your download starts in a moment...</h3>
+    <p>Project Shadow runs on real data-fetching, computing, and hosting costs — every single day. It's free for everyone, and we'd like to keep it that way. If it's saved you time or money, even a small donation helps keep the lights on.</p>
+    <div class="dl-modal-qr"><img src="assets/qr-code.png" alt="Donation QR code"></div>
+    <p class="dl-modal-note">Your file downloads automatically when the countdown ends — no action needed.</p>
+  </div>
+</div>
+
+<script>
+(function() {
+  const overlay = document.getElementById('dlModalOverlay');
+  const countdownEl = document.getElementById('dlModalCountdown');
+  let pendingUrl = null;
+  let timer = null;
+
+  document.querySelectorAll('.dl-btn.free[download]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      pendingUrl = btn.getAttribute('href');
+      startCountdown();
+    });
+  });
+
+  function startCountdown() {
+    let seconds = 10;
+    countdownEl.textContent = seconds;
+    overlay.classList.add('open');
+
+    timer = setInterval(() => {
+      seconds--;
+      if (seconds <= 0) {
+        clearInterval(timer);
+        overlay.classList.remove('open');
+        triggerDownload(pendingUrl);
+      } else {
+        countdownEl.textContent = seconds;
+      }
+    }, 1000);
+  }
+
+  function triggerDownload(url) {
+    if (!url) return;
+    const a = document.createElement('a');
+    a.href = url;
+    a.setAttribute('download', '');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  }
+})();
+</script>
 
 </body>
 </html>
