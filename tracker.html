@@ -82,6 +82,17 @@ td.sell{color:var(--red);font-weight:700}
 .dl-btn:hover{color:var(--text);border-color:var(--text2)}
 
 .summary-cards{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.backtest-panel{background:var(--bg3);border:1px solid var(--border);border-radius:10px;padding:16px 18px;margin-bottom:20px}
+.backtest-panel h4{font-size:12.5px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:10px}
+.backtest-panel table{font-size:12px}
+.backtest-panel th,.backtest-panel td{padding:5px 8px}
+.backtest-note{font-size:11.5px;color:var(--text3);margin-top:10px;line-height:1.6}
+.state-badge{font-size:10.5px;font-weight:700;padding:2px 8px;border-radius:10px;white-space:nowrap}
+.state-badge.early{background:rgba(0,230,118,.15);color:var(--green)}
+.state-badge.moving{background:rgba(245,158,11,.15);color:var(--amber)}
+.state-badge.quiet{background:rgba(33,150,243,.15);color:var(--blue)}
+.state-badge.watch{background:rgba(139,144,176,.15);color:var(--text2)}
+.state-badge.none{background:rgba(74,80,112,.15);color:var(--text3)}
 .summary-card{background:var(--bg3);border:1px solid var(--border);border-radius:8px;padding:14px}
 .summary-card .val{font-size:25px;font-weight:800;color:var(--green)}
 .summary-card .lbl{font-size:12.5px;color:var(--text3);margin-top:2px}
@@ -156,6 +167,8 @@ document.getElementById('navHamburger').addEventListener('click', () => {
     <a href="#panel-today" class="active">Today's Activity</a>
     <a href="#panel-lookup">Symbol Lookup</a>
     <a href="#panel-delivery">Delivery Zones</a>
+    <a href="#panel-watchlist">Watchlist</a>
+    <a href="#panel-events">Events</a>
   </div>
 
   <div class="status-bar" id="statusBar">
@@ -250,6 +263,46 @@ document.getElementById('navHamburger').addEventListener('click', () => {
       <table>
         <thead><tr><th>Symbol</th><th>Tier</th><th>Zone Start</th><th>Zone End</th></tr></thead>
         <tbody id="deliveryTable"><tr class="empty-row"><td colspan="4">Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-watchlist">
+    <div class="panel-header-row">
+      <h2>Watchlist</h2>
+      <button class="dl-btn" id="dlWatchlist">⬇ Download Symbols (.txt)</button>
+    </div>
+    <div class="panel-sub">Ranked by our scoring model — a starting point for your own research, not a buy signal. See the live performance numbers below before trusting any of it.</div>
+
+    <div class="backtest-panel">
+      <h4>Signal Performance (updates automatically as more days accumulate)</h4>
+      <div class="table-scroll">
+        <table>
+          <thead><tr><th>Signal</th><th>N</th><th>Precision</th><th>Lift</th></tr></thead>
+          <tbody id="backtestTable"><tr class="empty-row"><td colspan="4">Loading…</td></tr></tbody>
+        </table>
+      </div>
+      <div class="backtest-note">"N" is how many times this signal has fired historically. Under 10 and it's labeled "too few to judge" rather than shown as a real number. A lift near 1.0x means the signal isn't actually helping — treat it as noise, not an edge.</div>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Symbol</th><th>Score</th><th>State</th><th>Vol Ratio</th><th>Return %</th><th>Deliv %</th><th>Fade Risk</th><th>Event</th></tr></thead>
+        <tbody id="watchlistTable"><tr class="empty-row"><td colspan="8">Loading…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="panel" id="panel-events">
+    <div class="panel-header-row">
+      <h2>Upcoming Events</h2>
+      <button class="dl-btn" id="dlEvents">⬇ Download Symbols (.txt)</button>
+    </div>
+    <div class="panel-sub">Upcoming results/events for symbols with tracked activity in the past year, soonest first</div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Symbol</th><th>Event</th><th>Date</th><th>Days Until</th></tr></thead>
+        <tbody id="eventsTable"><tr class="empty-row"><td colspan="4">Loading…</td></tr></tbody>
       </table>
     </div>
   </div>
@@ -731,13 +784,19 @@ document.getElementById('dlLookup').addEventListener('click', () => {
 document.getElementById('dlDelivery').addEventListener('click', () => {
   downloadSymbolsTxt(currentDeliverySymbols, `delivery-zone-symbols-${todayStr()}.txt`);
 });
+document.getElementById('dlWatchlist').addEventListener('click', () => {
+  downloadSymbolsTxt(currentWatchlistSymbols, `watchlist-symbols-${todayStr()}.txt`);
+});
+document.getElementById('dlEvents').addEventListener('click', () => {
+  downloadSymbolsTxt(currentEventSymbols, `upcoming-events-symbols-${todayStr()}.txt`);
+});
 
 /* =====================================================================
    SECTION NAV — highlights the current panel's link while scrolling
 ===================================================================== */
 
 const sectionNavLinks = document.querySelectorAll('#sectionNav a');
-const sectionPanels = ['panel-today', 'panel-lookup', 'panel-delivery'].map(id => document.getElementById(id));
+const sectionPanels = ['panel-today', 'panel-lookup', 'panel-delivery', 'panel-watchlist', 'panel-events'].map(id => document.getElementById(id));
 
 const sectionObserver = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
@@ -753,7 +812,102 @@ const sectionObserver = new IntersectionObserver((entries) => {
 sectionPanels.forEach(panel => { if (panel) sectionObserver.observe(panel); });
 
 loadAllData();
+/* =====================================================================
+   WATCHLIST (with live backtest transparency table)
+===================================================================== */
+
+let currentWatchlistSymbols = [];
+
+function stateBadgeClass(state) {
+  if (state === 'EARLY / BUILDING') return 'early';
+  if (state === 'ALREADY MOVING') return 'moving';
+  if (state === 'ACTIVE, QUIET') return 'quiet';
+  if (state === 'WATCH') return 'watch';
+  return 'none';
+}
+
+async function loadXlsx(path) {
+  try {
+    const resp = await fetch(path);
+    if (!resp.ok) return [];
+    const buf = await resp.arrayBuffer();
+    const wb = XLSX.read(buf, { type: 'array' });
+    const sheet = wb.Sheets[wb.SheetNames[0]];
+    return XLSX.utils.sheet_to_json(sheet, { defval: '' });
+  } catch (e) {
+    console.warn('Could not load', path, e);
+    return [];
+  }
+}
+
+async function loadWatchlist() {
+  const year = new Date().getFullYear();
+  const [wlRows, btRows] = await Promise.all([
+    loadXlsx(`data/watchlist_${year}.xlsx`),
+    loadXlsx(`data/signal_backtest.xlsx`),
+  ]);
+
+  // Backtest transparency table
+  const btBody = document.getElementById('backtestTable');
+  if (btRows.length === 0) {
+    btBody.innerHTML = `<tr class="empty-row"><td colspan="4">No backtest data yet.</td></tr>`;
+  } else {
+    btBody.innerHTML = btRows.map(r => {
+      const precision = (r.Precision === '' || r.Precision === null) ? '—' : `${r.Precision}%`;
+      const lift = (r.Lift === '' || r.Lift === null) ? (r.Note || 'too few to judge') : `${r.Lift}x`;
+      return `<tr><td>${r.Signal}</td><td>${r.N}</td><td>${precision}</td><td>${lift}</td></tr>`;
+    }).join('');
+  }
+
+  // Watchlist table
+  const wlBody = document.getElementById('watchlistTable');
+  if (wlRows.length === 0) {
+    wlBody.innerHTML = `<tr class="empty-row"><td colspan="8">No watchlist data yet.</td></tr>`;
+    currentWatchlistSymbols = [];
+    return;
+  }
+  const sorted = wlRows.slice().sort((a, b) => (b.score || 0) - (a.score || 0)).slice(0, 50);
+  currentWatchlistSymbols = sorted.map(r => String(r.Symbol).toUpperCase());
+
+  wlBody.innerHTML = sorted.map(r => `<tr>
+    <td class="sym">${r.Symbol}</td>
+    <td>${r.score}</td>
+    <td><span class="state-badge ${stateBadgeClass(r.state)}">${r.state}</span></td>
+    <td>${r.vol_ratio || '—'}</td>
+    <td>${r.ret || '—'}</td>
+    <td>${r.Deliv_Per ? Number(r.Deliv_Per).toFixed(1) : '—'}</td>
+    <td>${r.fade_risk || '—'}</td>
+    <td>${r.event_type || '—'}</td>
+  </tr>`).join('');
+}
+
+/* =====================================================================
+   UPCOMING EVENTS
+===================================================================== */
+
+let currentEventSymbols = [];
+
+async function loadUpcomingEvents() {
+  const rows = await loadXlsx('data/upcoming_events.xlsx');
+  const body = document.getElementById('eventsTable');
+
+  if (rows.length === 0) {
+    body.innerHTML = `<tr class="empty-row"><td colspan="4">No upcoming events found for recently active symbols.</td></tr>`;
+    currentEventSymbols = [];
+    return;
+  }
+
+  const sorted = rows.slice().sort((a, b) => String(a.EventDate).localeCompare(String(b.EventDate)));
+  currentEventSymbols = [...new Set(sorted.map(r => String(r.Symbol).toUpperCase()))];
+
+  body.innerHTML = sorted.map(r => `<tr>
+    <td class="sym">${r.Symbol}</td><td>${r.EventType}</td><td>${r.EventDate}</td><td>${r.DaysUntil}</td>
+  </tr>`).join('');
+}
+
 loadDeliveryZones();
+loadWatchlist();
+loadUpcomingEvents();
 </script>
 
 </body>
