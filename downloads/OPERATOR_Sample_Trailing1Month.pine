@@ -1,7 +1,7 @@
 //@version=5
 indicator("Project Shadow - Operator Activity (Trailing 1M Sample)", overlay=true, max_labels_count=500)
 
-// SAMPLE VERSION — trailing 1 month: 26 Aug 2026 to 24 Sep 2026
+// SAMPLE VERSION — trailing 1 month: 27 Aug 2026 to 25 Sep 2026
 // Tracks bulk-deal activity by the 12 operator-linked accounts we track.
 // Includes quantity + trade price detail per account per deal.
 // This sample regenerates automatically every day from live data.
@@ -27,6 +27,7 @@ load_1() =>
     map.put(_m, "AHCL:20260922", "HRTI Private Limited@5121298.0@27.93@5090236.0@27.97|QE Securities LLP@2951499.0@28.2@2921607.0@28.13")
     map.put(_m, "AHCL:20260923", "Microcurves Trading Private Limited@2896608.0@28.84@2896608.0@28.84|HRTI Private Limited@13194593.0@28.78@13277172.0@29.02|Junomoneta Finsol Private Limited@4995524.0@28.91@4995526.0@28.92|QE Securities LLP@5327588.0@28.76@5329218.0@28.93")
     map.put(_m, "AHCL:20260924", "HRTI Private Limited@4698525.0@29.2@4858932.0@29.2")
+    map.put(_m, "AHCL:20260925", "HRTI Private Limited@7225426.0@30.1@7244905.0@30.2|NK Securities Research Private Limited@3290123.0@30.13@3298433.0@30.15|Junomoneta Finsol Private Limited@3218674.0@30.13@3212893.0@30.16|QE Securities LLP@2713853.0@29.72@2825885.0@29.87")
     map.put(_m, "ALEMBICLTD:20260903", "Microcurves Trading Private Limited@1866187.0@113.87@1866187.0@113.99|NK Securities Research Private Limited@1446441.0@113.11@1446441.0@113.15")
     map.put(_m, "ANDHRAPAP:20260907", "Microcurves Trading Private Limited@1818411.0@73.88@1818411.0@73.95|NK Securities Research Private Limited@1593777.0@72.89@1593777.0@72.96")
     map.put(_m, "ANDHRAPAP:20260908", "Microcurves Trading Private Limited@1575295.0@74.86@1575295.0@74.88|Junomoneta Finsol Private Limited@1621455.0@74.16@1613172.0@74.13")
@@ -39,17 +40,18 @@ load_1() =>
     map.put(_m, "ANTELOPUS:20260910", "HRTI Private Limited@275373.0@1142.88@276280.0@1143.88|Junomoneta Finsol Private Limited@271829.0@1143.29@273169.0@1143.9")
     map.put(_m, "ANTELOPUS:20260911", "HRTI Private Limited@404136.0@1147.83@393032.0@1154.31|NK Securities Research Private Limited@176364.0@1152.53@176364.0@1152.93|Junomoneta Finsol Private Limited@301154.0@1149.29@298266.0@1149.45|QE Securities LLP@274589.0@1145.06@271157.0@1151.44")
     map.put(_m, "ANTELOPUS:20260916", "HRTI Private Limited@464286.0@1140.37@470021.0@1138.1|Junomoneta Finsol Private Limited@236286.0@1137.59@235393.0@1138.46|QE Securities LLP@279455.0@1132.69@281782.0@1134.67")
+    map.put(_m, "ANTELOPUS:20260925", "Microcurves Trading Private Limited@317809.0@1241.22@317809.0@1241.99|HRTI Private Limited@461575.0@1230.59@461237.0@1229.86|NK Securities Research Private Limited@229679.0@1237.25@229679.0@1237.76|Junomoneta Finsol Private Limited@289043.0@1234.46@292726.0@1235.03|QE Securities LLP@313956.0@1230.94@320359.0@1228.54")
     map.put(_m, "ARIS:20260828", "HRTI Private Limited@480513.0@150.75@147131.0@149.66")
     map.put(_m, "ARIS:20260901", "HRTI Private Limited@183741.0@131.37@499240.0@131.55")
+    map.put(_m, "ARTEMISMED:20260925", "Microcurves Trading Private Limited@1004061.0@365.8@1004061.0@366.15")
     map.put(_m, "ARVSMART:20260923", "Microcurves Trading Private Limited@295220.0@649.48@295220.0@650.36|QE Securities LLP@233716.0@645.06@226027.0@648.38")
     map.put(_m, "ASHOKA:20260831", "Microcurves Trading Private Limited@6913773.0@124.8@6912536.0@124.88|NK Securities Research Private Limited@3729535.0@124.77@3729535.0@124.82|Junomoneta Finsol Private Limited@3465486.0@124.53@3462354.0@124.6|QE Securities LLP@2993046.0@125.22@2968058.0@124.19")
     map.put(_m, "ASTEC:20260909", "Microcurves Trading Private Limited@255931.0@752.6@255931.0@753.1|NK Securities Research Private Limited@172956.0@752.39@172956.0@752.7|Junomoneta Finsol Private Limited@193946.0@754.5@196601.0@754.71|QE Securities LLP@180108.0@754.57@180734.0@750.44")
-    map.put(_m, "ATALREAL:20260826", "HRTI Private Limited@521017.0@34.2@1059530.0@34.21|QE Securities LLP@691381.0@34.35@720010.0@34.37")
-    map.put(_m, "ATALREAL:20260827", "HRTI Private Limited@1367631.0@35.53@724376.0@35.35")
-    map.put(_m, "ATALREAL:20260828", "HRTI Private Limited@972181.0@35.28@928214.0@35.24|QE Securities LLP@977627.0@35.36@931525.0@35.38")
     true
 
 load_2() =>
+    map.put(_m, "ATALREAL:20260827", "HRTI Private Limited@1367631.0@35.53@724376.0@35.35")
+    map.put(_m, "ATALREAL:20260828", "HRTI Private Limited@972181.0@35.28@928214.0@35.24|QE Securities LLP@977627.0@35.36@931525.0@35.38")
     map.put(_m, "ATALREAL:20260831", "HRTI Private Limited@1462378.0@33.65@2412433.0@33.68|QE Securities LLP@1450724.0@33.59@1398925.0@33.47")
     map.put(_m, "ATALREAL:20260901", "HRTI Private Limited@2272736.0@29.69@1883867.0@31.72|QE Securities LLP@1695503.0@30.11@1676517.0@29.52")
     map.put(_m, "ATALREAL:20260902", "HRTI Private Limited@3154976.0@25.54@2894091.0@25.61|Junomoneta Finsol Private Limited@678750.0@25.6@687056.0@25.56|QE Securities LLP@2043662.0@25.45@2047883.0@25.55")
@@ -63,6 +65,7 @@ load_2() =>
     map.put(_m, "ATALREAL:20260922", "HRTI Private Limited@1870369.0@13.15@2007272.0@13.22|QE Securities LLP@942614.0@13.21@940538.0@13.14")
     map.put(_m, "ATALREAL:20260923", "HRTI Private Limited@1023364.0@13.73@1162003.0@13.88|QE Securities LLP@804015.0@13.95@810967.0@13.84")
     map.put(_m, "ATALREAL:20260924", "HRTI Private Limited@993132.0@14.56@886180.0@14.6")
+    map.put(_m, "ATALREAL:20260925", "HRTI Private Limited@1277507.0@13.5@1122576.0@13.6|QE Securities LLP@832794.0@13.61@825678.0@13.5")
     map.put(_m, "AUGMONT:20260831", "NK Securities Research Private Limited@495472.0@965.9@495472.0@966.27|Junomoneta Finsol Private Limited@937108.0@949.68@939951.0@949.85")
     map.put(_m, "AUSTENG:20260923", "NK Securities Research Private Limited@23513.0@171.58@23513.0@172.59")
     map.put(_m, "AWFIS:20260911", "Microcurves Trading Private Limited@973727.0@283.61@973727.0@283.81|NK Securities Research Private Limited@663418.0@283.91@663418.0@284.03|Junomoneta Finsol Private Limited@1492529.0@283.13@1496429.0@283.37|QE Securities LLP@528030.0@280.41@533070.0@281.57")
@@ -70,7 +73,6 @@ load_2() =>
     map.put(_m, "BALRAMCHIN:20260831", "Microcurves Trading Private Limited@2719861.0@717.01@2719199.0@717.45|HRTI Private Limited@1961272.0@710.11@1793242.0@709.82|Junomoneta Finsol Private Limited@1325169.0@712.36@1350074.0@712.63|QE Securities LLP@1413788.0@712.17@1433501.0@711.32")
     map.put(_m, "BBTC:20260827", "Microcurves Trading Private Limited@795485.0@1613.68@795485.0@1614.81|Elixir Wealth Management Private Limited@448910.0@1613.69@448910.0@1614.41|NK Securities Research Private Limited@620149.0@1608.94@620149.0@1609.62")
     map.put(_m, "BFUTILITIE:20260903", "Microcurves Trading Private Limited@194104.0@571.43@194104.0@571.64|NK Securities Research Private Limited@271991.0@564.04@271863.0@564.48")
-    map.put(_m, "BLEL:20260826", "Microcurves Trading Private Limited@251533.0@459.58@251533.0@459.82|Jump Trading Financial India Private Limited@215532.0@459.74@215532.0@452.22|QE Securities LLP@258916.0@447.81@263094.0@450.37")
     map.put(_m, "BLEL:20260827", "Junomoneta Finsol Private Limited@219180.0@470.16@219801.0@470.53")
     map.put(_m, "BLEL:20260908", "QE Securities LLP@220945.0@462.01@221232.0@468.09")
     map.put(_m, "BODALCHEM:20260902", "Microcurves Trading Private Limited@2103735.0@142.04@2103735.0@142.12|NK Securities Research Private Limited@1088638.0@140.11@1088638.0@140.2|Junomoneta Finsol Private Limited@1194151.0@139.48@1206051.0@139.61")
@@ -78,19 +80,20 @@ load_2() =>
     map.put(_m, "CENTENKA:20260903", "Junomoneta Finsol Private Limited@122662.0@616.37@123699.0@617.19")
     map.put(_m, "CORDSCABLE:20260908", "NK Securities Research Private Limited@85503.0@356.17@85389.0@356.61|Junomoneta Finsol Private Limited@84360.0@355.88@85207.0@355.54")
     map.put(_m, "CORDSCABLE:20260909", "HRTI Private Limited@94642.0@373.18@89982.0@375.34|NK Securities Research Private Limited@77197.0@379.49@77197.0@379.76|Junomoneta Finsol Private Limited@82293.0@377.51@82708.0@376.48")
-    map.put(_m, "CSM:20260916", "NK Securities Research Private Limited@262939.0@97.43@262939.0@97.52|Junomoneta Finsol Private Limited@260408.0@97.98@263209.0@98.09")
-    map.put(_m, "CSM:20260918", "NK Securities Research Private Limited@353874.0@108.54@353874.0@108.59|Junomoneta Finsol Private Limited@426544.0@108.8@426002.0@108.93|QE Securities LLP@301081.0@108.45@304248.0@107.93")
     true
 
 load_3() =>
+    map.put(_m, "CSM:20260916", "NK Securities Research Private Limited@262939.0@97.43@262939.0@97.52|Junomoneta Finsol Private Limited@260408.0@97.98@263209.0@98.09")
+    map.put(_m, "CSM:20260918", "NK Securities Research Private Limited@353874.0@108.54@353874.0@108.59|Junomoneta Finsol Private Limited@426544.0@108.8@426002.0@108.93|QE Securities LLP@301081.0@108.45@304248.0@107.93")
+    map.put(_m, "CUBEXTUB:20260925", "NK Securities Research Private Limited@71685.0@146.55@73541.0@146.89|Junomoneta Finsol Private Limited@75909.0@145.51@61825.0@145.85")
     map.put(_m, "CYBERMEDIA:20260904", "NK Securities Research Private Limited@108500.0@26.32@108500.0@26.57")
-    map.put(_m, "CYIENT:20260826", "QE Securities LLP@528376.0@1041.8@522908.0@1034.93")
     map.put(_m, "DCI:20260915", "Microcurves Trading Private Limited@166893.0@275.23@166893.0@275.24|NK Securities Research Private Limited@154947.0@268.95@154947.0@269.27|Junomoneta Finsol Private Limited@186021.0@272.66@194138.0@272.56|QE Securities LLP@122997.0@269.81@124539.0@269.33")
     map.put(_m, "DEEPA:20260908", "Microcurves Trading Private Limited@896665.0@201.68@896665.0@201.77|Elixir Wealth Management Private Limited@578833.0@201.19@580763.0@201.6|NK Securities Research Private Limited@1633074.0@202.46@1633074.0@202.56|Goldmine Stocks Private Limited@773794.0@201.85@773794.0@201.98|Junomoneta Finsol Private Limited@1403644.0@201.63@1424721.0@201.56")
     map.put(_m, "DEEPA:20260909", "NK Securities Research Private Limited@648234.0@199.92@648234.0@200.04")
     map.put(_m, "DEEPA:20260918", "Junomoneta Finsol Private Limited@677233.0@185.26@679892.0@185.34")
+    map.put(_m, "DEEPA:20260925", "Microcurves Trading Private Limited@552613.0@213.84@552613.0@214.01|Junomoneta Finsol Private Limited@626877.0@212.31@617992.0@212.61|QE Securities LLP@752177.0@209.56@821966.0@210.31")
+    map.put(_m, "DELTACORP:20260925", "QE Securities LLP@1584327.0@75.45@1624491.0@75.27")
     map.put(_m, "DIFFNKG:20260831", "Microcurves Trading Private Limited@302078.0@467.86@302078.0@468.39|NK Securities Research Private Limited@415329.0@468.15@417401.0@468.61|Junomoneta Finsol Private Limited@247003.0@466.63@248958.0@466.79|QE Securities LLP@207783.0@465.23@207452.0@464.41")
-    map.put(_m, "DWARKESH:20260826", "HRTI Private Limited@910889.0@53.71@980178.0@53.88")
     map.put(_m, "DWARKESH:20260831", "HRTI Private Limited@1111219.0@52.47@1151414.0@52.51")
     map.put(_m, "DYCL:20260901", "Microcurves Trading Private Limited@799589.0@546.06@799586.0@546.42|HRTI Private Limited@382337.0@538.46@362716.0@540.44|NK Securities Research Private Limited@318816.0@542.97@318816.0@543.28|Junomoneta Finsol Private Limited@592010.0@541.54@590122.0@542.04|QE Securities LLP@479905.0@540.37@485621.0@540.82")
     map.put(_m, "EKC:20260923", "NK Securities Research Private Limited@1395990.0@113.93@1395990.0@114.02")
@@ -105,21 +108,18 @@ load_3() =>
     map.put(_m, "FEDDERSHOL:20260923", "HRTI Private Limited@1449308.0@66.01@1601766.0@66.12|NK Securities Research Private Limited@1190808.0@66.15@1190808.0@66.18|Junomoneta Finsol Private Limited@1170833.0@66.31@1170833.0@66.41|QE Securities LLP@1442919.0@66.03@1439361.0@65.94")
     map.put(_m, "FEDDERSHOL:20260924", "HRTI Private Limited@1049912.0@66.0@1091923.0@66.6")
     map.put(_m, "FILATEX:20260911", "Junomoneta Finsol Private Limited@2503049.0@84.6@2512573.0@84.64")
-    map.put(_m, "FMGOETZE:20260826", "Microcurves Trading Private Limited@1077118.0@564.02@1077118.0@564.41|Elixir Wealth Management Private Limited@556416.0@563.22@556416.0@564.53|NK Securities Research Private Limited@559273.0@566.78@559273.0@567.12|Junomoneta Finsol Private Limited@745722.0@563.98@738673.0@564.37|QE Securities LLP@532421.0@566.57@536522.0@566.13")
     map.put(_m, "FMGOETZE:20260828", "Microcurves Trading Private Limited@983131.0@597.39@983131.0@597.73|Elixir Wealth Management Private Limited@370262.0@601.36@370262.0@602.38|HRTI Private Limited@572489.0@594.72@488627.0@594.12|Junomoneta Finsol Private Limited@1051178.0@596.24@1050686.0@596.53|QE Securities LLP@544062.0@592.04@532024.0@590.66")
     map.put(_m, "FMGOETZE:20260831", "Microcurves Trading Private Limited@340412.0@622.01@340412.0@622.26|HRTI Private Limited@348237.0@620.43@315907.0@624.66|Junomoneta Finsol Private Limited@536313.0@623.2@541226.0@623.52|QE Securities LLP@360160.0@621.26@338809.0@623.28")
     map.put(_m, "FMGOETZE:20260901", "HRTI Private Limited@236803.0@625.18@299549.0@625.23")
     map.put(_m, "FMGOETZE:20260907", "HRTI Private Limited@201470.0@477.06@281406.0@476.27")
     map.put(_m, "FRONTSP:20260924", "NK Securities Research Private Limited@60180.0@1512.77@60180.0@1513.93")
-    map.put(_m, "GAJA:20260826", "Microcurves Trading Private Limited@919600.0@172.16@919600.0@172.35|Elixir Wealth Management Private Limited@893454.0@175.94@946454.0@175.6|Jump Trading Financial India Private Limited@829301.0@173.55@829301.0@173.81|NK Securities Research Private Limited@2272405.0@179.04@2272405.0@179.11|Goldmine Stocks Private Limited@1127623.0@175.34@1127623.0@175.35|Junomoneta Finsol Private Limited@1197940.0@176.51@1186569.0@176.77")
-    map.put(_m, "GAJA:20260921", "Microcurves Trading Private Limited@888213.0@162.34@888213.0@162.48")
     true
 
 load_4() =>
+    map.put(_m, "GAJA:20260921", "Microcurves Trading Private Limited@888213.0@162.34@888213.0@162.48")
     map.put(_m, "GARUDA:20260908", "Microcurves Trading Private Limited@577137.0@192.96@577137.0@193.11|Junomoneta Finsol Private Limited@467908.0@191.3@472221.0@191.37|QE Securities LLP@523855.0@190.51@506077.0@192.48")
     map.put(_m, "GCSL:20260907", "HRTI Private Limited@159924.0@606.04@20623.0@606.28")
     map.put(_m, "GCSL:20260921", "HRTI Private Limited@172039.0@636.38@44440.0@633.85")
-    map.put(_m, "GENESYS:20260826", "Microcurves Trading Private Limited@1002887.0@243.82@1002887.0@244.03|HRTI Private Limited@212275.0@245.77@187149.0@246.14|NK Securities Research Private Limited@450372.0@245.77@450372.0@245.88|Junomoneta Finsol Private Limited@706878.0@244.3@711977.0@244.55|QE Securities LLP@494411.0@247.69@505075.0@245.15")
     map.put(_m, "GENESYS:20260908", "Junomoneta Finsol Private Limited@348179.0@273.37@354789.0@273.58|QE Securities LLP@339482.0@272.68@355518.0@273.33")
     map.put(_m, "GENESYS:20260910", "HRTI Private Limited@496148.0@304.64@517831.0@304.3|Junomoneta Finsol Private Limited@425464.0@307.05@429379.0@306.87|QE Securities LLP@368394.0@306.36@368424.0@306.62")
     map.put(_m, "GLASSWALL:20260916", "Microcurves Trading Private Limited@1192430.0@212.17@1192430.0@212.26|Elixir Wealth Management Private Limited@535626.0@206.78@560626.0@206.46|NK Securities Research Private Limited@1433437.0@207.05@1433437.0@207.22|Goldmine Stocks Private Limited@999175.0@209.29@999175.0@209.41|Junomoneta Finsol Private Limited@3145890.0@207.43@3101718.0@207.29")
@@ -129,12 +129,14 @@ load_4() =>
     map.put(_m, "GLASSWALL:20260922", "Microcurves Trading Private Limited@2111652.0@309.58@2111652.0@309.76|Elixir Wealth Management Private Limited@2052173.0@307.62@2052183.0@307.91|HRTI Private Limited@489781.0@309.56@242381.0@307.36|Jump Trading Financial India Private Limited@2972597.0@309.86@2972597.0@306.56|NK Securities Research Private Limited@1920198.0@307.56@1920198.0@307.73|Goldmine Stocks Private Limited@714294.0@307.93@714294.0@307.86|Junomoneta Finsol Private Limited@1601384.0@308.01@1592471.0@308.17|QE Securities LLP@1056262.0@307.33@1016474.0@307.73")
     map.put(_m, "GLASSWALL:20260923", "Microcurves Trading Private Limited@620043.0@296.03@620043.0@296.31|D3 Stock Vision LLP@454600.0@281.07@474601.0@283.12|Elixir Wealth Management Private Limited@722567.0@299.9@714595.0@301.19|Jump Trading Financial India Private Limited@2569521.0@289.24@2567115.0@299.79|NK Securities Research Private Limited@796608.0@299.03@796608.0@299.23|Junomoneta Finsol Private Limited@756717.0@297.77@756717.0@298.03|QE Securities LLP@675293.0@295.15@680572.0@301.52")
     map.put(_m, "GLASSWALL:20260924", "Jump Trading Financial India Private Limited@1304935.0@271.28@1064749.0@274.47|NK Securities Research Private Limited@510940.0@273.17@510940.0@273.28")
+    map.put(_m, "GLASSWALL:20260925", "Jump Trading Financial India Private Limited@1488556.0@272.44@1731148.0@272.41|NK Securities Research Private Limited@612641.0@272.66@612641.0@272.83|Junomoneta Finsol Private Limited@561773.0@271.84@568231.0@271.81")
     map.put(_m, "GNA:20260924", "Microcurves Trading Private Limited@313241.0@630.87@313241.0@631.41|HRTI Private Limited@280280.0@622.55@272400.0@624.26|Junomoneta Finsol Private Limited@223610.0@627.23@221848.0@627.71|QE Securities LLP@389522.0@626.04@396475.0@625.56")
     map.put(_m, "GOACARBON:20260909", "NK Securities Research Private Limited@74525.0@448.27@75093.0@448.91")
     map.put(_m, "GOCLCORP:20260903", "NK Securities Research Private Limited@335062.0@434.04@335026.0@434.37")
     map.put(_m, "GODAVARIB:20260916", "Microcurves Trading Private Limited@315726.0@248.87@315726.0@248.98|NK Securities Research Private Limited@447141.0@245.02@447141.0@245.11|Junomoneta Finsol Private Limited@440296.0@245.09@439179.0@245.26")
     map.put(_m, "GRAPHITE:20260909", "Microcurves Trading Private Limited@1465009.0@845.91@1465009.0@846.24|HRTI Private Limited@1178540.0@843.06@998742.0@844.74|Junomoneta Finsol Private Limited@1127661.0@847.21@1120849.0@848.2|QE Securities LLP@1352293.0@840.31@1406241.0@842.65")
     map.put(_m, "HAPPSTMNDS:20260901", "HRTI Private Limited@773086.0@367.78@732232.0@371.65|QE Securities LLP@769851.0@368.35@737391.0@371.72")
+    map.put(_m, "HERANBA:20260925", "NK Securities Research Private Limited@206732.0@193.36@206732.0@193.59")
     map.put(_m, "HEROMOTORS:20260923", "NK Securities Research Private Limited@6368171.0@90.64@6363635.0@90.69")
     map.put(_m, "HEROMOTORS:20260924", "NK Securities Research Private Limited@5292730.0@112.82@5301771.0@112.88")
     map.put(_m, "HGINFRA:20260924", "Microcurves Trading Private Limited@885986.0@483.42@885986.0@483.81|NK Securities Research Private Limited@501175.0@489.26@501175.0@489.52|Junomoneta Finsol Private Limited@350543.0@483.58@351730.0@483.88")
@@ -144,11 +146,10 @@ load_4() =>
     map.put(_m, "IFCI:20260902", "Microcurves Trading Private Limited@21355787.0@96.28@21356050.0@96.32|HRTI Private Limited@13512615.0@96.01@11288955.0@95.91|Jump Trading Financial India Private Limited@15628262.0@95.29@15628262.0@95.58|Junomoneta Finsol Private Limited@14694475.0@95.87@14812881.0@95.93")
     map.put(_m, "IFCI:20260904", "Microcurves Trading Private Limited@16087993.0@103.32@16087993.0@103.36|HRTI Private Limited@21430978.0@103.26@15444587.0@103.02|Jump Trading Financial India Private Limited@18677632.0@103.34@18677632.0@102.96|Junomoneta Finsol Private Limited@21297756.0@103.1@21324071.0@103.14|QE Securities LLP@15311187.0@102.66@15752228.0@102.65")
     map.put(_m, "IGARASHI:20260915", "Microcurves Trading Private Limited@1189309.0@454.65@1189309.0@455.06|NK Securities Research Private Limited@507463.0@454.59@507463.0@454.89|Junomoneta Finsol Private Limited@551991.0@454.68@547796.0@454.84")
-    map.put(_m, "INDOCO:20260902", "Microcurves Trading Private Limited@909179.0@275.73@909179.0@275.97|NK Securities Research Private Limited@763047.0@275.58@763047.0@275.76|Junomoneta Finsol Private Limited@961463.0@275.4@982902.0@275.49")
-    map.put(_m, "INDOTHAI:20260826", "D3 Stock Vision LLP@3587620.0@51.34@3351930.0@51.52")
     true
 
 load_5() =>
+    map.put(_m, "INDOCO:20260902", "Microcurves Trading Private Limited@909179.0@275.73@909179.0@275.97|NK Securities Research Private Limited@763047.0@275.58@763047.0@275.76|Junomoneta Finsol Private Limited@961463.0@275.4@982902.0@275.49")
     map.put(_m, "IPL:20260916", "Microcurves Trading Private Limited@1017557.0@145.06@1017557.0@145.19|NK Securities Research Private Limited@1185956.0@143.74@1185956.0@143.8|QE Securities LLP@652797.0@144.06@651691.0@144.16")
     map.put(_m, "JAGSNPHARM:20260924", "NK Securities Research Private Limited@423870.0@241.03@423870.0@241.2")
     map.put(_m, "JASH:20260921", "Microcurves Trading Private Limited@618491.0@581.71@618491.0@582.17|NK Securities Research Private Limited@390466.0@582.8@390466.0@583.11|Junomoneta Finsol Private Limited@537198.0@580.91@538203.0@581.47|QE Securities LLP@469501.0@581.56@462164.0@577.79")
@@ -170,6 +171,7 @@ load_5() =>
     map.put(_m, "KROSS:20260921", "QE Securities LLP@323517.0@256.54@326381.0@255.68")
     map.put(_m, "KROSS:20260923", "HRTI Private Limited@321531.0@274.41@322850.0@273.95|QE Securities LLP@370093.0@274.26@372372.0@273.66")
     map.put(_m, "KSCL:20260924", "Microcurves Trading Private Limited@1257977.0@795.35@1257977.0@796.18|NK Securities Research Private Limited@614963.0@797.85@614963.0@798.3|Junomoneta Finsol Private Limited@524728.0@795.21@524779.0@795.68|QE Securities LLP@324560.0@799.14@333970.0@797.43")
+    map.put(_m, "KSCL:20260925", "Microcurves Trading Private Limited@382816.0@808.56@382816.0@809.16")
     map.put(_m, "LUMINO:20260903", "Microcurves Trading Private Limited@3946770.0@114.32@3946770.0@114.36|Elixir Wealth Management Private Limited@2143579.0@114.56@2129579.0@114.91|NK Securities Research Private Limited@4011915.0@113.19@4012402.0@113.26|Goldmine Stocks Private Limited@2188731.0@113.38@2188731.0@113.46|Junomoneta Finsol Private Limited@11562930.0@113.32@11602150.0@113.37")
     map.put(_m, "LUMINO:20260904", "Microcurves Trading Private Limited@7281236.0@116.74@7281236.0@116.79|NK Securities Research Private Limited@2921704.0@116.45@2921704.0@116.49|Junomoneta Finsol Private Limited@7664459.0@116.89@7753861.0@116.92")
     map.put(_m, "LUMINO:20260907", "Junomoneta Finsol Private Limited@3753186.0@117.46@3806076.0@117.53")
@@ -177,11 +179,11 @@ load_5() =>
     map.put(_m, "LUMINO:20260909", "Junomoneta Finsol Private Limited@1848473.0@107.04@1844168.0@107.08")
     map.put(_m, "LUMINO:20260910", "Junomoneta Finsol Private Limited@1527336.0@105.47@1539711.0@105.5")
     map.put(_m, "LUMINO:20260911", "Junomoneta Finsol Private Limited@1696327.0@108.63@1739058.0@108.61")
-    map.put(_m, "LUMINO:20260917", "Junomoneta Finsol Private Limited@1839715.0@104.28@1843248.0@104.28")
-    map.put(_m, "LUMINO:20260918", "Junomoneta Finsol Private Limited@1733498.0@110.79@1739724.0@110.85")
     true
 
 load_6() =>
+    map.put(_m, "LUMINO:20260917", "Junomoneta Finsol Private Limited@1839715.0@104.28@1843248.0@104.28")
+    map.put(_m, "LUMINO:20260918", "Junomoneta Finsol Private Limited@1733498.0@110.79@1739724.0@110.85")
     map.put(_m, "LUMINO:20260922", "HRTI Private Limited@1664335.0@109.2@1867425.0@110.73")
     map.put(_m, "MANALIPETC:20260831", "Microcurves Trading Private Limited@5753001.0@82.46@5753001.0@82.53|HRTI Private Limited@1692792.0@82.36@1704273.0@82.49|NK Securities Research Private Limited@2191782.0@82.46@2191782.0@82.5|Junomoneta Finsol Private Limited@3674041.0@82.5@3687486.0@82.55|QE Securities LLP@1346928.0@81.62@1379651.0@81.96")
     map.put(_m, "MANALIPETC:20260901", "Microcurves Trading Private Limited@3732726.0@86.35@3732726.0@86.4|NK Securities Research Private Limited@1159944.0@85.56@1159944.0@85.61|Junomoneta Finsol Private Limited@2749279.0@85.9@2746497.0@85.99|QE Securities LLP@2835454.0@86.3@2859096.0@85.71")
@@ -204,17 +206,18 @@ load_6() =>
     map.put(_m, "MOTISONS:20260917", "Microcurves Trading Private Limited@7641366.0@17.99@7641366.0@18.0|HRTI Private Limited@9059477.0@17.91@8261705.0@17.69|Junomoneta Finsol Private Limited@12222232.0@17.83@12222792.0@17.84|QE Securities LLP@12269821.0@17.85@13078141.0@17.78")
     map.put(_m, "MOTISONS:20260918", "HRTI Private Limited@5663066.0@18.45@6106613.0@18.4|Junomoneta Finsol Private Limited@6506908.0@18.46@6426189.0@18.46|QE Securities LLP@6996897.0@18.5@7128277.0@18.37")
     map.put(_m, "MOTISONS:20260924", "HRTI Private Limited@6482380.0@18.97@8407550.0@19.12|QE Securities LLP@6518605.0@19.14@6668644.0@19.08")
+    map.put(_m, "MOTISONS:20260925", "HRTI Private Limited@6296701.0@18.25@4723438.0@18.63|QE Securities LLP@7019486.0@18.67@7308362.0@18.43")
     map.put(_m, "MVELECTRO:20260827", "Microcurves Trading Private Limited@802112.0@641.29@802112.0@641.8|HRTI Private Limited@533385.0@634.55@520643.0@633.23|Jump Trading Financial India Private Limited@189713.0@639.59@189713.0@641.49|NK Securities Research Private Limited@279140.0@638.96@279140.0@639.06|Junomoneta Finsol Private Limited@545311.0@636.77@547122.0@637.39|QE Securities LLP@471599.0@641.08@491176.0@637.47")
     map.put(_m, "MVELECTRO:20260828", "Microcurves Trading Private Limited@2019049.0@724.7@2019049.0@725.16|Elixir Wealth Management Private Limited@502608.0@728.91@504426.0@729.99|HRTI Private Limited@499926.0@722.04@514130.0@714.14|Jump Trading Financial India Private Limited@472242.0@727.13@472242.0@722.83|NK Securities Research Private Limited@798842.0@727.78@798842.0@728.06|Junomoneta Finsol Private Limited@1034178.0@717.33@1035909.0@718.01|QE Securities LLP@940883.0@716.88@962574.0@711.99")
     map.put(_m, "MVELECTRO:20260831", "Microcurves Trading Private Limited@415532.0@744.98@415532.0@745.63|HRTI Private Limited@615015.0@736.16@657668.0@734.87|Junomoneta Finsol Private Limited@488596.0@730.73@489651.0@730.85|QE Securities LLP@611819.0@730.23@613789.0@734.21")
     map.put(_m, "MVELECTRO:20260901", "HRTI Private Limited@261571.0@730.07@213160.0@738.23|Junomoneta Finsol Private Limited@255277.0@732.9@256763.0@733.2|QE Securities LLP@236501.0@735.71@231119.0@737.92")
     map.put(_m, "MVELECTRO:20260902", "HRTI Private Limited@157130.0@696.5@125896.0@704.79")
-    map.put(_m, "MVELECTRO:20260903", "Microcurves Trading Private Limited@399650.0@728.68@399650.0@729.09|HRTI Private Limited@689468.0@719.25@707663.0@718.52|Jump Trading Financial India Private Limited@169688.0@720.12@169688.0@716.75|NK Securities Research Private Limited@290629.0@720.6@290167.0@720.92|Junomoneta Finsol Private Limited@535373.0@721.56@532316.0@721.98|QE Securities LLP@294804.0@718.57@294205.0@718.74")
-    map.put(_m, "MVELECTRO:20260904", "HRTI Private Limited@206239.0@728.02@256706.0@734.34|Jump Trading Financial India Private Limited@183601.0@733.17@183601.0@733.68|Junomoneta Finsol Private Limited@241984.0@732.0@242774.0@732.47|QE Securities LLP@161439.0@729.59@159657.0@733.54")
-    map.put(_m, "MVELECTRO:20260907", "Microcurves Trading Private Limited@1170519.0@815.06@1170519.0@815.41|HRTI Private Limited@843076.0@810.89@808658.0@811.56|Jump Trading Financial India Private Limited@578358.0@816.2@578358.0@809.74|NK Securities Research Private Limited@474641.0@815.53@474641.0@816.02|Musigma Securities@216975.0@817.75@216975.0@818.0|Junomoneta Finsol Private Limited@1342177.0@812.37@1339703.0@812.64|QE Securities LLP@772243.0@809.73@777444.0@809.61")
     true
 
 load_7() =>
+    map.put(_m, "MVELECTRO:20260903", "Microcurves Trading Private Limited@399650.0@728.68@399650.0@729.09|HRTI Private Limited@689468.0@719.25@707663.0@718.52|Jump Trading Financial India Private Limited@169688.0@720.12@169688.0@716.75|NK Securities Research Private Limited@290629.0@720.6@290167.0@720.92|Junomoneta Finsol Private Limited@535373.0@721.56@532316.0@721.98|QE Securities LLP@294804.0@718.57@294205.0@718.74")
+    map.put(_m, "MVELECTRO:20260904", "HRTI Private Limited@206239.0@728.02@256706.0@734.34|Jump Trading Financial India Private Limited@183601.0@733.17@183601.0@733.68|Junomoneta Finsol Private Limited@241984.0@732.0@242774.0@732.47|QE Securities LLP@161439.0@729.59@159657.0@733.54")
+    map.put(_m, "MVELECTRO:20260907", "Microcurves Trading Private Limited@1170519.0@815.06@1170519.0@815.41|HRTI Private Limited@843076.0@810.89@808658.0@811.56|Jump Trading Financial India Private Limited@578358.0@816.2@578358.0@809.74|NK Securities Research Private Limited@474641.0@815.53@474641.0@816.02|Musigma Securities@216975.0@817.75@216975.0@818.0|Junomoneta Finsol Private Limited@1342177.0@812.37@1339703.0@812.64|QE Securities LLP@772243.0@809.73@777444.0@809.61")
     map.put(_m, "MVELECTRO:20260908", "Microcurves Trading Private Limited@914130.0@858.34@914130.0@858.74|HRTI Private Limited@660901.0@856.08@658860.0@856.9|Jump Trading Financial India Private Limited@440927.0@860.08@440927.0@852.28|NK Securities Research Private Limited@409517.0@858.74@409517.0@859.34|Musigma Securities@302233.0@860.37@302232.0@860.75|Junomoneta Finsol Private Limited@1148379.0@855.05@1150175.0@855.62|QE Securities LLP@860164.0@852.3@850046.0@850.78")
     map.put(_m, "MVELECTRO:20260909", "Microcurves Trading Private Limited@676840.0@924.28@676840.0@924.71|Elixir Wealth Management Private Limited@233372.0@921.39@229566.0@922.66|HRTI Private Limited@714427.0@917.9@675657.0@921.1|Jump Trading Financial India Private Limited@545636.0@928.19@545636.0@924.27|NK Securities Research Private Limited@337013.0@922.23@337013.0@922.67|Musigma Securities@205547.0@923.83@205547.0@924.0|Junomoneta Finsol Private Limited@1120751.0@923.67@1111522.0@924.25|QE Securities LLP@736919.0@923.46@728510.0@923.03")
     map.put(_m, "MVELECTRO:20260910", "HRTI Private Limited@396491.0@854.43@343768.0@868.01|NK Securities Research Private Limited@152743.0@860.67@152743.0@861.12|Junomoneta Finsol Private Limited@382938.0@864.91@381601.0@865.66|QE Securities LLP@318251.0@859.13@317032.0@864.75")
@@ -242,25 +245,26 @@ load_7() =>
     map.put(_m, "PCJEWELLER:20260911", "Jump Trading Financial India Private Limited@49999371.0@13.59@49156617.0@13.57")
     map.put(_m, "PCJEWELLER:20260922", "Jump Trading Financial India Private Limited@53894884.0@13.28@53894885.0@13.32")
     map.put(_m, "PCJEWELLER:20260923", "HRTI Private Limited@55589253.0@14.44@40889013.0@14.35|Jump Trading Financial India Private Limited@85618930.0@14.39@85618930.0@14.38")
-    map.put(_m, "PINELABS:20260911", "Microcurves Trading Private Limited@9962599.0@192.64@9962599.0@192.72|HRTI Private Limited@9508708.0@191.41@8307520.0@192.84|Junomoneta Finsol Private Limited@10272056.0@191.96@10204601.0@192.07|QE Securities LLP@7461736.0@189.07@7712197.0@191.29")
-    map.put(_m, "PINELABS:20260916", "HRTI Private Limited@6053225.0@183.57@7145510.0@184.53|QE Securities LLP@5856951.0@183.96@5921017.0@184.22")
-    map.put(_m, "PRANAV:20260915", "NK Securities Research Private Limited@1595782.0@141.15@1593904.0@141.25|Junomoneta Finsol Private Limited@686751.0@139.64@583429.0@139.61")
     true
 
 load_8() =>
+    map.put(_m, "PINELABS:20260911", "Microcurves Trading Private Limited@9962599.0@192.64@9962599.0@192.72|HRTI Private Limited@9508708.0@191.41@8307520.0@192.84|Junomoneta Finsol Private Limited@10272056.0@191.96@10204601.0@192.07|QE Securities LLP@7461736.0@189.07@7712197.0@191.29")
+    map.put(_m, "PINELABS:20260916", "HRTI Private Limited@6053225.0@183.57@7145510.0@184.53|QE Securities LLP@5856951.0@183.96@5921017.0@184.22")
+    map.put(_m, "POLICYBZR:20260925", "Graviton Research Capital LLP@3858509.0@1180.49@3870440.0@1182.23")
+    map.put(_m, "PRANAV:20260915", "NK Securities Research Private Limited@1595782.0@141.15@1593904.0@141.25|Junomoneta Finsol Private Limited@686751.0@139.64@583429.0@139.61")
     map.put(_m, "PRANAV:20260916", "D3 Stock Vision LLP@555468.0@106.37@637964.0@106.23|NK Securities Research Private Limited@714122.0@112.69@716000.0@112.78|Junomoneta Finsol Private Limited@671376.0@115.28@643866.0@115.07")
     map.put(_m, "PRANAV:20260917", "Junomoneta Finsol Private Limited@753572.0@112.0@736152.0@112.08|QE Securities LLP@807205.0@112.84@793836.0@112.46")
     map.put(_m, "PRIORITY:20260924", "HRTI Private Limited@140156.0@297.36@143125.0@297.79|NK Securities Research Private Limited@96608.0@298.48@96608.0@298.61|QE Securities LLP@106546.0@297.03@101287.0@294.37")
+    map.put(_m, "PRIORITY:20260925", "HRTI Private Limited@75201.0@308.87@97619.0@307.92")
     map.put(_m, "PROTEAN:20260921", "Microcurves Trading Private Limited@355881.0@561.82@355937.0@562.12|Junomoneta Finsol Private Limited@215241.0@558.94@227708.0@560.57|QE Securities LLP@290612.0@556.98@307396.0@559.47")
     map.put(_m, "PROTEAN:20260922", "Microcurves Trading Private Limited@772945.0@630.66@772889.0@631.0|HRTI Private Limited@239785.0@622.81@216336.0@623.07|Junomoneta Finsol Private Limited@378095.0@626.45@331519.0@627.38|QE Securities LLP@720296.0@626.61@722847.0@626.16")
+    map.put(_m, "PROTEAN:20260925", "HRTI Private Limited@219727.0@671.97@219167.0@669.04")
     map.put(_m, "QUADFUTURE:20260911", "Microcurves Trading Private Limited@443330.0@491.84@443330.0@492.0|HRTI Private Limited@349601.0@482.64@339306.0@481.66|NK Securities Research Private Limited@326480.0@487.91@326480.0@488.04|Junomoneta Finsol Private Limited@524068.0@487.17@537529.0@487.39|QE Securities LLP@345985.0@481.05@370857.0@480.26")
     map.put(_m, "QUADFUTURE:20260915", "HRTI Private Limited@215733.0@493.7@219626.0@499.38|QE Securities LLP@206360.0@496.55@204546.0@499.19")
     map.put(_m, "RADHIKAJWE:20260907", "Microcurves Trading Private Limited@1297712.0@93.13@1297712.0@93.17|NK Securities Research Private Limited@594373.0@93.4@594373.0@93.43|Junomoneta Finsol Private Limited@1519265.0@92.9@1521661.0@92.95|QE Securities LLP@1128000.0@92.08@1129420.0@91.8")
     map.put(_m, "RADHIKAJWE:20260909", "HRTI Private Limited@505423.0@88.45@592841.0@89.17")
-    map.put(_m, "RAMBHAJO:20260826", "Microcurves Trading Private Limited@605877.0@242.94@605877.0@243.1|NK Securities Research Private Limited@306678.0@241.6@306147.0@241.72|Junomoneta Finsol Private Limited@539000.0@240.41@540993.0@240.48|QE Securities LLP@448159.0@236.42@462140.0@235.17")
     map.put(_m, "RAMBHAJO:20260827", "Microcurves Trading Private Limited@542467.0@267.18@542467.0@267.15|HRTI Private Limited@734074.0@260.57@758064.0@259.54|NK Securities Research Private Limited@582524.0@264.12@582524.0@264.24|Junomoneta Finsol Private Limited@986217.0@262.03@987194.0@262.19|QE Securities LLP@641634.0@260.5@654508.0@259.44")
     map.put(_m, "RAMBHAJO:20260903", "HRTI Private Limited@267540.0@246.68@261214.0@247.9")
-    map.put(_m, "RATNAVEER:20260826", "HRTI Private Limited@395708.0@276.0@373117.0@275.67|QE Securities LLP@367480.0@277.61@366432.0@276.74")
     map.put(_m, "RATNAVEER:20260827", "HRTI Private Limited@454129.0@290.29@400187.0@289.1")
     map.put(_m, "RATNAVEER:20260828", "HRTI Private Limited@496314.0@296.87@625190.0@297.55|Junomoneta Finsol Private Limited@378209.0@297.62@368438.0@297.82")
     map.put(_m, "RATNAVEER:20260831", "HRTI Private Limited@699530.0@306.09@694715.0@303.74|Junomoneta Finsol Private Limited@374353.0@305.93@374798.0@305.92|QE Securities LLP@427243.0@305.74@425246.0@305.1")
@@ -271,49 +275,54 @@ load_8() =>
     map.put(_m, "RATNAVEER:20260917", "Microcurves Trading Private Limited@600909.0@310.62@600909.0@310.74|HRTI Private Limited@848799.0@304.07@613260.0@306.13|Junomoneta Finsol Private Limited@606324.0@306.79@590441.0@307.0|QE Securities LLP@982257.0@305.4@1010985.0@307.31")
     map.put(_m, "RATNAVEER:20260918", "HRTI Private Limited@459029.0@308.98@489358.0@311.0|QE Securities LLP@694635.0@316.05@697260.0@307.56")
     map.put(_m, "RATNAVEER:20260921", "Microcurves Trading Private Limited@756291.0@329.35@756291.0@329.51|HRTI Private Limited@972633.0@330.2@922317.0@325.74|Junomoneta Finsol Private Limited@435840.0@325.39@435980.0@325.44|QE Securities LLP@921898.0@326.65@966571.0@325.69")
+    map.put(_m, "RATNAVEER:20260925", "QE Securities LLP@441782.0@335.03@445208.0@333.89")
     map.put(_m, "RAYMOND:20260903", "Microcurves Trading Private Limited@1187368.0@751.59@1187368.0@752.02|HRTI Private Limited@249584.0@744.82@359605.0@750.8|Junomoneta Finsol Private Limited@477986.0@749.67@479953.0@750.18|QE Securities LLP@622995.0@746.98@634379.0@747.52")
     map.put(_m, "RAYMOND:20260908", "Microcurves Trading Private Limited@619143.0@844.23@619143.0@844.64|Graviton Research Capital LLP@338781.0@829.45@338781.0@829.59|Junomoneta Finsol Private Limited@463303.0@843.5@463811.0@843.93|QE Securities LLP@744428.0@842.44@751822.0@840.84")
+    true
+
+load_9() =>
     map.put(_m, "RAYMOND:20260909", "HRTI Private Limited@418788.0@801.13@321303.0@800.76|QE Securities LLP@380690.0@799.94@378929.0@796.79")
     map.put(_m, "RAYMOND:20260911", "Microcurves Trading Private Limited@735354.0@967.82@735242.0@968.21|Graviton Research Capital LLP@350260.0@918.02@350260.0@916.21|HRTI Private Limited@1071709.0@968.14@1121466.0@960.47|NK Securities Research Private Limited@346760.0@981.09@346760.0@981.63|Junomoneta Finsol Private Limited@505941.0@955.77@475979.0@956.49|QE Securities LLP@623925.0@942.98@637629.0@948.4")
     map.put(_m, "RAYMOND:20260915", "Microcurves Trading Private Limited@1308540.0@1073.56@1308540.0@1074.11|Graviton Research Capital LLP@344036.0@1078.8@344036.0@1080.85|HRTI Private Limited@1454780.0@1063.0@1371469.0@1070.94|NK Securities Research Private Limited@382758.0@1064.19@382758.0@1064.97|Musigma Securities@412877.0@1068.99@412877.0@1069.52|Junomoneta Finsol Private Limited@993314.0@1062.71@992321.0@1063.4|QE Securities LLP@1031977.0@1069.6@1031512.0@1070.86")
     map.put(_m, "RAYMOND:20260916", "Microcurves Trading Private Limited@391505.0@982.82@391505.0@983.63|Graviton Research Capital LLP@337776.0@986.82@337776.0@986.37|HRTI Private Limited@1077522.0@982.76@1072404.0@984.85|Junomoneta Finsol Private Limited@833858.0@983.55@834326.0@984.09|QE Securities LLP@847996.0@978.84@846296.0@981.78")
     map.put(_m, "RAYMOND:20260917", "HRTI Private Limited@327404.0@982.97@338779.0@985.22")
-    true
-
-load_9() =>
     map.put(_m, "RAYMOND:20260921", "HRTI Private Limited@597182.0@1044.3@558522.0@1044.75")
     map.put(_m, "RAYMOND:20260922", "HRTI Private Limited@400874.0@1143.55@428618.0@1147.92")
     map.put(_m, "RAYMOND:20260923", "HRTI Private Limited@432281.0@1109.27@470850.0@1110.33|QE Securities LLP@378767.0@1108.09@378181.0@1107.57")
     map.put(_m, "RAYMOND:20260924", "HRTI Private Limited@709574.0@1165.56@718193.0@1167.4|QE Securities LLP@414226.0@1165.26@424649.0@1166.57")
     map.put(_m, "RAYMONDREL:20260923", "Microcurves Trading Private Limited@838463.0@666.08@838463.0@666.47|HRTI Private Limited@406907.0@656.24@288493.0@661.88")
     map.put(_m, "RAYMONDREL:20260924", "Microcurves Trading Private Limited@1192283.0@703.83@1192283.0@704.18|HRTI Private Limited@348443.0@700.21@390573.0@701.09|NK Securities Research Private Limited@351088.0@700.06@351088.0@700.43|Junomoneta Finsol Private Limited@398977.0@702.92@394110.0@703.33|QE Securities LLP@834364.0@702.95@834607.0@701.01")
+    map.put(_m, "RAYMONDREL:20260925", "HRTI Private Limited@246987.0@715.91@341584.0@718.5|QE Securities LLP@557761.0@722.13@566985.0@720.02")
     map.put(_m, "RBZJEWEL:20260901", "NK Securities Research Private Limited@330332.0@170.18@330332.0@170.34")
     map.put(_m, "RBZJEWEL:20260902", "Microcurves Trading Private Limited@371130.0@165.9@371130.0@165.67|NK Securities Research Private Limited@268997.0@167.22@268997.0@167.27|Junomoneta Finsol Private Limited@535539.0@166.23@536263.0@166.31|QE Securities LLP@315329.0@167.64@320517.0@167.52")
     map.put(_m, "RBZJEWEL:20260903", "Microcurves Trading Private Limited@239230.0@180.99@239230.0@181.04|HRTI Private Limited@411419.0@180.54@393821.0@180.7|NK Securities Research Private Limited@478905.0@182.7@479438.0@182.74|Junomoneta Finsol Private Limited@541097.0@181.46@536629.0@181.46|QE Securities LLP@380806.0@178.93@384396.0@179.14")
     map.put(_m, "RBZJEWEL:20260904", "NK Securities Research Private Limited@231399.0@199.81@231399.0@199.97|Junomoneta Finsol Private Limited@323696.0@199.57@324302.0@199.78|QE Securities LLP@296407.0@198.79@290110.0@199.57")
+    map.put(_m, "REMSONSIND:20260925", "NK Securities Research Private Limited@227778.0@124.5@227778.0@124.62")
     map.put(_m, "RENTOMOJO:20260917", "Microcurves Trading Private Limited@1016645.0@521.19@1016645.0@521.67|Elixir Wealth Management Private Limited@557080.0@517.31@550080.0@518.75|NK Securities Research Private Limited@1202669.0@510.75@1202669.0@510.96|Junomoneta Finsol Private Limited@1475491.0@513.37@1537142.0@513.5")
     map.put(_m, "RENTOMOJO:20260918", "Microcurves Trading Private Limited@661578.0@535.38@661578.0@535.37|Elixir Wealth Management Private Limited@634029.0@531.73@638029.0@533.27|NK Securities Research Private Limited@666718.0@534.09@666718.0@534.3|Junomoneta Finsol Private Limited@724830.0@531.13@702282.0@531.22")
     map.put(_m, "RENTOMOJO:20260921", "Jump Trading Financial India Private Limited@599882.0@531.63@599882.0@525.54")
     map.put(_m, "RESPONIND:20260904", "Microcurves Trading Private Limited@2569617.0@168.87@2569617.0@169.01")
-    map.put(_m, "RGL:20260826", "Microcurves Trading Private Limited@2917206.0@149.33@2917206.0@149.43|HRTI Private Limited@585163.0@148.2@567454.0@148.66|Jump Trading Financial India Private Limited@609909.0@149.62@609909.0@150.17|NK Securities Research Private Limited@1702359.0@148.47@1702359.0@148.56|Junomoneta Finsol Private Limited@1489966.0@148.66@1500216.0@148.86")
     map.put(_m, "RGL:20260827", "Junomoneta Finsol Private Limited@711986.0@139.77@713101.0@139.9|QE Securities LLP@671275.0@138.93@635336.0@141.33")
     map.put(_m, "RIR:20260907", "Junomoneta Finsol Private Limited@402997.0@193.54@412190.0@193.76")
     map.put(_m, "RIR:20260917", "Microcurves Trading Private Limited@1763793.0@200.17@1763793.0@200.29|HRTI Private Limited@1131902.0@199.58@1195302.0@200.19|NK Securities Research Private Limited@1486318.0@200.7@1486318.0@200.81|Junomoneta Finsol Private Limited@1771531.0@200.2@1833154.0@200.44|QE Securities LLP@805330.0@199.83@837851.0@199.8")
     map.put(_m, "RIR:20260918", "NK Securities Research Private Limited@698063.0@206.29@698063.0@206.45|Junomoneta Finsol Private Limited@536581.0@205.59@538559.0@205.64|QE Securities LLP@608240.0@205.53@601642.0@205.91")
     map.put(_m, "ROSSTECH:20260916", "Microcurves Trading Private Limited@207487.0@1365.61@207487.0@1366.87")
     map.put(_m, "SAMBHV:20260921", "Microcurves Trading Private Limited@2852888.0@155.99@2852888.0@156.05|HRTI Private Limited@1331989.0@154.54@1646599.0@155.4|NK Securities Research Private Limited@1513398.0@156.92@1513398.0@156.99|Musigma Securities@1500292.0@155.72@1499828.0@155.76|QE Securities LLP@2723091.0@154.79@2743321.0@155.8")
+    map.put(_m, "SBC:20260925", "HRTI Private Limited@3366861.0@50.96@3389615.0@51.07")
+    map.put(_m, "SDBL:20260925", "NK Securities Research Private Limited@1364080.0@74.69@1364080.0@74.74")
     map.put(_m, "SHANKESH:20260908", "QE Securities LLP@755658.0@98.32@781805.0@99.27")
+    true
+
+load_10() =>
     map.put(_m, "SHANKESH:20260911", "Microcurves Trading Private Limited@1366268.0@107.84@1366268.0@107.63|HRTI Private Limited@1478432.0@104.79@1351271.0@105.42|NK Securities Research Private Limited@1799129.0@107.32@1799129.0@107.38|Junomoneta Finsol Private Limited@1991157.0@107.12@1979727.0@107.14|QE Securities LLP@2932019.0@106.34@2823884.0@105.16")
     map.put(_m, "SHANTIGOLD:20260827", "HRTI Private Limited@565632.0@247.96@516735.0@247.94|QE Securities LLP@447594.0@248.44@399995.0@248.63")
     map.put(_m, "SHANTIGOLD:20260907", "HRTI Private Limited@383955.0@270.57@236304.0@269.98")
     map.put(_m, "SHANTIGOLD:20260923", "Microcurves Trading Private Limited@412068.0@286.51@412068.0@286.57|HRTI Private Limited@459820.0@278.87@374053.0@279.06|QE Securities LLP@569054.0@279.71@590112.0@279.57")
     map.put(_m, "SHANTIGOLD:20260924", "HRTI Private Limited@206298.0@285.88@395424.0@286.13")
+    map.put(_m, "SHANTIGOLD:20260925", "Microcurves Trading Private Limited@1600610.0@317.25@1600610.0@317.42|HRTI Private Limited@1438527.0@315.68@1531075.0@315.33|NK Securities Research Private Limited@533207.0@315.69@533207.0@315.73|Junomoneta Finsol Private Limited@858656.0@315.29@863750.0@315.31|QE Securities LLP@1514866.0@313.86@1543080.0@311.48")
     map.put(_m, "SHAREINDIA:20260909", "Microcurves Trading Private Limited@2293123.0@191.34@2293123.0@191.55|NK Securities Research Private Limited@1146243.0@190.88@1146243.0@191.0|Junomoneta Finsol Private Limited@1596937.0@190.8@1601272.0@190.89")
     map.put(_m, "SHAREINDIA:20260910", "Microcurves Trading Private Limited@3189512.0@205.91@3189512.0@206.04|Junomoneta Finsol Private Limited@3059523.0@205.48@3035421.0@205.57|QE Securities LLP@2561733.0@206.12@2568379.0@206.22")
     map.put(_m, "SHAREINDIA:20260911", "Junomoneta Finsol Private Limited@1197935.0@198.74@1201166.0@198.85")
-    true
-
-load_10() =>
     map.put(_m, "SHAREINDIA:20260917", "Microcurves Trading Private Limited@1206351.0@215.78@1206351.0@215.9|HRTI Private Limited@2347772.0@214.08@1991563.0@214.04|Junomoneta Finsol Private Limited@2376865.0@214.73@2389099.0@214.8")
     map.put(_m, "SHAREINDIA:20260918", "HRTI Private Limited@1644689.0@225.94@1510599.0@226.48|Junomoneta Finsol Private Limited@1693298.0@226.43@1693663.0@226.64|QE Securities LLP@1297422.0@226.65@1307649.0@226.27")
     map.put(_m, "SHIPROCKET:20260831", "Junomoneta Finsol Private Limited@3668239.0@134.95@3671882.0@135.0")
@@ -328,12 +337,16 @@ load_10() =>
     map.put(_m, "SOTL:20260901", "Microcurves Trading Private Limited@834500.0@763.59@834500.0@764.11|HRTI Private Limited@392016.0@757.58@359589.0@761.24|Junomoneta Finsol Private Limited@485834.0@761.67@485995.0@762.14")
     map.put(_m, "SSRETAIL:20260923", "Microcurves Trading Private Limited@741235.0@687.08@741235.0@687.74|Elixir Wealth Management Private Limited@428554.0@681.74@406768.0@677.09|NK Securities Research Private Limited@2300012.0@668.9@2301782.0@669.31|Goldmine Stocks Private Limited@603930.0@676.26@604230.0@676.9|Junomoneta Finsol Private Limited@653350.0@677.79@635083.0@674.84")
     map.put(_m, "SSRETAIL:20260924", "Microcurves Trading Private Limited@732761.0@844.14@732761.0@844.49|Elixir Wealth Management Private Limited@1079777.0@837.64@1068228.0@840.34|NK Securities Research Private Limited@854526.0@840.35@854526.0@840.82|Goldmine Stocks Private Limited@418039.0@839.48@427311.0@841.33|Junomoneta Finsol Private Limited@494767.0@842.53@494767.0@842.82")
+    map.put(_m, "SSRETAIL:20260925", "Microcurves Trading Private Limited@1105023.0@798.42@1105023.0@798.68|Elixir Wealth Management Private Limited@855564.0@798.82@848574.0@800.97|NK Securities Research Private Limited@487885.0@812.45@487885.0@812.85|Goldmine Stocks Private Limited@476860.0@781.62@476860.0@782.38|Junomoneta Finsol Private Limited@657066.0@787.3@649160.0@786.99")
     map.put(_m, "SSWL:20260901", "Microcurves Trading Private Limited@2633614.0@345.53@2633614.0@345.75|Junomoneta Finsol Private Limited@1147492.0@344.62@1142831.0@344.51")
     map.put(_m, "STEAMHOUSE:20260917", "NK Securities Research Private Limited@2574129.0@98.73@2574129.0@98.79")
     map.put(_m, "SUBEXLTD:20260915", "HRTI Private Limited@3177870.0@21.1@2759386.0@21.26")
     map.put(_m, "SUBEXLTD:20260923", "QE Securities LLP@2693369.0@21.6@2943521.0@21.6")
     map.put(_m, "SUNSHINE:20260828", "Microcurves Trading Private Limited@437928.0@419.78@437928.0@420.03|NK Securities Research Private Limited@244406.0@422.32@244406.0@422.69|Junomoneta Finsol Private Limited@272695.0@420.3@257334.0@421.01|QE Securities LLP@376926.0@413.95@443835.0@415.87")
     map.put(_m, "SUNSHINE:20260831", "Microcurves Trading Private Limited@214094.0@447.49@214094.0@447.4|Jump Trading Financial India Private Limited@164318.0@446.2@164318.0@447.28|Junomoneta Finsol Private Limited@395178.0@448.07@383813.0@447.89|QE Securities LLP@314170.0@447.12@326855.0@445.71")
+    true
+
+load_11() =>
     map.put(_m, "SUNSHINE:20260901", "HRTI Private Limited@207809.0@451.94@210632.0@452.11|Junomoneta Finsol Private Limited@173523.0@451.73@173374.0@451.81|QE Securities LLP@188077.0@451.89@179527.0@451.63")
     map.put(_m, "SUNSHINE:20260904", "Jump Trading Financial India Private Limited@163305.0@464.14@163305.0@450.41|QE Securities LLP@169868.0@457.75@166514.0@457.48")
     map.put(_m, "SUNSHINE:20260907", "QE Securities LLP@176869.0@478.16@191278.0@477.98")
@@ -344,14 +357,10 @@ load_10() =>
     map.put(_m, "SUNSHINE:20260921", "HRTI Private Limited@206115.0@405.81@140027.0@406.55")
     map.put(_m, "SWANCORP:20260910", "Microcurves Trading Private Limited@5331806.0@304.04@5331806.0@304.19|Graviton Research Capital LLP@1591724.0@305.95@1591724.0@305.85|Junomoneta Finsol Private Limited@1724427.0@304.08@1721319.0@304.19")
     map.put(_m, "SYMBIOTEC:20260901", "Microcurves Trading Private Limited@667966.0@1104.29@667966.0@1105.17|Elixir Wealth Management Private Limited@552698.0@1074.1@547601.0@1074.04|NK Securities Research Private Limited@842160.0@1063.42@842160.0@1063.88|Goldmine Stocks Private Limited@573416.0@1071.88@573716.0@1073.42|Junomoneta Finsol Private Limited@1876359.0@1068.22@1847308.0@1066.89")
-    true
-
-load_11() =>
     map.put(_m, "SYMBIOTEC:20260902", "Junomoneta Finsol Private Limited@357516.0@1123.4@357516.0@1123.68")
     map.put(_m, "TBZ:20260901", "Microcurves Trading Private Limited@355969.0@348.71@355967.0@348.7|Junomoneta Finsol Private Limited@357724.0@344.26@356373.0@344.75|QE Securities LLP@323824.0@347.35@360865.0@355.85")
     map.put(_m, "TBZ:20260902", "Microcurves Trading Private Limited@1489617.0@406.04@1488796.0@406.13|HRTI Private Limited@1508567.0@399.76@1536260.0@401.15|NK Securities Research Private Limited@459742.0@404.55@460134.0@404.73|Musigma Securities@448854.0@401.36@448854.0@401.53|Junomoneta Finsol Private Limited@792246.0@402.13@805619.0@402.35|QE Securities LLP@1353171.0@401.81@1337255.0@401.22")
     map.put(_m, "TBZ:20260903", "QE Securities LLP@361896.0@419.74@366352.0@420.86")
-    map.put(_m, "TCC:20260826", "NK Securities Research Private Limited@289909.0@253.61@289909.0@253.76")
     map.put(_m, "TCC:20260909", "NK Securities Research Private Limited@1332422.0@55.41@1337221.0@55.43|Junomoneta Finsol Private Limited@1844874.0@54.73@1862842.0@54.75")
     map.put(_m, "TCC:20260910", "Microcurves Trading Private Limited@3997574.0@57.1@3997574.0@57.14|NK Securities Research Private Limited@1416050.0@55.63@1416050.0@55.69|Junomoneta Finsol Private Limited@4021426.0@56.43@4025205.0@56.44|QE Securities LLP@1682927.0@56.21@1695426.0@56.41")
     map.put(_m, "TECHNOCRAF:20260827", "HRTI Private Limited@276559.0@359.64@280561.0@359.05|Junomoneta Finsol Private Limited@308715.0@362.57@308216.0@362.79")
@@ -366,23 +375,26 @@ load_11() =>
     map.put(_m, "TEMPSENS:20260901", "Junomoneta Finsol Private Limited@590906.0@554.31@594952.0@554.37")
     map.put(_m, "TEMPSENS:20260902", "Microcurves Trading Private Limited@902986.0@569.87@902986.0@570.09|Junomoneta Finsol Private Limited@1288309.0@568.95@1292492.0@569.1|QE Securities LLP@468489.0@567.63@482966.0@566.94")
     map.put(_m, "TEMPSENS:20260909", "Junomoneta Finsol Private Limited@532987.0@593.56@537831.0@593.68")
+    map.put(_m, "TGVSL:20260925", "NK Securities Research Private Limited@602591.0@123.32@602591.0@123.43")
     map.put(_m, "TNPETRO:20260831", "Microcurves Trading Private Limited@1467880.0@122.15@1467890.0@122.29|Junomoneta Finsol Private Limited@1295713.0@122.32@1304844.0@122.4")
+    true
+
+load_12() =>
     map.put(_m, "TNPETRO:20260901", "NK Securities Research Private Limited@524083.0@128.94@524083.0@129.04|Junomoneta Finsol Private Limited@551338.0@129.38@563891.0@129.4|QE Securities LLP@662835.0@129.57@643588.0@128.9")
     map.put(_m, "TNPETRO:20260908", "Junomoneta Finsol Private Limited@562350.0@141.75@561552.0@141.75")
     map.put(_m, "TRANSRAILL:20260922", "Microcurves Trading Private Limited@1010878.0@473.07@1010878.0@473.41|QE Securities LLP@728735.0@467.93@756127.0@465.81")
     map.put(_m, "UGARSUGAR:20260911", "Junomoneta Finsol Private Limited@586382.0@56.27@595091.0@56.3")
+    map.put(_m, "UGARSUGAR:20260925", "NK Securities Research Private Limited@710593.0@63.37@710593.0@63.41")
     map.put(_m, "UNIECOM:20260922", "NK Securities Research Private Limited@729465.0@88.06@729465.0@88.1")
     map.put(_m, "VENUSPIPES:20260918", "HRTI Private Limited@55023.0@2224.79@107225.0@2235.89")
     map.put(_m, "VIKRAN:20260924", "Junomoneta Finsol Private Limited@1329226.0@61.22@1315260.0@61.26")
     map.put(_m, "VINCOFE:20260831", "HRTI Private Limited@921532.0@184.97@657412.0@184.7")
     map.put(_m, "VTL:20260901", "Microcurves Trading Private Limited@2088766.0@610.32@2088766.0@610.84")
     map.put(_m, "WEL:20260827", "Microcurves Trading Private Limited@6100111.0@160.38@6100111.0@160.53|D3 Stock Vision LLP@1978112.0@126.67@1412646.0@127.71|HRTI Private Limited@2693122.0@149.74@2625427.0@152.8|NK Securities Research Private Limited@5778004.0@144.26@5776745.0@144.58|Junomoneta Finsol Private Limited@4627996.0@153.13@4408542.0@154.62|QE Securities LLP@3886333.0@152.92@3855621.0@150.86")
-    true
-
-load_12() =>
     map.put(_m, "WHEELS:20260908", "Microcurves Trading Private Limited@133578.0@2020.0@133578.0@2021.88|Junomoneta Finsol Private Limited@132089.0@1993.82@133767.0@1996.48|QE Securities LLP@123887.0@1968.62@128798.0@1980.91")
     map.put(_m, "WHEELS:20260909", "Microcurves Trading Private Limited@128119.0@2361.52@128119.0@2362.92|Graviton Research Capital LLP@122899.0@2354.16@122899.0@2356.4|HRTI Private Limited@183445.0@2360.08@193593.0@2365.44|NK Securities Research Private Limited@151096.0@2364.99@151096.0@2365.93|Musigma Securities@135423.0@2370.54@135423.0@2371.99|Junomoneta Finsol Private Limited@257574.0@2367.53@251038.0@2368.29|QE Securities LLP@291041.0@2363.51@296904.0@2365.5")
     map.put(_m, "WHEELS:20260910", "HRTI Private Limited@183541.0@2390.51@150621.0@2403.9|Junomoneta Finsol Private Limited@162485.0@2395.75@160695.0@2398.04|QE Securities LLP@164873.0@2405.36@164757.0@2398.44")
+    map.put(_m, "WHIRLPOOL:20260925", "Microcurves Trading Private Limited@1633846.0@927.17@1633846.0@927.76|HRTI Private Limited@1309378.0@920.18@1267607.0@922.73|NK Securities Research Private Limited@903406.0@926.09@903406.0@926.45|QE Securities LLP@1004534.0@923.6@985523.0@924.0")
     map.put(_m, "XTRANET:20260831", "QE Securities LLP@287738.0@197.07@291031.0@198.97")
     map.put(_m, "XTRANET:20260907", "Microcurves Trading Private Limited@444944.0@267.08@444944.0@267.29|HRTI Private Limited@519159.0@266.47@539701.0@265.99|NK Securities Research Private Limited@579766.0@267.87@580802.0@268.07|Junomoneta Finsol Private Limited@741597.0@267.59@735698.0@267.79|QE Securities LLP@687749.0@270.66@685408.0@265.79")
     map.put(_m, "XTRANET:20260908", "Microcurves Trading Private Limited@263221.0@281.39@263221.0@281.45|HRTI Private Limited@489561.0@272.57@460085.0@277.09|NK Securities Research Private Limited@429562.0@276.72@429562.0@276.89|Junomoneta Finsol Private Limited@539633.0@279.52@554021.0@279.41|QE Securities LLP@560377.0@277.6@558614.0@279.27")
