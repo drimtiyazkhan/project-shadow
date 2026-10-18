@@ -1,6 +1,12 @@
 //@version=5
 indicator("Project Shadow - Operator Activity 2026", overlay=true, max_labels_count=500)
 
+// ---------------------------------------------------------------------------
+// © 2026 Project Shadow (project-shadow.in). All rights reserved.
+// This indicator is provided for personal use. Redistribution, resale, or
+// repackaging of this script, in whole or in part, is not permitted.
+// ---------------------------------------------------------------------------
+
 // 01 Jan 2026 - 16 Oct 2026 | 609 symbols | 1911 entries
 // J=Jump Trading, Q=QE Securities, N=Junomoneta, K=NK Securities, H=HRTI, G=Graviton, S=Share India, E=Elixir Wealth, D=D3 Stock Vision, M=Goldmine Stocks, C=Microcurves, MS=Musigma Securities
 // Project Shadow — free, community-supported. project-shadow.in
