@@ -205,14 +205,12 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:24px 40p
   </div>
   <div class="nav-links" id="navLinks">
     <a href="index.html">Home</a>
-    <a href="#thesis">Our Thesis</a>
-    <a href="#indicator-features">See It In Action</a>
     <a href="#downloads">Downloads</a>
     <a href="#donate">Donate</a>
     <a href="#install-guide">Setup Guide</a>
-    <a href="#hft-list">Tracked Accounts</a>
     <a href="#how-it-works">How it works</a>
     <a href="#feedback">Feedback</a>
+    <a href="misc.html">Misc</a>
     <a href="tracker.html" class="nav-cta">Open Tracker →</a>
   </div>
   <button class="nav-hamburger" id="navHamburger" aria-label="Menu">☰</button>
@@ -230,36 +228,6 @@ document.getElementById('navHamburger').addEventListener('click', () => {
   <div class="hero-btns">
     <a href="tracker.html" class="btn-primary">📊 Open Tracker</a>
     <a href="#downloads" class="btn-secondary">Get the Indicator</a>
-  </div>
-</div>
-
-<div class="thesis" id="thesis">
-  <div class="thesis-inner">
-    <div class="section-title">Our Thesis</div>
-    <div class="section-heading">Why we track these accounts</div>
-    <p style="font-size:14px;color:var(--text2);line-height:1.8;text-align:center;max-width:680px;margin:0 auto">
-      Every stock that moves sharply has someone behind the move. In the Indian markets, we've observed a recurring pattern: a specific group of HFT trading accounts shows up, again and again, in the bulk deal data of stocks right before or during major price action. We call the entity coordinating this activity <b style="color:var(--text)">the operator</b>.
-    </p>
-    <div class="thesis-grid">
-      <div class="thesis-card">
-        <div class="num">01</div>
-        <h3>Frequent, Repeated Footprints</h3>
-        <p>We didn't pick these 12 accounts at random. They were shortlisted because of how often — and how consistently — they appear in bulk deals right around periods of sharp, manipulative-looking price action.</p>
-      </div>
-      <div class="thesis-card">
-        <div class="num">02</div>
-        <h3>Signal, Not Noise</h3>
-        <p>Our belief is that this activity is not incidental — it's a signal that operator interest is present in a stock. When several of these accounts show up on the same stock and date, that's when the signal gets strongest.</p>
-      </div>
-      <div class="thesis-card">
-        <div class="num">03</div>
-        <h3>Trade With the Operator</h3>
-        <p>The goal isn't to predict the operator's next move blindly — it's to avoid being trapped in a retail-facing plot, and instead position alongside where the real activity is concentrated.</p>
-      </div>
-    </div>
-    <div class="thesis-note">
-      This is our trading methodology and interpretation of publicly available NSE bulk deal data — not a factual claim about any individual entity's intent. Bulk deal disclosures are public record; our indicator simply visualizes patterns in that data on your TradingView chart. Always do your own research before acting on any signal.
-    </div>
   </div>
 </div>
 
@@ -296,67 +264,6 @@ document.getElementById('navHamburger').addEventListener('click', () => {
       <div class="feature-icon">🔒</div>
       <h3>100% Private</h3>
       <p>The tracker runs entirely in your browser — no data is ever sent to a server.</p>
-    </div>
-  </div>
-</div>
-
-<div class="showcase" id="indicator-features">
-  <div class="section-title">On The Chart</div>
-  <div class="section-heading">What the indicator actually looks like</div>
-
-  <div class="showcase-shots">
-    <div class="showcase-shot">
-      <img src="assets/screenshot-tooltip.png" alt="Pine Script indicator tooltip showing date and tracked trader names on a bulk deal day">
-      <div class="showcase-shot-caption"><b>Hover any marker</b> to see the exact date, how many of the 12 tracked accounts were active, and every account name present that day.</div>
-    </div>
-    <div class="showcase-shot">
-      <img src="assets/screenshot-markers.png" alt="Pine Script indicator showing markers of varying size and vertical highlighting across a candlestick chart">
-      <div class="showcase-shot-caption"><b>Marker size and highlighting</b> scale automatically with how many tracked accounts were active on a given day.</div>
-    </div>
-  </div>
-
-  <div class="showcase-points">
-    <div class="showcase-point">
-      <div class="showcase-point-num">1</div>
-      <div>
-        <h4>Marks every candle with activity</h4>
-        <p>Any day one of the 12 tracked accounts appears in the bulk deal data, the indicator drops a marker directly on that candle — no digging through spreadsheets.</p>
-      </div>
-    </div>
-    <div class="showcase-point">
-      <div class="showcase-point-num">2</div>
-      <div>
-        <h4>Hover for full detail</h4>
-        <p>Move your cursor over any marker and a tooltip pops up with the date, stock, and the full list of tracked account names active that day.</p>
-      </div>
-    </div>
-    <div class="showcase-point">
-      <div class="showcase-point-num">3</div>
-      <div>
-        <h4>Marker size shows conviction</h4>
-        <p>A single account shows a small marker; several tracked accounts on the same day show a visibly larger one — the size itself tells you how significant the day was, at a glance.</p>
-      </div>
-    </div>
-    <div class="showcase-point">
-      <div class="showcase-point-num">4</div>
-      <div>
-        <h4>Vertical highlighting</h4>
-        <p>Candles with tracked activity get a soft vertical highlight down the chart, so clusters of activity are visible even when zoomed out.</p>
-      </div>
-    </div>
-    <div class="showcase-point">
-      <div class="showcase-point-num">5</div>
-      <div>
-        <h4>Saves hours of manual work</h4>
-        <p>No more manually cross-referencing bulk deal CSVs against a chart, day by day, stock by stock — the indicator does it for every symbol automatically.</p>
-      </div>
-    </div>
-    <div class="showcase-point">
-      <div class="showcase-point-num">6</div>
-      <div>
-        <h4>Surfaces historical operator levels</h4>
-        <p>Scroll back through months or years of chart history and instantly see exactly where tracked accounts were active before — a fast way to find historically significant price levels.</p>
-      </div>
     </div>
   </div>
 </div>
@@ -490,27 +397,6 @@ document.getElementById('navHamburger').addEventListener('click', () => {
   </div>
 </div>
 
-<div class="hft-section" id="hft-list">
-  <div class="hft-inner">
-    <div class="section-title">Watchlist</div>
-    <div class="section-heading">12 Accounts We Track</div>
-    <div class="hft-grid">
-      <div class="hft-card"><span class="hft-code">J</span><span class="hft-name">Jump Trading Financial India</span></div>
-      <div class="hft-card"><span class="hft-code">Q</span><span class="hft-name">QE Securities LLP</span></div>
-      <div class="hft-card"><span class="hft-code">N</span><span class="hft-name">Junomoneta Finsol</span></div>
-      <div class="hft-card"><span class="hft-code">K</span><span class="hft-name">NK Securities Research</span></div>
-      <div class="hft-card"><span class="hft-code">H</span><span class="hft-name">HRTI Private Limited</span></div>
-      <div class="hft-card"><span class="hft-code">G</span><span class="hft-name">Graviton Research Capital</span></div>
-      <div class="hft-card"><span class="hft-code">S</span><span class="hft-name">Share India Securities</span></div>
-      <div class="hft-card"><span class="hft-code">E</span><span class="hft-name">Elixir Wealth Management</span></div>
-      <div class="hft-card"><span class="hft-code">D</span><span class="hft-name">D3 Stock Vision LLP</span></div>
-      <div class="hft-card"><span class="hft-code">M</span><span class="hft-name">Goldmine Stocks</span></div>
-      <div class="hft-card"><span class="hft-code">C</span><span class="hft-name">Microcurves Trading</span></div>
-      <div class="hft-card"><span class="hft-code">MS</span><span class="hft-name">Musigma Securities</span></div>
-    </div>
-  </div>
-</div>
-
 <div class="how-section" id="how-it-works">
   <div class="section-title">Workflow</div>
   <div class="section-heading">How it works</div>
@@ -628,13 +514,13 @@ document.getElementById('feedbackForm').addEventListener('submit', async (e) => 
 </script>
 
 <footer>
-  <div class="footer-left">Project Shadow · Operator Activity Tracking for NSE Traders</div>
+  <div class="footer-left">Project Shadow · Operator Activity Tracking for NSE Traders<br>© 2026 Project Shadow. All rights reserved. Content and indicators may not be reproduced or redistributed without permission.</div>
   <div class="footer-right">
     <a href="tracker.html">Tracker</a>
     <a href="#downloads">Downloads</a>
     <a href="#donate">Donate</a>
     <a href="#how-it-works">How it works</a>
-    <a href="#hft-list">Tracked Accounts</a>
+    <a href="misc.html">Misc</a>
     <a href="#feedback">Feedback</a>
   </div>
 </footer>
