@@ -118,3 +118,10 @@
 2026-10-30 18:51:04,820 [INFO] Saved 897 upcoming events across 878 symbols to /home/runner/work/project-shadow-automation/project-shadow-automation/site/data/events.xlsx
 2026-10-30 18:51:04,820 [INFO] === NSE event calendar fetch finished ===
 
+2026-10-30 21:21:57,626 [INFO] === NSE event calendar fetch started ===
+2026-10-30 21:22:12,740 [WARNING] Attempt 1/3 failed: ReadTimeout: HTTPSConnectionPool(host='www.nseindia.com', port=443): Read timed out. (read timeout=15)
+2026-10-30 21:22:18,294 [INFO] Attempt 2: GET https://www.nseindia.com/api/event-calendar -> HTTP 200 | content-type=application/json; charset=utf-8 | content-encoding=gzip | 218886 bytes
+2026-10-30 21:22:18,296 [INFO] Received 899 raw event rows. Columns: ['symbol', 'company', 'purpose', 'bm_desc', 'date']
+2026-10-30 21:22:18,416 [INFO] Saved 897 upcoming events across 878 symbols to /home/runner/work/project-shadow-automation/project-shadow-automation/site/data/events.xlsx
+2026-10-30 21:22:18,416 [INFO] === NSE event calendar fetch finished ===
+
