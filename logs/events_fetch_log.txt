@@ -125,3 +125,9 @@
 2026-10-30 21:22:18,416 [INFO] Saved 897 upcoming events across 878 symbols to /home/runner/work/project-shadow-automation/project-shadow-automation/site/data/events.xlsx
 2026-10-30 21:22:18,416 [INFO] === NSE event calendar fetch finished ===
 
+2026-11-02 22:31:23,456 [INFO] === NSE event calendar fetch started ===
+2026-11-02 22:31:23,887 [INFO] Attempt 1: GET https://www.nseindia.com/api/event-calendar -> HTTP 200 | content-type=application/json; charset=utf-8 | content-encoding=gzip | 174337 bytes
+2026-11-02 22:31:23,890 [INFO] Received 725 raw event rows. Columns: ['symbol', 'company', 'purpose', 'bm_desc', 'date']
+2026-11-02 22:31:24,019 [INFO] Saved 723 upcoming events across 699 symbols to /home/runner/work/project-shadow-automation/project-shadow-automation/site/data/events.xlsx
+2026-11-02 22:31:24,019 [INFO] === NSE event calendar fetch finished ===
+
