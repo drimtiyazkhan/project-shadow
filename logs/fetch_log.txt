@@ -1272,3 +1272,11 @@ ValueError: [existing activity_2026.xlsx] Unexpected format — missing fields: 
 2026-11-13 20:37:07,740 [WARNING] Gave up after 1 attempts — NSE's file still doesn't show today's date. This is expected on weekends/holidays. If it's a trading day, check https://nsearchives.nseindia.com/content/equities/bulk.csv manually.
 2026-11-13 20:37:07,740 [INFO] === Bulk deal fetch run finished ===
 
+2026-11-13 22:04:35,410 [INFO] === Bulk deal fetch run started (2026-11-14T03:34:35.410072+05:30 IST) ===
+2026-11-13 22:04:38,077 [INFO] GET https://nsearchives.nseindia.com/content/equities/bulk.csv -> HTTP 200 (12951 bytes)
+2026-11-13 22:04:38,091 [INFO] Parsed 136 rows from NSE's archive file
+2026-11-13 22:04:38,091 [INFO] Most recent date present in the fetched file: 2026-11-13 (today is 2026-11-14)
+2026-11-13 22:04:46,060 [INFO] Year 2026: no new rows (all 136 already recorded)
+2026-11-13 22:04:46,065 [WARNING] Gave up after 1 attempts — NSE's file still doesn't show today's date. This is expected on weekends/holidays. If it's a trading day, check https://nsearchives.nseindia.com/content/equities/bulk.csv manually.
+2026-11-13 22:04:46,065 [INFO] === Bulk deal fetch run finished ===
+
